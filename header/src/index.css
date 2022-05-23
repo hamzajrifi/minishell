@@ -1,0 +1,32 @@
+
+img.mr-80 {
+  margin: 7rem;
+}
+
+.icon-font-menu{
+  font-size: 1rem;
+  line-height: 1;
+  margin-right: 1rem;
+  color: #6C7383;
+}
+
+.btn-scend {
+  background-color: #b00101de;
+  border-color: #b00000;
+  color: #f6f9fe;
+}
+.btn-scend:hover {
+  color: #f6f9fe;
+  background-color: #c95252;
+  border-color: #c95252;
+}
+
+.animation_warnning{
+  animation: 580ms bounce ease infinite;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(1.2);
+  }
+}
