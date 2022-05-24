@@ -6,7 +6,7 @@
 /*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:13:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/22 16:55:01 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/05/24 19:13:33 by hjrifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,28 @@ typedef struct t_contents
 	int		ntab;
 }t_contents;
 
-typedef struct t_quote
-{
-	char			*str;
-	struct t_quote	*next;
-} t_quote;
-
 typedef struct s_pipes
 {
 	char			*prt;
+	char			**val;
+	int				v_type;
 	struct s_pipes	*next;
 } s_pipes;
-struct  t_type 
+
+
+typedef struct  t_type 
 {
+	
 	enum {
 		command,
+		argument,
 		quote ,
 		equale ,
 		parenthese ,
 		comma ,
 		dollar ,
 	}type;
-};
+}n_type;
 
 typedef struct t_list
 {

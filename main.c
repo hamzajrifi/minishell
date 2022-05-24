@@ -68,7 +68,7 @@ void	free_node(s_pipes *pip)
 {
 	s_pipes *tmp;
 	s_pipes *head;
-	
+
 	tmp = pip;
 	head = pip;
 	while(pip)
@@ -86,78 +86,98 @@ void	free_node(s_pipes *pip)
 s_pipes	*split_pipe( t_contents *src)
 {
 	s_pipes	*pip;
-	int		is_scln;
+	int		is_dqt;
+	int		is_sqt;
 	int		i;
 	char	*tmp;
 
 	pip = NULL;
-	is_scln = 0;
+	is_dqt = 0;
+	is_sqt = 0;
 	i = 0;
-	while(src->str[i] && src->i == 0)
+	
+	while(src->str[i])
 	{
-		if (src->str[i] == '"')
-			is_scln += 1;
-		if ((is_scln % 2 == 0 && src->str[i] == '|') )
+		while(src->str[i] && src->str[i] == '"' )
 		{
-			tmp = malloc(sizeof(char) * i  + 1);
-			src->i = 0;
-			while (src->i < i )
-				tmp[src->i++] = src->str[src->end + src->i];
-			src->end = i + 1;
-		 	tmp[src->i] = '\0';
-		 	pip = add_node_pip(tmp , pip);
-		 	free(tmp);
+			i++;
+			is_dqt++;
+			while (src->str[i] && src->str[i] != '"')
+				i++;
+			if (src->str[i] && src->str[i] == '"')
+				is_dqt++;
+			i++;
 		}
-		i++;
-	}
-	if (!pip && is_scln % 2 == 0)
-		pip = add_node_pip(ft_strdup(src->str) , pip);
-	while(src->str[i] && src->end != 0)
-	{
-		if (src->str[i] == '"')
-			is_scln += 1;
-		if (is_scln % 2 == 0 && src->str[i] == '|')
+		while(src->str[i] && src->str[i] == '\'')
 		{
+			i++;
+			is_sqt++;
+			while (src->str[i] && src->str[i] != '\'')
+				i++;
+			if (src->str[i] && src->str[i] == '\'')
+				is_sqt++;
+			i++;
+		}
+		if ((src->str[i] == '|' || src->str[i + 1] == '\0' || src->str[i] == '\0' ))
+		{
+			if(src->str[i + 1] == '\0')
+				i++;
 			tmp = malloc(sizeof(char) * (i - src->end) + 1);
 			src->i = 0;
-			while (src->i < i && (src->str[src->i + src->end] != '|' || (src->str[src->i + src->end] == '|' && is_scln % 2 != 0)))
-			{
-				if (src->str[src->i + src->end] == '"')
-					is_scln += 1;
+			while (src->i + src->end < i )
 				tmp[src->i++] = src->str[src->end + src->i];
-			}
 			src->end = i + 1;
 			tmp[src->i] = '\0';
 			pip = add_node_pip(tmp , pip);
 			free(tmp);	
 		}
-		else if (src->str[i + 1] == '\0')
-		{
-			i += 1;
-			tmp = malloc(sizeof(char) * (i - src->end) + 1);
-			src->i = 0;
-			while (src->str[src->end + src->i])
-				tmp[src->i++] = src->str[src->end + src->i];
-			tmp[src->i] = '\0';
-			pip = add_node_pip(tmp , pip);
-			free(tmp);	
-		}
-		i++;
+		if ( src->str[i] != '\'' && src->str[i] != '"')
+			i++;
 	}
+	if (is_dqt % 2 != 0 || is_sqt % 2 != 0)
+		printf("error s_qt or d_qt\n");
 	return (pip);
 }
 
+s_pipes	*check_node(s_pipes *pip)
+{
+	int		i;
+	int		is_scl; /// is semicolon
+
+	is_scl = 0;
+	
+	while (pip)
+	{
+		i = 0;
+		while (pip->prt[i])
+		{
+			//printf("pip->prt = %c\n", pip->prt[i]);
+			i++;
+		}
+		pip = pip->next;
+	}
+	
+	return (pip);
+}
 
 void	minishell(char *str)
 {
-	t_contents src;
-	s_pipes *pip ;
+	t_contents	src;
+	s_pipes		*pip ;
+	s_pipes		*head ;
 
 	src.str = str;
 	src.i = 0;
 	src.end = 0;
 	pip = split_pipe(&src);
+	check_node(pip);
+	head = pip;
 	//splite_cmd();
+	while (head)
+	{
+		printf("tmp = %s\n", head->prt);
+		head = head->next;
+	}
 	
 	free_node(pip);
 }
@@ -172,6 +192,7 @@ int main()
 	{
 		char *line = readline("minishell>");
 		minishell(line);
+		add_history(line);
 			free(line);
 		i = 0;
 	}
