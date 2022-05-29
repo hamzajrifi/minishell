@@ -1,58 +1,53 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 11:13:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/27 11:13:37 by hjrifi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
-# define MINISHELL_H
+#define MINISHELL_H
 
-typedef struct t_contents
+
+#include "utiles_functions.h"
+
+//// lexer
+typedef struct  lexer_t
 {
-	char	*str;
-	int		i;
-	int		end;
-	int		narg;
-}t_contents;
+    char    c;
+    unsigned int i;
+    char    *src;
+} lexer_t;
 
-typedef struct s_pipes
+
+// token
+
+typedef struct token_struct
 {
-	char			*prt;
-	char			**val;
-	int				*v_type;
-	struct s_pipes	*next;
-} s_pipes;
+    enum {
+        t_command,
+        t_args,
+        t_string,
+        t_var,
+        t_l_parenthesis,
+        t_r_parenthesis,
+        t_pip,
+        t_equal,
+        t_dollar,
+        t_number,
+        t_or,
+        t_and,
+    } type;
 
+    char *val;
+} token_t;
 
-typedef struct  t_type 
-{
-	enum {
-		command = 1,
-		argument,
-		variable,
-		quote ,
-		equale ,
-		parenthese,
-		dollar,
-	}type;
-}n_type;
+void    ft_mini(char *src);
+lexer_t *init_lexer(char *src);
 
-typedef struct t_list
-{
-	char			**value;
-	int				*type;
-}s_list;
+void    lexer_advance(lexer_t *lexer);
 
-# include <stdio.h> 
-# include <unistd.h>
-# include <signal.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void    lixer_skip_whitespace(lexer_t *lexer);
+
+token_t *lexer_get_next_token(lexer_t *lexer);
+
+token_t *lexer_collect_string(lexer_t *lexer);
+token_t *lexer_collect_id(lexer_t *lexer);
+
+char *lexer_get_current_char_as_string(lexer_t *lexer);
+token_t *lexer_advance_with_token(lexer_t *lexer, token_t *token);
+token_t *init_token(int t_type, char *val);
 #endif

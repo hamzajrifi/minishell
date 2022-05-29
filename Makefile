@@ -1,28 +1,32 @@
-NAME = minishell.a
+NAME = mini.a
 
-CC      = gcc 
+CC = gcc
 
-FLAGS   = -Wall -Wextra -Werror 
+FLAG = -Wall -Wextra -Werror
 
-HDR = header/minishell.h
+HDR = 	header/minishell.h \
+		header/utiles_functions.h
 
-C_FILES =	main.c \
-			minishell.c
+C_FILES =	main.c\
+			functions/utiles_functions.c\
+			mini.c
 
-OBJ =	main.o \
-		minishell.o
+OBJ = $(C_FILES:.c=.o)
+# main.o\
+# 		functions/utiles_functions.o\
+# 		mini.o
+
 
 all : $(NAME)
 
-$(NAME) : 	$(HDR) $(OBJ)
-			$(CC) $(FLAGS) -c $(C_FILES) 
+$(NAME) : $(HDR) $(OBJ)
+			$(CC) $(FLAG) -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC)   $(FLAGS) -o minishell main.c $(NAME) -lreadline
+			$(CC) $(FLAG) -o minishell main.c -lreadline $(NAME)
 
-clean : 
-		rm -f *.o
-		rm -f $(NAME) 
-fclean :  clean 
+clean :	
+		rm -f *.o functions/*.o
+		rm -f $(NAME)
+fclean : clean
 		rm -f minishell
-
-re : fclean all 
+re : fclean all
