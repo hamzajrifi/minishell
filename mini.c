@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
+/*   Updated: 2022/05/30 17:47:53 by hjrifi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "header/minishell.h"
 
@@ -38,13 +49,23 @@ token_t *lexer_get_next_token(lexer_t *lexer)
             lexer_skip_whitespace(lexer);
         if (lexer->c == '\'' || lexer->c == '"')
             return (lexer_collect_string(lexer));
-        if (lexer->c == '|')
+        else if (lexer->c == '|')
             return (lexer_advance_with_token(lexer , init_token(t_pip, lexer_get_current_char_as_string(lexer))));
-        if (lexer->c == '>')
+        else if (lexer->c == '<' && lexer->src[lexer->i + 1] == '<')
+        {
+            lexer_advance(lexer);
+            return (lexer_advance_with_token(lexer , init_token(t_herdoc, ft_strdup("<<"))));
+        }
+        else if (lexer->c == '>' && lexer->src[lexer->i + 1] == '>')
+        {
+            lexer_advance(lexer);
+            return (lexer_advance_with_token(lexer , init_token(t_append, ft_strdup(">>"))));
+        }
+        else if (lexer->c == '>')
             return (lexer_advance_with_token(lexer , init_token(t_input, lexer_get_current_char_as_string(lexer))));
-        if (lexer->c == '<')
+        else if (lexer->c == '<')
             return (lexer_advance_with_token(lexer , init_token(t_output, lexer_get_current_char_as_string(lexer))));
-        if (lexer->c == '=')
+        else if (lexer->c == '=')
             return (lexer_advance_with_token(lexer , init_token(t_equal, lexer_get_current_char_as_string(lexer))));
         else if (lexer->c)
             return (lexer_collect_arg(lexer));
@@ -69,26 +90,6 @@ token_t *lexer_advance_with_token(lexer_t *lexer, token_t *token)
     return (token);
 }
 
-token_t *lexer_collect_string(lexer_t *lexer)
-{
-    char    *tmp;
-    char    *str;
-    char    c;
-
-    c = lexer->c;
-    lexer_advance(lexer);
-    str = NULL;
-    while(lexer->c != c)
-    {
-        tmp = lexer_get_current_char_as_string(lexer); // sheck sigfault..
-        str = ft_strjoin(str, tmp);
-        free(tmp);
-        lexer_advance(lexer);
-    }
-    lexer_advance(lexer);
-    return (init_token(t_string, str));
-}
-
 char	*check_var(lexer_t *lexer)
 {
 	char    *tmp;
@@ -96,11 +97,11 @@ char	*check_var(lexer_t *lexer)
 
 	str = NULL;
 	lexer_advance(lexer);
-	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c || '|')
+	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|')
 		return (ft_strdup("$"));
 	else
 	{
-		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '|')
+		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '|' && lexer->c != '"')
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
 			str = ft_strjoin(str, tmp);
@@ -115,13 +116,39 @@ char	*check_var(lexer_t *lexer)
 	return (str);
 }
 
+token_t *lexer_collect_string(lexer_t *lexer)
+{
+    char    *tmp;
+    char    *str;
+    char    c;
+
+    c = lexer->c;
+    lexer_advance(lexer);
+    str = NULL;
+    while(lexer->c != c)
+    {
+
+        if (lexer->c == '$' && c == '"')
+        	str = ft_strjoin(str, check_var(lexer));
+        else
+        {
+            tmp = lexer_get_current_char_as_string(lexer);
+            str = ft_strjoin(str, tmp);
+            free(tmp);
+            lexer_advance(lexer);
+        }
+    }
+    lexer_advance(lexer);
+    return (init_token(t_string, str));
+}
+
 token_t *lexer_collect_arg(lexer_t *lexer)
 {
     char    *tmp;
     char    *str;
 
     str = NULL;
-    while(lexer->src[lexer->i] && lexer->c !=' ')
+    while(lexer->src[lexer->i] && lexer->c !=' ' && lexer->c !='|' )
     {
 		if (lexer->c == '$')
 		{

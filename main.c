@@ -13,11 +13,12 @@ void    ft_mini(char *src)
     token_t *token;
 
     lexer = init_lexer(src);
-    // printf("src = %s\n", src);
     token = NULL;
     while((token = lexer_get_next_token(lexer)))
     {
         printf("Token(%d, %s)\n", token->type, token->val);
+        // free(token->val);
+        // token = NULL;
     }
 
 }
