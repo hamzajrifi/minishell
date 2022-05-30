@@ -36,16 +36,18 @@ token_t *lexer_get_next_token(lexer_t *lexer)
     {
         if (lexer->c == ' ')
             lexer_skip_whitespace(lexer);
-    while((lexer->c >= '0' && lexer->c <= '9') || (lexer->c >= 'a' && lexer->c <= 'z') || (lexer->c >= 'A' && lexer->c <= 'Z'))
-            return (lexer_collect_id(lexer));
-        if (lexer->c == '"')
+        if (lexer->c == '\'' || lexer->c == '"')
             return (lexer_collect_string(lexer));
         if (lexer->c == '|')
             return (lexer_advance_with_token(lexer , init_token(t_pip, lexer_get_current_char_as_string(lexer))));
+        if (lexer->c == '>')
+            return (lexer_advance_with_token(lexer , init_token(t_input, lexer_get_current_char_as_string(lexer))));
+        if (lexer->c == '<')
+            return (lexer_advance_with_token(lexer , init_token(t_output, lexer_get_current_char_as_string(lexer))));
         if (lexer->c == '=')
-            return (lexer_advance_with_token(lexer , init_token(t_equal, lexer_get_current_char_as_string(lexer)))); 
-        if (lexer->c == '$')
-            return (lexer_advance_with_token(lexer , init_token(t_dollar, lexer_get_current_char_as_string(lexer))));
+            return (lexer_advance_with_token(lexer , init_token(t_equal, lexer_get_current_char_as_string(lexer))));
+        else if (lexer->c)
+            return (lexer_collect_arg(lexer));
         lexer_advance(lexer);
     }
     return (NULL);
@@ -71,36 +73,72 @@ token_t *lexer_collect_string(lexer_t *lexer)
 {
     char    *tmp;
     char    *str;
-    int     i;
+    char    c;
 
-    i = 0;
+    c = lexer->c;
     lexer_advance(lexer);
-    while(lexer->c != '"')
-    {
-        tmp = lexer_get_current_char_as_string(lexer); // sheck sigfault..
-        str = ft_strjoin(str, tmp);
-        free(tmp);
-        lexer_advance(lexer); 
-        i++;        
-    }
-    lexer_advance(lexer);
-    return (init_token(t_string, str));
-}
-
-token_t *lexer_collect_id(lexer_t *lexer)
-{
-    char    *tmp;
-    char    *str;
-
     str = NULL;
-    while((lexer->c >= '0' && lexer->c <= '9') || (lexer->c >= 'a' && lexer->c <= 'z') || (lexer->c >= 'A' && lexer->c <= 'Z'))
+    while(lexer->c != c)
     {
         tmp = lexer_get_current_char_as_string(lexer); // sheck sigfault..
         str = ft_strjoin(str, tmp);
         free(tmp);
         lexer_advance(lexer);
     }
-    return (init_token(t_command, str));
+    lexer_advance(lexer);
+    return (init_token(t_string, str));
+}
+
+char	*check_var(lexer_t *lexer)
+{
+	char    *tmp;
+    char    *str;
+
+	str = NULL;
+	lexer_advance(lexer);
+	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c || '|')
+		return (ft_strdup("$"));
+	else
+	{
+		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '|')
+		{
+			tmp = lexer_get_current_char_as_string(lexer);
+			str = ft_strjoin(str, tmp);
+        	free(tmp);
+        	lexer_advance(lexer);
+		}
+		if (getenv(str))
+			return (getenv(str));
+		else 
+			return (ft_strdup(""));
+	}
+	return (str);
+}
+
+token_t *lexer_collect_arg(lexer_t *lexer)
+{
+    char    *tmp;
+    char    *str;
+
+    str = NULL;
+    while(lexer->src[lexer->i] && lexer->c !=' ')
+    {
+		if (lexer->c == '$')
+		{
+        	str = ft_strjoin(str, check_var(lexer));
+			return (init_token(t_args, str));
+		}
+        else
+		{
+			tmp = lexer_get_current_char_as_string(lexer); // sheck sigfault..
+        	str = ft_strjoin(str, tmp);
+        	free(tmp);
+        	lexer_advance(lexer);
+        	if (lexer->c == '"')
+        		str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+		}
+    }
+    return (init_token(t_args, str));
 }
 
 char *lexer_get_current_char_as_string(lexer_t *lexer)

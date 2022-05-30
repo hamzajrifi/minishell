@@ -10,4 +10,5 @@
 
 unsigned int  ft_strlen(char *src);
 char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strdup(const char *s1);
 #endif

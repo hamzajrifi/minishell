@@ -56,3 +56,23 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	ft_strlcat(ptr, (char *)s2, len + len1 + 1);
 	return (ptr);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	int		i;
+	int		len_s1;
+
+	len_s1 = ft_strlen((char *)s1);
+	i = 0;
+	ptr = (char *)malloc(len_s1 * sizeof(char) + 1);
+	if (!ptr)
+		return (NULL);
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
