@@ -24,8 +24,9 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
     }
 	new = malloc(sizeof(t_list));
     new->val = malloc (sizeof(char*) * 3);
+    new->v_type = malloc(sizeof(int) * 2);
+	new->val[0] = str;
     new->val[3] = NULL;
-	new->val[0] = ft_strdup(str);
     new->v_type[0] = v_type;
 	new->next = NULL;
 	if(lst)
@@ -54,7 +55,7 @@ t_list  *ft_parser(char *src)
     while(token)
     {
         printf("Token(%d, %s)\n", token->type, token->val);
-            lst = add_node_in_lst(token->val, token->type, lst);
+        lst = add_node_in_lst(token->val, token->type, lst);
         if (token->type == t_herdoc)
         {
             if (!(token = lexer_get_next_token(lexer)))
@@ -63,6 +64,7 @@ t_list  *ft_parser(char *src)
                 return NULL;
             }
             lst->val[1] = token->val;
+            free(token->val);
             lst->v_type[1] = t_end;
         }
         else if (token->type == t_input || token->type == t_output)
@@ -73,21 +75,23 @@ t_list  *ft_parser(char *src)
                 return NULL;
             }
             lst->val[1] = token->val;
+            free(token->val);
             lst->v_type[1] = t_file;
         }
-        else if ((token = lexer_get_next_token(lexer)))
+        else
         {
-            while (token->type == t_args || token->type == t_string)
+            token = lexer_get_next_token(lexer);
+            if (token)
             {
-                puts("here");
-                tmp = ft_strjoin(tmp, token->val);
-                free(token->val);
-                token = lexer_get_next_token(lexer);
+                while (token->type == t_args || token->type == t_string)
+                {
+                    tmp = ft_strjoin(tmp, token->val);
+                    free(token->val);
+                    token = lexer_get_next_token(lexer);
+                }
             }
         }
-        
-        // free(token->val);
-        // token = NULL;
+        printf("str = %s\n", lst->val[0]);
     }
-    return (0);
+    return (lst);
 }

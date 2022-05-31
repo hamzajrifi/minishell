@@ -9,11 +9,12 @@ void    checksignal(int nbr)
 
 void    ft_mini(char *src)
 {
-    // t_list *lst;
+    t_list *lst;
     
-    // lst =
-     ft_parser(src);
-
+    lst = ft_parser(src);
+    
+        printf("lst = %s , value = %d\n", lst->val[0], lst->v_type[0]);
+    
 }
 
 int main(void)
