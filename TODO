@@ -1,1 +1,2 @@
 -- herdoc
+// else if (lexer->src[lexer->i + 1] == '?')

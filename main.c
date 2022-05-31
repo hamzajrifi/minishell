@@ -14,10 +14,14 @@ void    ft_mini(char *src)
     lst = ft_parser(src);
     
     i = 0;
-    while (lst->v_type[i] != 0 && lst->val[i])
+    while(lst)
     {
-        printf("lst = %s , value = %d\n", lst->val[i], lst->v_type[i]);
-        i++;
+        while ( lst->v_type[i] != 0 && lst->val[i])
+        {
+            printf("lst = %s , value = %d\n", lst->val[i], lst->v_type[i]);
+            i++;
+        }
+        lst =lst->next;
     }
     
 }
@@ -29,7 +33,7 @@ int main(void)
 	signal(SIGINT, checksignal);
     while(1337)
     {
-        src = readline("mimishell :>");
+        src = readline("mimishell : ");
         ft_mini(src);
 		add_history(src);
         free(src);

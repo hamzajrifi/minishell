@@ -6,7 +6,7 @@
 /*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/30 17:47:53 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/05/31 12:55:27 by hjrifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*check_var(lexer_t *lexer)
 		return (ft_strdup("$"));
 	else
 	{
-		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '|' && lexer->c != '"' && lexer->c != '=')
+		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '|' && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=')
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
 			str = ft_strjoin(str, tmp);
@@ -133,7 +133,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
     c = lexer->c;
     lexer_advance(lexer);
     str = NULL;
-    while(lexer->c != c)
+    while(lexer->c && lexer->c != c)
     {
 
         if (lexer->c == '$' && c == '"')
@@ -146,6 +146,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
             lexer_advance(lexer);
         }
     }
+    puts("here");
     lexer_advance(lexer);
     return (init_token(t_string, str));
 }

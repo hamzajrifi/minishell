@@ -6,7 +6,7 @@
 /*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:39 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/30 18:13:29 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/05/31 12:24:03 by hjrifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ typedef struct token_struct
         t_append,
         t_string,
         t_file,
-        t_input,
-        t_end,
         t_output,
+        t_end,
+        t_input,
         t_l_parenthesis,
         t_r_parenthesis,
         t_pip,
         t_or,
         t_and,
+        t_error,
     } type;
 
     char *val;
