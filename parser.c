@@ -6,7 +6,7 @@
 /*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:12 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/30 17:48:12 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/05/31 11:55:35 by hjrifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,35 @@ t_list  *ft_parser(char *src)
         lst = add_node_in_lst(token->val, token->type, lst);
         if (token->type == t_herdoc)
         {
-            if (!(token = lexer_get_next_token(lexer)))
+            token = lexer_get_next_token(lexer);
+            if (!token)
             {
                 printf("error delimeter\n");
                 return NULL;
             }
-            lst->val[1] = token->val;
+            lst->val[1] = ft_strdup( token->val);
             free(token->val);
             lst->v_type[1] = t_end;
+            printf("lst->val %s\n", lst->val[1]);
+            token = lexer_get_next_token(lexer);
+            if (token)
+            {
+                while (token && (token->type == t_args || token->type == t_string))
+                {
+                    tmp = ft_strjoin(tmp, token->val);
+                    free(token->val);
+                    tmp = ft_strjoin(tmp, " ");
+                    token = lexer_get_next_token(lexer);
+                }
+                lst->val[2] = ft_strdup(tmp);
+                free(tmp);
+                lst->v_type[2] = t_args;
+            }
         }
         else if (token->type == t_input || token->type == t_output)
         {
-            if (!(token = lexer_get_next_token(lexer)))
+            token = lexer_get_next_token(lexer);
+            if (!token)
             {
                 printf("error file\n");
                 return NULL;
@@ -83,15 +100,20 @@ t_list  *ft_parser(char *src)
             token = lexer_get_next_token(lexer);
             if (token)
             {
-                while (token->type == t_args || token->type == t_string)
+                while (token && (token->type == t_args || token->type == t_string))
                 {
                     tmp = ft_strjoin(tmp, token->val);
                     free(token->val);
+                    tmp = ft_strjoin(tmp, " ");
                     token = lexer_get_next_token(lexer);
                 }
+                lst->val[1] = ft_strdup(tmp);
+                free(tmp);
+                lst->v_type[1] = t_args;
             }
         }
-        printf("str = %s\n", lst->val[0]);
+        token = lexer_get_next_token(lexer);
     }
+
     return (lst);
 }

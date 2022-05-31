@@ -10,10 +10,15 @@ void    checksignal(int nbr)
 void    ft_mini(char *src)
 {
     t_list *lst;
-    
+    int     i;
     lst = ft_parser(src);
     
-        printf("lst = %s , value = %d\n", lst->val[0], lst->v_type[0]);
+    i = 0;
+    while (lst->v_type[i] != 0 && lst->val[i])
+    {
+        printf("lst = %s , value = %d\n", lst->val[i], lst->v_type[i]);
+        i++;
+    }
     
 }
 
