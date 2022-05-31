@@ -9,6 +9,7 @@ HDR = 	header/minishell.h \
 
 C_FILES =	main.c\
 			functions/utiles_functions.c\
+			parser.c\
 			mini.c
 
 OBJ = $(C_FILES:.c=.o)

@@ -9,17 +9,10 @@ void    checksignal(int nbr)
 
 void    ft_mini(char *src)
 {
-    lexer_t *lexer;
-    token_t *token;
-
-    lexer = init_lexer(src);
-    token = NULL;
-    while((token = lexer_get_next_token(lexer)))
-    {
-        printf("Token(%d, %s)\n", token->type, token->val);
-        // free(token->val);
-        // token = NULL;
-    }
+    // t_list *lst;
+    
+    // lst =
+     ft_parser(src);
 
 }
 

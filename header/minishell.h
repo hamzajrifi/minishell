@@ -35,20 +35,26 @@ typedef struct token_struct
         t_herdoc,
         t_append,
         t_string,
+        t_file,
         t_input,
+        t_end,
         t_output,
-        t_var,
         t_l_parenthesis,
         t_r_parenthesis,
         t_pip,
-        t_equal,
-        t_number,
         t_or,
         t_and,
     } type;
 
     char *val;
 } token_t;
+
+typedef struct t_list
+{
+    char            **val;
+    int             *v_type;
+    struct t_list   *next;
+}t_list;
 
 
 void    ft_mini(char *src);
@@ -59,9 +65,14 @@ token_t *lexer_get_next_token(lexer_t *lexer);
 token_t *lexer_collect_string(lexer_t *lexer);
 token_t *lexer_collect_arg(lexer_t *lexer);
 char	*check_var(lexer_t *lexer);
-char *lexer_get_current_char_as_string(lexer_t *lexer);
+char    *lexer_get_current_char_as_string(lexer_t *lexer);
 token_t *lexer_advance_with_token(lexer_t *lexer, token_t *token);
 token_t *init_token(int t_type, char *val);
+
+
+//// parser
+
+t_list  *ft_parser(char *src);
 
 #endif
 
