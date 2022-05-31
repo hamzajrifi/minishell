@@ -22,11 +22,10 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
     {        
         v_type = 1;
     }
-    if (!(new = malloc(sizeof(t_list))) || !(new->val = malloc (sizeof(char*) * 3)))
-        exit(0);
+	new = malloc(sizeof(t_list));
+    new->val = malloc (sizeof(char*) * 3);
     new->val[3] = NULL;
-    if(!(new->val[0] = ft_strdup(str)))
-        exit(1);
+	new->val[0] = ft_strdup(str);
     new->v_type[0] = v_type;
 	new->next = NULL;
 	if(lst)
@@ -76,13 +75,14 @@ t_list  *ft_parser(char *src)
             lst->val[1] = token->val;
             lst->v_type[1] = t_file;
         }
-        else
+        else if ((token = lexer_get_next_token(lexer)))
         {
-            puts("here");
-            while ((token = lexer_get_next_token(lexer))->type == t_args || (token = lexer_get_next_token(lexer))->type == t_string)
+            while (token->type == t_args || token->type == t_string)
             {
+                puts("here");
                 tmp = ft_strjoin(tmp, token->val);
-                // free(token->val);
+                free(token->val);
+                token = lexer_get_next_token(lexer);
             }
         }
         
