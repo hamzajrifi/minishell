@@ -87,3 +87,40 @@ char	*ft_strdup(const char *s1)
 	ptr[i] = '\0';
 	return (ptr);
 }
+
+char **ft_realloc_char(char **str)
+{
+	char  **tab;
+	int		i;
+	
+	i = 0;
+	while(str[i])
+		i++;
+	tab = malloc(sizeof(char *) * (i + 2));
+	i = 0;
+	while (str[i])
+	{
+		tab[i] = ft_strdup(str[i]);
+		i++;
+	}
+	tab[i + 1] = NULL;
+	return (tab);
+}
+
+int *ft_realloc_int(int *tab, char **str)
+{
+	int		i;
+	int  	*new_tab;
+
+	i = 0;
+	while(str[i])
+		i++;
+	new_tab = malloc(sizeof(int *) * i);
+	i = 0;
+	while (str[i])
+	{
+		new_tab[i] = tab[i];
+		i++;
+	}
+	return (new_tab);
+}
