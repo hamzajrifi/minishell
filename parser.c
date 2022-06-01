@@ -40,7 +40,7 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
 	return (head);
 }
 
-t_list  *ft_check_herdoc(token_t *token, lexer_t *lexer, t_list *lst)
+t_list  *ft_check_parser(token_t *token, lexer_t *lexer, t_list *lst)
 {
     int     i;
 
@@ -54,57 +54,42 @@ t_list  *ft_check_herdoc(token_t *token, lexer_t *lexer, t_list *lst)
         lst->v_type[i++] = token->type;
         token = lexer_get_next_token(lexer);
     }
-    if (i > 1)
+    if (i > 1 && lst->v_type[0] == 3)
+    {
         lst->v_type[1] = t_end;
+    }
+    else if (i > 1 && lst->v_type[0] == 7)
+        lst->v_type[1] = t_file;
     return (lst);
 }
+
 
 t_list  *ft_parser(char *src)
 {
     lexer_t *lexer;
     token_t *token;
     t_list  *lst;
-    char    *tmp;
-
-    tmp = NULL;
+    t_list  *head;
+    
     lexer = init_lexer(src);
     token = lexer_get_next_token(lexer);
     lst = NULL;
+    if (token)
+        lst = add_node_in_lst(token->val, token->type, lst);
+    head = lst;
     while(token)
     {
-        lst = add_node_in_lst(token->val, token->type, lst);
-        if (token->type == t_herdoc)
-           lst = ft_check_herdoc(token, lexer, lst);
-        else if (token->type == t_input || token->type == t_output)
-        {
-            token = lexer_get_next_token(lexer);
-            if (!token && token->type != t_args && token->type != t_string)
-            {
-                printf("syntax error near unexpected token \n");
-                return lst;
-            }
-            lst->val[1] = token->val;
-            free(token->val);
-            lst->v_type[1] = t_file;
-        }
-        else
-        {
-            token = lexer_get_next_token(lexer);
-            if (token)
-            {
-                while (token && (token->type == t_args || token->type == t_string))
-                {
-                    tmp = ft_strjoin(tmp, token->val);
-                    free(token->val);
-                    tmp = ft_strjoin(tmp, " ");
-                    token = lexer_get_next_token(lexer);
-                }
-                lst->val[1] = ft_strdup(tmp);
-                free(tmp);
-                lst->v_type[1] = t_args;
-            }
-        }
+        // printf("toke(%s, %d)\n", token->val, token->type);
+        lst = ft_check_parser(token, lexer, lst);
         token = lexer_get_next_token(lexer);
+        if (token)
+        {
+            lst = add_node_in_lst(token->val, token->type, head);
+        printf("toke1%s, %d)\n", lst->val[0], lst->v_type[0]);
+            while (lst->next)
+                lst = lst->next;
+        printf("toke2(%s, %d)\n", lst->val[0], lst->v_type[0]);
+        }
     }
-    return (lst);
+    return (head);
 }
