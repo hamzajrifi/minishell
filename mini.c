@@ -157,7 +157,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
     lexer_advance(lexer);
     if (check_lexer_c(lexer->c))
         str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
-    return (init_token(t_string, str));
+    return (init_token(t_args, str));
 }
 
 token_t *lexer_collect_arg(lexer_t *lexer)

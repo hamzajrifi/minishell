@@ -18,7 +18,7 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
 	t_list	*head;
    
 	head = lst;
-    if (v_type == t_args || v_type == t_string) 
+    if (v_type == t_args) 
         v_type = 1;
 	new = malloc(sizeof(t_list));
     new->val = malloc (sizeof(char*) * 2);
@@ -44,7 +44,7 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
 
     i = 1;
     *token = lexer_get_next_token(lexer);
-    while (*token && ((*token)->type == t_args || (*token)->type == t_string))
+    while (*token && (*token)->type == t_args)
     {
         lst->val =  ft_realloc_char(lst->val); /// return str 
         lst->v_type =  ft_realloc_int(lst->v_type, lst->val); /// return str 
@@ -54,7 +54,7 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
     }
     if (i > 1 && lst->v_type[0] == 3)
         lst->v_type[1] = t_end;
-    else if (i > 1 && lst->v_type[0] == 7)
+    else if (i > 1 && lst->v_type[0] == 8)
         lst->v_type[1] = t_file;
     return (lst);
 }
