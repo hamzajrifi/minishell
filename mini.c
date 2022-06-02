@@ -55,7 +55,19 @@ token_t *lexer_get_next_token(lexer_t *lexer)
             return (lexer_advance_with_token(lexer , init_token(t_or, ft_strdup("||"))));
         }
         else if (lexer->c == '|')
+        {
+            int i = lexer->i + 1;
+            printf("c = %c\n", lexer->src[lexer->i]);
+            while (lexer->src[i] == ' ')// error [  |  ]
+                i++;
+            while (!lexer->src[i]);
+            if(lexer->c == '|')
+            {
+                printf("minishell: syntax error near unexpected token `|'\n");
+                return (NULL);
+            }
             return (lexer_advance_with_token(lexer , init_token(t_pip, lexer_get_current_char_as_string(lexer))));
+        }
         else if (lexer->c == '<' && lexer->src[lexer->i + 1] == '<')
         {
             lexer_advance(lexer);
@@ -109,7 +121,7 @@ char	*check_var(lexer_t *lexer)
 		return (ft_strdup("$"));
 	else
 	{
-		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '|' && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=')
+		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '$' && lexer->c != '|' && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=')
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
 			str = ft_strjoin(str, tmp);
@@ -138,10 +150,8 @@ void    check_backslash(lexer_t **lexer)
 
     c = (*lexer)->c;
     k = (*lexer)->src[(*lexer)->i + 1];
-    if (c == '\\' && (k == '\\' || k == '"' || k == '\''))
-    {
+    if (c == '\\' && (k == '\\' || k == '"' || k == '\'' || k == '$'))
         lexer_advance(*lexer);
-    }
 }
 
 token_t *lexer_collect_string(lexer_t *lexer)
@@ -186,6 +196,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
         	str = ft_strjoin(str, check_var(lexer));
         else
 		{
+            check_backslash(&lexer);
 			tmp = lexer_get_current_char_as_string(lexer);
         	str = ft_strjoin(str, tmp);
         	free(tmp);
