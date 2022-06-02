@@ -124,12 +124,19 @@ char	*check_var(lexer_t *lexer)
 	return (str);
 }
 
+int    check_lexer_c(char c)
+{
+    if (c != ' ' && c != '<' && c != '>' &&  c != '|' && c != '"' && c != '\'')
+        return (1);
+    return (0);
+}
+
 token_t *lexer_collect_string(lexer_t *lexer)
 {
     char    *tmp;
     char    *str;
     char    c;
-
+    
     c = lexer->c;
     lexer_advance(lexer);
     str = NULL;
@@ -146,7 +153,10 @@ token_t *lexer_collect_string(lexer_t *lexer)
             lexer_advance(lexer);
         }
     }
+    while (!lexer->c); // error [']
     lexer_advance(lexer);
+    if (check_lexer_c(lexer->c))
+        str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
     return (init_token(t_string, str));
 }
 
@@ -166,8 +176,8 @@ token_t *lexer_collect_arg(lexer_t *lexer)
         	str = ft_strjoin(str, tmp);
         	free(tmp);
         	lexer_advance(lexer);
-        	if (lexer->c == '"')
-        		str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+        	while (lexer->c == '"' ||lexer->c == '\'')
+                str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
 		}
     }
     return (init_token(t_args, str));

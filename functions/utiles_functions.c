@@ -55,7 +55,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	int		len1;
 
 	if (s2 == NULL)
-		return (NULL);
+		return ((char *)s1);
 	len = ft_strlen((char *)s1);
 	len1 = ft_strlen((char *)s2);
 	ptr = (char *)malloc(sizeof(char) * (len + len1 + 1));
