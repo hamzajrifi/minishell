@@ -131,6 +131,19 @@ int    check_lexer_c(char c)
     return (0);
 }
 
+void    check_backslash(lexer_t **lexer)
+{
+    char    c;
+    char    k;
+
+    c = (*lexer)->c;
+    k = (*lexer)->src[(*lexer)->i + 1];
+    if (c == '\\' && (k == '\\' || k == '"' || k == '\''))
+    {
+        lexer_advance(*lexer);
+    }
+}
+
 token_t *lexer_collect_string(lexer_t *lexer)
 {
     char    *tmp;
@@ -147,6 +160,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
         	str = ft_strjoin(str, check_var(lexer));
         else
         {
+            check_backslash(&lexer);
             tmp = lexer_get_current_char_as_string(lexer);
             str = ft_strjoin(str, tmp);
             free(tmp);

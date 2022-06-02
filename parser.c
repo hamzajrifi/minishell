@@ -71,15 +71,11 @@ t_list  *ft_parser(char *src)
     token = lexer_get_next_token(lexer);
     lst = NULL;
     if (token)
-    {
         lst = add_node_in_lst(token->val, token->type, lst);
-        // token = lexer_get_next_token(lexer);
-    }
     head = lst;
     while(token)
     {
         lst = ft_check_parser(&token, lexer, lst);
-        // token = lexer_get_next_token(lexer);
         if (token)
         {
             lst = add_node_in_lst(token->val, token->type, head);
