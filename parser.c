@@ -18,10 +18,8 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
 	t_list	*head;
    
 	head = lst;
-    if (v_type == t_args || v_type == t_string)
-    {        
+    if (v_type == t_args || v_type == t_string) 
         v_type = 1;
-    }
 	new = malloc(sizeof(t_list));
     new->val = malloc (sizeof(char*) * 2);
     new->v_type = malloc(sizeof(int) * 2);

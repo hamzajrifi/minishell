@@ -146,7 +146,6 @@ token_t *lexer_collect_string(lexer_t *lexer)
             lexer_advance(lexer);
         }
     }
-    puts("here");
     lexer_advance(lexer);
     return (init_token(t_string, str));
 }

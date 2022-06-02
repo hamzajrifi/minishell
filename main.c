@@ -16,7 +16,7 @@ void    ft_mini(char *src)
     while(lst)
     {
         i = 0;
-            puts("----------");
+            puts("----- node struct-----");
         while ( lst->v_type[i] != 0 && lst->val[i])
         {
             printf("lst = %s , value = %d\n", lst->val[i], lst->v_type[i]);
