@@ -40,19 +40,19 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
 	return (head);
 }
 
-t_list  *ft_check_parser(token_t *token, lexer_t *lexer, t_list *lst)
+t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
 {
     int     i;
 
     i = 1;
-    // token = lexer_get_next_token(lexer);
-    while (token && (token->type == t_args || token->type == t_string))
+    *token = lexer_get_next_token(lexer);
+    while (*token && ((*token)->type == t_args || (*token)->type == t_string))
     {
         lst->val =  ft_realloc_char(lst->val); /// return str 
         lst->v_type =  ft_realloc_int(lst->v_type, lst->val); /// return str 
-        lst->val[i] = ft_strdup(token->val);
-        lst->v_type[i++] = token->type;
-        token = lexer_get_next_token(lexer);
+        lst->val[i] = ft_strdup((*token)->val);
+        lst->v_type[i++] = (*token)->type;
+        *token = lexer_get_next_token(lexer);
     }
     if (i > 1 && lst->v_type[0] == 3)
         lst->v_type[1] = t_end;
@@ -75,17 +75,21 @@ t_list  *ft_parser(char *src)
     if (token)
     {
         lst = add_node_in_lst(token->val, token->type, lst);
-        token = lexer_get_next_token(lexer);
+        // token = lexer_get_next_token(lexer);
     }
     head = lst;
     while(token)
     {
-        lst = ft_check_parser(token, lexer, lst);
-        token = lexer_get_next_token(lexer);
+        lst = ft_check_parser(&token, lexer, lst);
+        // token = lexer_get_next_token(lexer);
         if (token)
         {
             lst = add_node_in_lst(token->val, token->type, head);
-            token = lexer_get_next_token(lexer);
+            if (token->type > t_input && token->type <= t_error )
+            {
+                token = lexer_get_next_token(lexer);
+                lst = add_node_in_lst(token->val, token->type, head);
+            }
             while (lst->next)
                 lst = lst->next;
         }
