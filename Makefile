@@ -11,6 +11,7 @@ C_FILES =	main.c\
 			functions/utiles_functions.c\
 			exec/exec_cmd.c\
 			exec/redirections.c\
+			exec/pipes.c\
 			built_func/cd.c\
 			built_func/echo.c\
 			built_func/env.c\

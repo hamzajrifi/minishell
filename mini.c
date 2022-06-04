@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/31 12:55:27 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/04 18:12:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ token_t *lexer_get_next_token(lexer_t *lexer)
         }
         else if (lexer->c == '|')
         {
-            int i = lexer->i + 1;
-            while (lexer->src[i] == ' ')// error [  |  ]
-                i++;
-            while (!lexer->src[i]);
-            if(lexer->c == '|')
-            {
-                printf("minishell: syntax error near unexpected token `|'\n");
-                return (NULL);
-            }
+            //int i = lexer->i + 1;
+            //while (lexer->src[i] == ' ')// error [  |  ]
+            //    i++;
+            //while (!lexer->src[i]);
+            //if(lexer->c == '|')
+            //{
+            //    printf("minishell: syntax error near unexpected token `|'\n");
+            //    return (NULL);
+            //}
             return (lexer_advance_with_token(lexer , init_token(t_pip, lexer_get_current_char_as_string(lexer))));
         }
         else if (lexer->c == '<' && lexer->src[lexer->i + 1] == '<')

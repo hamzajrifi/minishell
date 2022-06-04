@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 16:59:42 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:10:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void    ft_mini(t_shell *mini, char *src)
        ft_redirection(mini, lst);
     else if (finder_red(lst->next) == 4)
         check_herd(mini, lst);
+    else if (finder_red(lst->next) == 1)
+        pipes(mini, lst);
     else 
        ft_check_built(mini, lst, 1);
 }

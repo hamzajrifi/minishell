@@ -45,7 +45,7 @@ int	ft_strcmp(char *s1, char *s2);
 int	ft_isdigit(int c);
 
 
-
+void    pipes(t_shell *mini, t_list *list);
 int     len(char *str);
 void    ft_print(t_shell *index, int fd);
 void    ft_realloc(t_shell *index, char *str, int save);
