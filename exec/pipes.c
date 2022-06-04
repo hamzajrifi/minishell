@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 20:32:17 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 21:41:28 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ int     num_of_cmd(t_list *list)
     {
         if (list->val)
             count++;
-        // if (list->next)
-        //     list = list->next->next;
-        // else 
-        //     break;
-        list = list->next;
+        if (list->next)
+            list = list->next->next;
+        else 
+            break;
     }
     return count;
 }
