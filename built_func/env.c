@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utiles_functions.h                                 :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 17:47:36 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 14:26:46 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/21 15:13:55 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/21 15:14:59 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILES_FUNCTIONS_H
-#define UTILES_FUNCTIONS_H
+#include "../shell.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void    ft_env(t_shell *index, int fd)
+{
+	int i;
 
-
-//unsigned int  ft_strlen(char *src);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strdup(const char *s1);
-char    **ft_realloc_char(char **str);
-int     *ft_realloc_int(int *tab, char **str);
-#endif
+	i = 0;
+	while (index->tab_save_env[i])
+	{
+		ft_putendl_fd(index->tab_save_env[i], fd);
+		i++;
+	}
+	if (index->tab_save_exp)
+	{
+		i = 0;
+		while (index->tab_save_exp[i])
+		{
+			if (len(index->tab_save_exp[i]) != 0)
+				ft_putendl_fd(index->tab_save_exp[i], fd);
+			i++;
+		}
+	}
+}

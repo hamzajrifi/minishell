@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:39 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/31 12:24:03 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/04 15:14:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 
 #include "utiles_functions.h"
+#include "../shell.h"
 
 //// lexer
 typedef struct  lexer_t
@@ -35,9 +36,9 @@ typedef struct token_struct
         t_herdoc = 3,
         t_append = 4,
         t_file = 5,
-        t_output = 6,
+        t_output = 8,
         t_end = 7,
-        t_input = 8,
+        t_input = 6,
         t_l_parenthesis = 9,
         t_r_parenthesis = 10,
         t_pip = 11,
@@ -49,15 +50,9 @@ typedef struct token_struct
     char *val;
 } token_t;
 
-typedef struct t_list
-{
-    char            **val;
-    int             *v_type;
-    struct t_list   *next;
-}t_list;
 
 
-void    ft_mini(char *src);
+void    ft_mini(t_shell *mini, char *src);
 lexer_t *init_lexer(char *src);
 void    lexer_advance(lexer_t *lexer);
 void    lixer_skip_whitespace(lexer_t *lexer);
@@ -76,30 +71,3 @@ t_list  *ft_parser(char *src);
 
 #endif
 
-
-/*
-
-char    **val;
-int     *n_type;
-int     cont;
-
-i = 0;
-while (i < cont)
-{
-    if (n_type[i] == 1) ///// command
-    {
-        
-    }
-    else if (n_type[i] == 2 ) //// arg
-    {
-        val[i] = "-ls";
-    }
-    else if (n_type[i] == 3 ) //// herdoc
-    else if (n_type[i] == 4 ) //// append
-    else if (n_type[i] == 5 ) //// string
-    else if (n_type[i] == 6 ) //// input 
-    
-    
-    i++;
-}
-*/

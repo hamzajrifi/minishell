@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utiles_functions.h                                 :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 17:47:36 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 14:26:46 by otmallah         ###   ########.fr       */
+/*   Created: 2022/03/18 16:28:20 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/31 18:16:27 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILES_FUNCTIONS_H
-#define UTILES_FUNCTIONS_H
+#include "../shell.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+size_t	ft_strlen(char *str)
+{
+	size_t i;
 
-
-//unsigned int  ft_strlen(char *src);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strdup(const char *s1);
-char    **ft_realloc_char(char **str);
-int     *ft_realloc_int(int *tab, char **str);
-#endif
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utiles_functions.h                                 :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 17:47:36 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 14:26:46 by otmallah         ###   ########.fr       */
+/*   Created: 2022/03/18 20:35:08 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/27 18:50:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILES_FUNCTIONS_H
-#define UTILES_FUNCTIONS_H
+#include "../shell.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+char	*ft_strchr(const char *str, int c)
+{
+	int		i;
+	char	*st;
 
-
-//unsigned int  ft_strlen(char *src);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strdup(const char *s1);
-char    **ft_realloc_char(char **str);
-int     *ft_realloc_int(int *tab, char **str);
-#endif
+	st = (char *)str;
+	i = 0;
+	while (st[i])
+	{
+		if (st[i] == (char)c)
+			return (st + i + 1);
+		i++;
+	}
+	if (st[i] == (char)c)
+		return (st + i);
+	return (NULL);
+}

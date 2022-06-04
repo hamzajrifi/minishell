@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utiles_functions.h                                 :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 17:47:36 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 14:26:46 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/20 19:03:34 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/31 18:05:49 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILES_FUNCTIONS_H
-#define UTILES_FUNCTIONS_H
+#include "../shell.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-
-//unsigned int  ft_strlen(char *src);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strdup(const char *s1);
-char    **ft_realloc_char(char **str);
-int     *ft_realloc_int(int *tab, char **str);
-#endif
+void	ft_putendl_fd(char *s,	int fd)
+{
+	if (s)
+	{
+		ft_putstr_fd(s, fd);
+		write (fd, "\n", 1);
+	}
+}

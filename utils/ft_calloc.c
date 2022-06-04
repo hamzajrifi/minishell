@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utiles_functions.h                                 :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 17:47:36 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 14:26:46 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/23 17:08:28 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/23 17:08:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILES_FUNCTIONS_H
-#define UTILES_FUNCTIONS_H
+#include "../shell.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void	*ft_calloc(size_t n, size_t c)
+{
+	void		*str;
+	size_t		i;
 
-
-//unsigned int  ft_strlen(char *src);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strdup(const char *s1);
-char    **ft_realloc_char(char **str);
-int     *ft_realloc_int(int *tab, char **str);
-#endif
+	i = 0;
+	str = malloc(n * c);
+	if (str == 0)
+		return (NULL);
+	while (i < (n * c))
+	{
+		((char *)str)[i] = 0;
+		i++;
+	}
+	return (str);
+}
