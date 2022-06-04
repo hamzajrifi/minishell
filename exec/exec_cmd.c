@@ -6,11 +6,21 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 15:25:47 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 16:53:44 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+
+int size_vl(char **str)
+{
+	int i = 0;
+
+	while (str[i])
+		i++;
+	return i;
+}
+
 
 void    ft_check_built(t_shell *mini, t_list *lst, int fd)
 {
@@ -20,9 +30,8 @@ void    ft_check_built(t_shell *mini, t_list *lst, int fd)
     {
         if (strcmp(lst->val[0], "export") == 0)
         {
-			printf("%s\n", lst->val[1]);
-            if (lst && lst->val[1] != NULL && lst->v_type[1] != 0)
-                ft_print_export(mini, lst->val, 1);
+            if (lst && size_vl(lst->val) > 1)
+				ft_print_export(mini, lst->val, 1);
             else
                 ft_print_export(mini, NULL, 1);
         }

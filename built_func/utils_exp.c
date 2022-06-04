@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_exp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
+/*   Updated: 2022/06/04 16:02:36 by otmallah         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../shell.h"
 
 void    ft_realloc(t_shell *index, char *str, int save)
@@ -35,7 +47,6 @@ void    ft_print(t_shell *index, int fd)
     {
         ft_putstr_fd("decalre -x ", fd);
         ft_putendl_fd(index->tab_save_env[i], fd);
-        //printf("declare -x %s\n", index->tab_save_env[i]);
         i++;
     }
     if (index->tab_save_exp)

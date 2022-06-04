@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:32:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 14:33:38 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 15:59:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ void	ft_print_export(t_shell *index, char **str, int fd)
 		i++;
 	}
 	i = 1;
+	if (!str)	
+		ft_print(index, fd);
 	if (str)
 	{
 		while (str[i])
@@ -167,6 +169,5 @@ void	ft_print_export(t_shell *index, char **str, int fd)
 			}
 		}
 	}
-	if (!str)
-		ft_print(index, fd);
+	
 }
