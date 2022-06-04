@@ -120,7 +120,7 @@ char	*check_var(lexer_t *lexer)
 		return (ft_strdup("$"));
 	else
 	{
-		while (lexer->c != '\0' && lexer->c != ' ' && lexer->c != '$' && lexer->c != '|' && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=')
+		while (lexer->c != '\0' && lexer->c != '\\' && lexer->c != ' ' && lexer->c != '$' && lexer->c != '|' && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=')
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
 			str = ft_strjoin(str, tmp);
@@ -149,7 +149,7 @@ void    check_backslash(lexer_t **lexer)
 
     c = (*lexer)->c;
     k = (*lexer)->src[(*lexer)->i + 1];
-    if (c == '\\' && (k == '\\' || k == '"' || k == '\'' || k == '$'))
+    if (c == '\\' && (k == '\\' || k == ';' || k == '"' || k == '\'' || k == '$' || k == '>' || k == '<'))
         lexer_advance(*lexer);
 }
 
@@ -164,7 +164,6 @@ token_t *lexer_collect_string(lexer_t *lexer)
     str = NULL;
     while(lexer->c && lexer->c != c)
     {
-
         if (lexer->c == '$' && c == '"')
         	str = ft_strjoin(str, check_var(lexer));
         else
@@ -179,10 +178,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
     while (!lexer->c); // error [']
     lexer_advance(lexer);
     if (check_lexer_c(lexer->c))
-    {
-        puts("here");
         str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
-    }
     else if (lexer->c == '\'' || lexer->c == '"')
         str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
     return (init_token(t_args, str));
