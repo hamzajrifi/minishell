@@ -57,7 +57,6 @@ token_t *lexer_get_next_token(lexer_t *lexer)
         else if (lexer->c == '|')
         {
             int i = lexer->i + 1;
-            printf("c = %c\n", lexer->src[lexer->i]);
             while (lexer->src[i] == ' ')// error [  |  ]
                 i++;
             while (!lexer->src[i]);
@@ -180,7 +179,12 @@ token_t *lexer_collect_string(lexer_t *lexer)
     while (!lexer->c); // error [']
     lexer_advance(lexer);
     if (check_lexer_c(lexer->c))
+    {
+        puts("here");
         str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
+    }
+    else if (lexer->c == '\'' || lexer->c == '"')
+        str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
     return (init_token(t_args, str));
 }
 

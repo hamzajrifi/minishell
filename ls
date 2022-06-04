@@ -1,0 +1,15 @@
+functions
+header
+ls
+main.c
+main.o
+Makefile
+mini.a
+mini.c
+mini.o
+minishell
+parser.c
+parser.o
+TODO
+utiles_functions.o
+/home/lcom/Desktop/proget/minishell
