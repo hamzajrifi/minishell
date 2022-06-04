@@ -46,8 +46,6 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
 
     i = 1;
     *token = lexer_get_next_token(lexer);
-    if ((*token) && (*token)->type == t_error)
-        printf("Error\n");
     while (*token && (*token)->type == t_args)
     {
         lst->val =  ft_realloc_char(lst->val); /// return str 
@@ -60,15 +58,9 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
         lst->v_type[1] = t_end;
     else if (i > 1 && lst->v_type[0] == 8)
         lst->v_type[1] = t_file;
-    if ((*token) && (*token)->type == t_error)
-        printf("Error\n");
     return (lst);
 }
-t_list    *print_error(char *str)
-{
-    printf("%s\n",str);
-    return (NULL);
-}
+
 
 t_list  *ft_parser(char *src)
 {
@@ -82,8 +74,6 @@ t_list  *ft_parser(char *src)
     lst = NULL;
     if (token)
         lst = add_node_in_lst(token->val, token->type, lst);
-    if(token->type == t_error)
-        return (print_error("Error"));
     head = lst;
     while(token)
     {

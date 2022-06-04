@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 18:10:56 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:48:39 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,18 @@ void    checksignal(int nbr)
 
 int     finder_red(t_list *list)
 {
-    if (list && list->v_type[0] == 11)
-        return 1;
-    else if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
-        return 2;
-    else if (list && list->v_type[0] == 3)
-        return 4;
+    while (list)
+    {
+        if (list && list->v_type[0] == 11)
+            return 1;
+        else if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
+            return 2;
+        else if (list && list->v_type[0] == 8)
+            return 3;
+        else if (list && list->v_type[0] == 3)
+            return 4;
+        list = list->next;
+    }
     return 0;
 }
 
@@ -37,31 +43,10 @@ int check_herd(t_shell *mini, t_list *list)
     }
     else if (list->v_type[0] == 1 && list->next && list->next->v_type[0] == 3)
     {
+        puts("hana");
         heredoc(mini, list);
     }
     return 0;
-}
-
-
-void    ft_mini_parser(t_shell *mini, char *src)
-{
-    t_list *lst;
-    int     i;
-    lst = ft_parser(src);
-
-    while(lst)
-    {
-        i = 0;
-            puts("----- node struct-----");
-        while ( lst->v_type[i] != 0 && lst->val[i])
-        {
-            printf("lst = %s , value = %d\n", lst->val[i], lst->v_type[i]);
-            i++;
-        }
-        lst =lst->next;
-    }
-    return ;
-    check_herd(mini, lst);
 }
 
 void    ft_mini(t_shell *mini, char *src)
@@ -73,13 +58,14 @@ void    ft_mini(t_shell *mini, char *src)
     i = 0;
     if (!lst)
         return;
-    
-    else if (finder_red(lst->next) == 2)
+    else if (finder_red(lst) == 2)
        ft_redirection(mini, lst);
-    else if (finder_red(lst->next) == 4)
+    else if (finder_red(lst) == 4)
         check_herd(mini, lst);
-    else if (finder_red(lst->next) == 1)
+    else if (finder_red(lst) == 1)
         pipes(mini, lst);
+    else if (finder_red(lst) == 3)
+        ft_redin(mini, lst);
     else 
        ft_check_built(mini, lst, 1);
 }
@@ -97,12 +83,9 @@ int main(int ac, char **av, char **env)
     while(1337)
     {
         src = readline("mimishell : ");
-        if (src != NULL && src[0])
-        {
-            ft_mini_parser(&mini, src);
-            add_history(src);
-            free(src);
-        }
+        ft_mini(&mini, src);
+        add_history(src);
+        free(src);
     }
     return (0);
 }

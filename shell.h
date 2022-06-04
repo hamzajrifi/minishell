@@ -45,6 +45,7 @@ int	ft_strcmp(char *s1, char *s2);
 int	ft_isdigit(int c);
 
 
+int check_herd(t_shell *mini, t_list *list);
 void    pipes(t_shell *mini, t_list *list);
 int     len(char *str);
 void    ft_print(t_shell *index, int fd);
@@ -75,6 +76,7 @@ char **ft_parse(char *str);
 int find_both(char *str);
 void    ft_both(t_shell *mini, char *str);
 void    ft_wildcars(t_shell *mini, char *str);
+void    ft_redin(t_shell *mini, t_list *lst);
 
 // exit
 

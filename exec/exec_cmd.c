@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 16:53:44 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:37:46 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 	else
 	{
 		write(2, lst->val[0], ft_strlen(lst->val[0]));
-		write (2, " :command not2 found\n", 21);
+		write (2, " :command not found\n", 20);
 		exit(0);
 	}
 }
@@ -180,7 +180,7 @@ char	*check_path_if_exi(t_shell *mini)
 		}
 		i++;
 	}
-	if (mini->tab_save_exp)
+	if (mini->tab_save_exp && mini->tab_save_exp[0] != NULL)
 	{
 		i = 0;
 		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
