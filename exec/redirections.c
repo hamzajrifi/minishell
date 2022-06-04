@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 21:32:49 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 21:37:33 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,26 @@ void    ft_redin(t_shell *mini, t_list *lst)
 
     fd_in = 0;
     fd_out = 1;
-    puts("hna");
     if (lst->v_type[0] == 1)
     {
         fd_in = open(lst->next->next->val[0], O_RDONLY);
-        if (lst->next->next->next && lst->next->next->next->v_type[0] == 6)
-            fd_out = open_all_files(lst->next);
-        if (fork() == 0)
+        if (fd_in < 0)
+            perror(NULL);
+        else
         {
-            dup2(fd_in, 0);
-            dup2(fd_out, 1);
-            exec_cmd(mini, lst);
-            exit(1);
+            if (lst->next->next->next && lst->next->next->next->v_type[0] == 6)
+                fd_out = open_all_files(lst->next);
+            if (fork() == 0)
+            {
+                dup2(fd_in, 0);
+                dup2(fd_out, 1);
+                exec_cmd(mini, lst);
+                exit(1);
+            }
+            close(fd_in);
+            if (fd_out != 1)
+                close(fd_out);
+            wait(NULL);
         }
-        close(fd_in);
-        //close(fd_out);
-        wait(NULL);
     }   
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:13:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 21:27:55 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/04 21:39:18 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,17 @@ void    heredoc(t_shell *mini, t_list *list)
 	int out;
 
 	out = 1;
-	fd = 0;
-	while (list)
+	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
+	if (list && list->next->next && list->next->next->v_type[0] == 6)
+		out = open_all_files(list->next->next); 
+	while (1)
 	{
-		puts("hana");
-		if (fd == 0)
-			fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
-		if (list && list->next->next && list->next->next->v_type[0] == 6)
-			out = open_all_files(list->next->next); 
-		while (1)
-		{
-			find = readline(">2");
-			if (find == NULL)
-				break ;
-			if (strcmp(find, list->next->val[1]) == 0)
-				break;
-			ft_putendl_fd(find, fd);
-		}
-		if (list && list->next->v_type[0] == 3)
-		{
-			list = list->next;
-			puts("heeee");
-		}
-		else
+		find = readline(">");
+		if (find == NULL)
+			break ;
+		if (strcmp(find, list->next->val[1]) == 0)
 			break;
+		ft_putendl_fd(find, fd);
 	}
 	close(fd);
 	fd = open("/tmp/test", O_CREAT | O_RDWR, 0644);
