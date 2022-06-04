@@ -42,6 +42,28 @@ int check_herd(t_shell *mini, t_list *list)
     return 0;
 }
 
+
+void    ft_mini_parser(t_shell *mini, char *src)
+{
+    t_list *lst;
+    int     i;
+    lst = ft_parser(src);
+
+    while(lst)
+    {
+        i = 0;
+            puts("----- node struct-----");
+        while ( lst->v_type[i] != 0 && lst->val[i])
+        {
+            printf("lst = %s , value = %d\n", lst->val[i], lst->v_type[i]);
+            i++;
+        }
+        lst =lst->next;
+    }
+    return ;
+    check_herd(mini, lst);
+}
+
 void    ft_mini(t_shell *mini, char *src)
 {
     t_list *lst;
@@ -51,6 +73,7 @@ void    ft_mini(t_shell *mini, char *src)
     i = 0;
     if (!lst)
         return;
+    
     else if (finder_red(lst->next) == 2)
        ft_redirection(mini, lst);
     else if (finder_red(lst->next) == 4)
@@ -76,7 +99,7 @@ int main(int ac, char **av, char **env)
         src = readline("mimishell : ");
         if (src != NULL && src[0])
         {
-            ft_mini(&mini, src);
+            ft_mini_parser(&mini, src);
             add_history(src);
             free(src);
         }

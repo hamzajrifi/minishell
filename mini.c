@@ -175,7 +175,8 @@ token_t *lexer_collect_string(lexer_t *lexer)
             lexer_advance(lexer);
         }
     }
-    while (!lexer->c); // error [']
+    if (!lexer->c) // error [']
+        return (init_token(t_error, NULL));
     lexer_advance(lexer);
     if (check_lexer_c(lexer->c))
         str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
@@ -203,6 +204,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
         	lexer_advance(lexer);
         	while (lexer->c == '"' ||lexer->c == '\'')
                 str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+            
 		}
     }
     return (init_token(t_args, str));
