@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 20:48:39 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:41:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int check_herd(t_shell *mini, t_list *list)
     }
     else if (list->v_type[0] == 1 && list->next && list->next->v_type[0] == 3)
     {
-        puts("hana");
         heredoc(mini, list);
     }
     return 0;
@@ -56,6 +55,11 @@ void    ft_mini(t_shell *mini, char *src)
     lst = ft_parser(src);
     
     i = 0;
+    // while (lst)
+    // {
+    //     printf("%s -- %s\n" , lst->val[0] , lst->val[1]);
+    //     lst = lst->next;
+    // }
     if (!lst)
         return;
     else if (finder_red(lst) == 2)

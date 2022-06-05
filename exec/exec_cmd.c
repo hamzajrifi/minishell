@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 18:37:46 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:50:00 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int size_vl(char **str)
 		i++;
 	return i;
 }
-
 
 void    ft_check_built(t_shell *mini, t_list *lst, int fd)
 {
@@ -58,6 +57,8 @@ void    ft_check_built(t_shell *mini, t_list *lst, int fd)
             else
                 ft_cd(NULL, mini);
         }
+		else if (ft_strcmp(lst->val[0], "echo") == 0)
+			ft_echo(mini, lst->val, fd);
         else
         {
             if (fork() == 0)

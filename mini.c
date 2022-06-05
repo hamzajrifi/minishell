@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 18:12:56 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:45:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,13 +175,22 @@ token_t *lexer_collect_string(lexer_t *lexer)
             lexer_advance(lexer);
         }
     }
-    while (!lexer->c); // error [']
-    lexer_advance(lexer);
-    if (check_lexer_c(lexer->c))
-        str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
-    else if (lexer->c == '\'' || lexer->c == '"')
-        str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+    while (!lexer->c)
+    {
+        puts("error");
+        break;
+    }
+    if (lexer->c)
+    {
+        lexer_advance(lexer);
+        if (check_lexer_c(lexer->c))
+            str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
+        else if (lexer->c == '\'' || lexer->c == '"')
+            str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+        
     return (init_token(t_args, str));
+    }
+    return (NULL);
 }
 
 token_t *lexer_collect_arg(lexer_t *lexer)

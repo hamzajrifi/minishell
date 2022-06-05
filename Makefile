@@ -25,6 +25,8 @@ C_FILES =	main.c\
 			utils/ft_substr.c\
 			utils/all_func.c\
 			utils/ft_strcmp.c\
+			utils/ft_itoa.c\
+			utils/ft_calloc.c\
 			exec/heredoc.c\
 			mini.c
 
@@ -37,9 +39,9 @@ OBJ = $(C_FILES:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(HDR) $(OBJ)
-			$(CC) $(FLAG) -c $(C_FILES)
+			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC) $(FLAG) -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
+			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
 
 clean :	
 		rm -f *.o functions/*.o
