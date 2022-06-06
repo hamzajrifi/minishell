@@ -24,12 +24,12 @@ int     finder_red(t_list *list)
     {
         if (list && list->v_type[0] == 11)
             return 1;
-        else if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
-            return 2;
-        else if (list && list->v_type[0] == 8)
-            return 3;
-        else if (list && list->v_type[0] == 3)
-            return 4;
+        // else if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
+        //     return 2;
+        // else if (list && list->v_type[0] == 8)
+        //     return 3;
+        // else if (list && list->v_type[0] == 3)
+        //     return 4;
         list = list->next;
     }
     return 0;
@@ -65,14 +65,17 @@ void    ft_mini(t_shell *mini, char *src)
     lst = head;
     if (!lst)
         return;
-    else if (finder_red(lst) == 2)
-       ft_redirection(mini, lst, 0);
-    else if (finder_red(lst) == 4)
-        check_herd(mini, lst);
     else if (finder_red(lst) == 1)
+    {
+        puts("hana");
         pipes(mini, lst);
-    else if (finder_red(lst) == 3)
-        ft_redin(mini, lst);
+    }
+    // else if (finder_red(lst) == 2)
+    //    ft_redirection(mini, lst, 0);
+    // else if (finder_red(lst) == 4)
+    //     check_herd(mini, lst);
+    // else if (finder_red(lst) == 3)
+    //     ft_redin(mini, lst);
     else 
        ft_check_built(mini, lst, 1);
 }

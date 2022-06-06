@@ -33,7 +33,7 @@ typedef struct token_struct
     enum {
         t_command = 1,
         t_args = 2,
-        t_herdoc = 3,
+        t_heredoc = 3,
         t_append = 4,
         t_file = 5,
         t_output = 8,
@@ -68,6 +68,7 @@ token_t *init_token(int t_type, char *val);
 //// parser
 
 t_list  *ft_parser(char *src);
+t_list    *print_error(char *str);
 
 #endif
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:12 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/05 22:08:12 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:20:35 by hjrifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
 
     i = 1;
     *token = lexer_get_next_token(lexer);
+    if ((*token) && (*token)->type == t_error)
+        return (print_error("minishell: syntax error 1"));
     while (*token && (*token)->type == t_args)
     {
         lst->val =  ft_realloc_char(lst->val); /// return str 
@@ -56,11 +58,18 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
     }
     if (i > 1 && lst->v_type[0] == 3)
         lst->v_type[1] = t_end;
-    else if (i > 1 && lst->v_type[0] == 8)
+    else if (i > 1 && lst->v_type[0] == t_output)
         lst->v_type[1] = t_file;
+    if ((*token) && (*token)->type == t_error)
+        return (print_error("minishell: syntax error 2"));
     return (lst);
 }
 
+t_list    *print_error(char *str)
+{
+    printf("%s\n",str);
+    return (NULL);
+}
 
 t_list  *ft_parser(char *src)
 {
@@ -74,11 +83,13 @@ t_list  *ft_parser(char *src)
     lst = NULL;
     if (token)
         lst = add_node_in_lst(token->val, token->type, lst);
+    if(token && token->type == t_error)
+        return (print_error("minishell: syntax error 3"));
     head = lst;
-    while(token)
+    while(token && token->type != t_error)
     {
         lst = ft_check_parser(&token, lexer, lst);
-        if (token)
+        if (token && lst)
         {
             lst = add_node_in_lst(token->val, token->type, head);
             if (token->type > t_output && token->type <= t_error )

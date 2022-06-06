@@ -19,10 +19,13 @@ int     num_of_cmd(t_list *list)
 	count = 0;
 	while (list)
 	{
-		if (list->val)
+		if (list->v_type[0] == 1)
+		{
+			printf("%s\n", list->val[0]);
 			count++;
+		}
 		if (list->next)
-			list = list->next->next;
+			list = list->next;
 		else 
 			break;
 	}
@@ -49,7 +52,8 @@ void    pipes(t_shell *mini, t_list *list)
 	int id;
 
 	num_cmd = num_of_cmd(list);
-	exec_first(mini, list);
+	//printf("num = %d\n", num_cmd);
+	//exec_first(mini, list);
 	//exit(0);
 	i = 0;
 	temp_fd = 0;
@@ -57,48 +61,71 @@ void    pipes(t_shell *mini, t_list *list)
 	{
 		if (pipe(fd) < 0)
 			perror("pipe");
-		if (list->next && list->next->v_type[0] != 1)
-		{
-			puts("hana");
-			if(list->next)
-				list = list->next->next;
-		}
 		id = fork();
 		if (id == 0)
 		{
 			if (i == 0)
 			{
 				close(fd[0]);
-				dup2(fd[1], 1);
-				if (ft_strcmp(list->val[0], "exit") != 0)
+				if (list->next && list->next->v_type[0] == 6)
+				{
+					close(fd[1]);
+					ft_redirection(mini, list, 1);
+				}
+				else if (ft_strcmp(list->val[0], "exit") != 0)
+				{
+					dup2(fd[1], 1);
 					ft_check_built(mini, list, 1);
+				}
 			}
 			else if (i == (num_cmd - 1))
 			{
 				close(fd[0]);
 				close(fd[1]);
 				dup2(temp_fd, 0);
-				if (ft_strcmp(list->val[0], "exit") != 0)
+				if (list->next && list->next->v_type[0] == 6)
+				{
+					ft_redirection(mini, list, 1);
+				}
+				else if (ft_strcmp(list->val[0], "exit") != 0)	
+				{
+					dup2(temp_fd, 0);
 					ft_check_built(mini, list, 1);
+				}
 			}
 			else
 			{
 				close(fd[0]);
-				dup2(temp_fd, 0);
-				dup2(fd[1], 1);
-				if (ft_strcmp(list->val[0], "exit") != 0)
+				if (list->next && list->next->v_type[0] == 6)
+				{
+					close(fd[1]);
+					dup2(temp_fd, 0);
+					ft_redirection(mini, list, 1);
+				}
+				else if (ft_strcmp(list->val[0], "exit") != 0)
+				{
+					dup2(temp_fd, 0);
+					dup2(fd[1], 1);
 					ft_check_built(mini, list, 1);
+				}
 			}
 			exit(0);
 		}
 		saver[i] = id;
+		//if (list->next && list->next->v_type[0] != 6)
 		temp_fd = dup(fd[0]);
+		printf("%d\n", temp_fd);
 		close(fd[0]);
 		close(fd[1]);
-		if (list->next)
+		if (list->next && list->next->v_type[0] == 6 && list->next->next)
+			list = list->next->next->next;
+		else if (list->next)
+		{
+			puts("hana");
 			list = list->next->next;
+		}
 		i++;
 	}
-	while(--i >= 0)
+	while (--i >= 0)
 		waitpid(saver[i], 0, 0);
 }

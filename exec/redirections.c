@@ -33,16 +33,27 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a)
     int id;
 
     fd = open_all_files(lst);
-    id = fork();
-    if (id == 0)
+    if (a != 1)
     {
-        dup2(fd, STDOUT_FILENO);
-        ft_check_built(mini, lst, fd);
-        //if (a != 1)
-        exit(1);
+        id = fork();
+        if (id == 0)
+        {
+            dup2(fd, STDOUT_FILENO);
+            ft_check_built(mini, lst, fd);
+            //if (a != 1)
+            exit(1);
+        }
+        close(fd);
+        wait(NULL);
     }
-    close(fd);
-    wait(NULL);
+    else
+    {
+        printf("yaaat  = %s\n", lst->next->val[1]);
+       if (dup2(fd, 1) > 0)
+            puts("khasraate");
+        ft_check_built(mini, lst, fd);
+        close(fd);
+    }
 }
 
 void    ft_redin(t_shell *mini, t_list *lst)

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/05 20:49:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:45:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,35 +52,39 @@ token_t *lexer_get_next_token(lexer_t *lexer)
 		else if (lexer->c == '|' && lexer->src[lexer->i + 1] == '|')
         {
             lexer_advance(lexer);
-            return (lexer_advance_with_token(lexer , init_token(t_or, ft_strdup("||"))));
+			lexer_advance(lexer);
+           	return (init_token(t_error, NULL));
+            // return (lexer_advance_with_token(lexer , init_token(t_or, ft_strdup("||"))));
         }
         else if (lexer->c == '|')
         {
-            //int i = lexer->i + 1;
-            //while (lexer->src[i] == ' ')// error [  |  ]
-            //    i++;
-            //while (!lexer->src[i]);
-            //if(lexer->c == '|')
-            //{
-            //    printf("minishell: syntax error near unexpected token `|'\n");
-            //    return (NULL);
-            //}
-            return (lexer_advance_with_token(lexer , init_token(t_pip, lexer_get_current_char_as_string(lexer))));
+            int i = lexer->i + 1;
+            while (lexer->src[i] == ' ')// error [  |  ]
+                i++;
+           	if(!lexer->src[i]  || lexer->src[i] == '|')
+			{
+            	lexer_skip_whitespace(lexer);
+				lexer_advance(lexer);
+           	    return (init_token(t_error, NULL));
+			}
+            return (lexer_advance_with_token(lexer, init_token(t_pip, lexer_get_current_char_as_string(lexer))));
         }
         else if (lexer->c == '<' && lexer->src[lexer->i + 1] == '<')
         {
             lexer_advance(lexer);
-            return (lexer_advance_with_token(lexer , init_token(t_herdoc, ft_strdup("<<"))));
+            return (lexer_advance_with_token(lexer, init_token(t_heredoc, ft_strdup("<<"))));
         }
         else if (lexer->c == '>' && lexer->src[lexer->i + 1] == '>')
         {
             lexer_advance(lexer);
-            return (lexer_advance_with_token(lexer , init_token(t_append, ft_strdup(">>"))));
+            return (lexer_advance_with_token(lexer, init_token(t_append, ft_strdup(">>"))));
         }
         else if (lexer->c == '&' && lexer->src[lexer->i + 1] == '&')
         {
             lexer_advance(lexer);
-            return (lexer_advance_with_token(lexer , init_token(t_and, ft_strdup("&&"))));
+			lexer_advance(lexer);
+           	return (init_token(t_error, NULL));
+            // return (lexer_advance_with_token(lexer , init_token(t_and, ft_strdup("&&"))));
         }
         else if (lexer->c == '>')
             return (lexer_advance_with_token(lexer , init_token(t_input, lexer_get_current_char_as_string(lexer))));
@@ -116,11 +120,19 @@ char	*check_var(lexer_t *lexer)
 
 	str = NULL;
 	lexer_advance(lexer);
-	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|')
+	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|' || lexer->c == '=')
 		return (ft_strdup("$"));
+    else if ((lexer->c >= '0' && lexer->c <= '9') || lexer->c == '*')
+    {
+		lexer_advance(lexer);
+	    return (ft_strdup(""));
+	}
 	else
 	{
-		while (lexer->c != '\0' && lexer->c != '\\' && lexer->c != ' ' && lexer->c != '$' && lexer->c != '|' && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=')
+		while (lexer->c != '\0' && lexer->c != '\\' 
+            && lexer->c != ' ' && lexer->c != '$' && lexer->c != '|' 
+            && lexer->c != '"' && lexer->c != '\''  && lexer->c != '='
+			)
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
 			str = ft_strjoin(str, tmp);
@@ -162,6 +174,11 @@ token_t *lexer_collect_string(lexer_t *lexer)
     c = lexer->c;
     lexer_advance(lexer);
     str = NULL;
+    if (lexer->c == c && (lexer->src[lexer->i + 1] == '\0' || lexer->src[lexer->i + 1] == ' '))
+    {
+        lexer_advance(lexer);
+        return (init_token(t_args, ft_strdup("")));
+    }
     while(lexer->c && lexer->c != c)
     {
         if (lexer->c == '$' && c == '"')
@@ -175,22 +192,14 @@ token_t *lexer_collect_string(lexer_t *lexer)
             lexer_advance(lexer);
         }
     }
-    while (!lexer->c)
-    {
-        puts("error");
-        break;
-    }
-    if (lexer->c)
-    {
-        lexer_advance(lexer);
-        if (check_lexer_c(lexer->c))
-            str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
-        else if (lexer->c == '\'' || lexer->c == '"')
-            str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
-        
+    if (!lexer->c) // error [']
+        return (init_token(t_error, NULL));
+    lexer_advance(lexer);
+    if (check_lexer_c(lexer->c))
+        str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
+    else if (lexer->c == '\'' || lexer->c == '"')
+        str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
     return (init_token(t_args, str));
-    }
-    return (NULL);
 }
 
 token_t *lexer_collect_arg(lexer_t *lexer)
@@ -199,7 +208,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
     char    *str;
 
     str = NULL;
-    while(lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|' )
+    while(lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|' && lexer->c != '>' && lexer->c != '<')
     {
 		if (lexer->c == '$')
         	str = ft_strjoin(str, check_var(lexer));
