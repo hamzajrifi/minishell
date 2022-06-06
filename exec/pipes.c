@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/06 16:50:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:01:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void    exec_first(t_shell *mini, t_list *list)
 {
     while (list)
     {
-        if (list->next && list->next->v_type[0] == 6)
-			ft_redirection(mini, list, 1);
-		list = list->next->next;
+        if (list->next && list->v_type[0] == 3)
+			heredoc(mini, list);
+		list = list->next;
     }
 }
 
@@ -52,15 +52,11 @@ void    pipes(t_shell *mini, t_list *list)
 	int id;
 
 	num_cmd = num_of_cmd(list);
-	//printf("num = %d\n", num_cmd);
-	//exec_first(mini, list);
-	//exit(0);
+	exec_first(mini, list);
 	i = 0;
 	temp_fd = 0;
 	while (i < num_cmd && list)
 	{
-		puts("hhahahahahahahahahaha");
-
 		if (pipe(fd) < 0)
 			perror("pipe");
 		id = fork();
@@ -114,25 +110,17 @@ void    pipes(t_shell *mini, t_list *list)
 			exit(0);
 		}
 		saver[i] = id;
-		//if (list->next && list->next->v_type[0] != 6)
 		temp_fd = dup(fd[0]);
-		//printf("%d\n", temp_fd);
 		close(fd[0]);
 		close(fd[1]);
-		if (list && list->next && list->next->v_type[0] == 6 && list->next->next)
+		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8) && list->next->next)
 		{
 			while (list && list->next && list->v_type[0] != 11 )
-			{
-				puts("hana");
 				list = list->next;
-			}
 			list = list->next;
 		}
 		else if (list->next)
-		{
-			//puts("hana");
 			list = list->next->next;
-		}
 		i++;
 	}
 	while (--i >= 0)

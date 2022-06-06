@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/06 15:46:03 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:53:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,27 @@ void    checksignal(int nbr)
         exit(1);
 }
 
+int finde_her(t_list *lis)
+{
+    while (lis)
+    {
+        if (lis->v_type[0] == 11)
+            return 1;
+        lis = lis->next;  
+    }
+    return  0;
+}
+
 int     finder_red(t_list *list)
 {
     while (list)
     {
-        if (list && list->v_type[0] == 11)
-            return 1;
-        // else if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
-        //     return 2;
-        // else if (list && list->v_type[0] == 8)
-        //     return 3;
-        // else if (list && list->v_type[0] == 3)
-        //     return 4;
+        if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
+            return 2;
+        else if (list && list->v_type[0] == 8)
+            return 3;
+        else if (list && list->v_type[0] == 3)
+            return 4;
         list = list->next;
     }
     return 0;
@@ -55,7 +64,6 @@ void    ft_mini(t_shell *mini, char *src)
     int     i;
     lst = ft_parser(src);
     
-    
     // head = lst;
     // while (lst)
     // {
@@ -69,11 +77,8 @@ void    ft_mini(t_shell *mini, char *src)
     // lst = head;
     if (!lst)
         return;
-    else if (finder_red(lst) == 1)
-    {
-        // puts("hana");
+    else if (finde_her(lst) == 1)
         pipes(mini, lst);
-    }
     else if (finder_red(lst) == 2)
        ft_redirection(mini, lst, 0);
     else if (finder_red(lst) == 4)

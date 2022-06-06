@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 16:02:36 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:37:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int     len(char *str)
     }
     return (0);
 }
-
 
 int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 {
