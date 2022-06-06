@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/05 22:19:54 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:46:03 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,32 @@ void    ft_mini(t_shell *mini, char *src)
     lst = ft_parser(src);
     
     
-    head = lst;
-    while (lst)
-    {
-        i = 1;
-        printf("%s ---\n" , lst->val[0]);
-        while (lst->val[i])
-            printf("%s | " , lst->val[i++]);
-        printf("\n");
-            lst = lst->next;
-    }
-    // lst = head;
-    // if (!lst)
-    //     return;
-    // else if (finder_red(lst) == 1)
+    // head = lst;
+    // while (lst)
     // {
-    //     // puts("hana");
-    //     pipes(mini, lst);
+    //     i = 1;
+    //     printf("%s ---\n" , lst->val[0]);
+    //     while (lst->val[i])
+    //         printf("%s | " , lst->val[i++]);
+    //     printf("\n");
+    //         lst = lst->next;
     // }
-    // else if (finder_red(lst) == 2)
-    //    ft_redirection(mini, lst, 0);
-    // else if (finder_red(lst) == 4)
-    //     check_herd(mini, lst);
-    // else if (finder_red(lst) == 3)
-    //     ft_redin(mini, lst);
-    // else 
-    //    ft_check_built(mini, lst, 1);
+    // lst = head;
+    if (!lst)
+        return;
+    else if (finder_red(lst) == 1)
+    {
+        // puts("hana");
+        pipes(mini, lst);
+    }
+    else if (finder_red(lst) == 2)
+       ft_redirection(mini, lst, 0);
+    else if (finder_red(lst) == 4)
+        check_herd(mini, lst);
+    else if (finder_red(lst) == 3)
+        ft_redin(mini, lst);
+    else 
+       ft_check_built(mini, lst, 1);
 }
 
 int main(int ac, char **av, char **env)

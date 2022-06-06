@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/05 22:18:42 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:25:34 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int     open_all_files(t_list *list)
 {
     int fd;
 
-    while (list)
+    while (list && list->v_type[0] != 11)
     {
         if (list->v_type[0] == 6)
             fd = open(list->val[1], O_CREAT | O_RDWR | O_TRUNC , 0644);
@@ -48,9 +48,7 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a)
     }
     else
     {
-        printf("yaaat  = %s\n", lst->next->val[1]);
-       if (dup2(fd, 1) > 0)
-            puts("khasraate");
+        dup2(fd, 1);
         ft_check_built(mini, lst, fd);
         close(fd);
     }

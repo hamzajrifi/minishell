@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/05 22:17:38 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:50:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int     num_of_cmd(t_list *list)
 	{
 		if (list->v_type[0] == 1)
 		{
-			printf("%s\n", list->val[0]);
+			//printf("%s\n", list->val[0]);
 			count++;
 		}
 		if (list->next)
@@ -59,6 +59,8 @@ void    pipes(t_shell *mini, t_list *list)
 	temp_fd = 0;
 	while (i < num_cmd && list)
 	{
+		puts("hhahahahahahahahahaha");
+
 		if (pipe(fd) < 0)
 			perror("pipe");
 		id = fork();
@@ -114,14 +116,21 @@ void    pipes(t_shell *mini, t_list *list)
 		saver[i] = id;
 		//if (list->next && list->next->v_type[0] != 6)
 		temp_fd = dup(fd[0]);
-		printf("%d\n", temp_fd);
+		//printf("%d\n", temp_fd);
 		close(fd[0]);
 		close(fd[1]);
-		if (list->next && list->next->v_type[0] == 6 && list->next->next)
-			list = list->next->next->next;
+		if (list && list->next && list->next->v_type[0] == 6 && list->next->next)
+		{
+			while (list && list->next && list->v_type[0] != 11 )
+			{
+				puts("hana");
+				list = list->next;
+			}
+			list = list->next;
+		}
 		else if (list->next)
 		{
-			puts("hana");
+			//puts("hana");
 			list = list->next->next;
 		}
 		i++;
