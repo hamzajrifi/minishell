@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/05 18:41:31 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/05 22:19:54 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,22 @@ int check_herd(t_shell *mini, t_list *list)
 void    ft_mini(t_shell *mini, char *src)
 {
     t_list *lst;
+    t_list *head;
     int     i;
     lst = ft_parser(src);
     
     i = 0;
-    // while (lst)
-    // {
-    //     printf("%s -- %s\n" , lst->val[0] , lst->val[1]);
-    //     lst = lst->next;
-    // }
+    head = lst;
+    while (lst)
+    {
+        printf("%s -- %s\n" , lst->val[0] , lst->val[1]);
+        lst = lst->next;
+    }
+    lst = head;
     if (!lst)
         return;
     else if (finder_red(lst) == 2)
-       ft_redirection(mini, lst);
+       ft_redirection(mini, lst, 0);
     else if (finder_red(lst) == 4)
         check_herd(mini, lst);
     else if (finder_red(lst) == 1)

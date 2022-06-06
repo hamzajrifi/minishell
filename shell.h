@@ -60,7 +60,7 @@ void	ft_check_cmd(t_shell *mini, t_list *list);
 char	*check_path_if_exi(t_shell *mini);
 void    ft_echo(t_shell *mini, char **str, int fd);
 void    ft_check_built(t_shell *mini, t_list *lst, int fd);
-void    ft_redirection(t_shell *mini, t_list *lst);
+void    ft_redirection(t_shell *mini, t_list *lst, int a);
 int     checker(char *str);
 int     finder(char *str);
 int     find_pipe(char *str);

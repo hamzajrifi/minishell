@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:12 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/31 13:20:35 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/05 22:08:12 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_list  *ft_parser(char *src)
         if (token)
         {
             lst = add_node_in_lst(token->val, token->type, head);
-            if (token->type > t_input && token->type <= t_error )
+            if (token->type > t_output && token->type <= t_error )
             {
                 token = lexer_get_next_token(lexer);
                 lst = add_node_in_lst(token->val, token->type, head);
