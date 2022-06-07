@@ -77,18 +77,24 @@ void    ft_redin(t_shell *mini, t_list *lst)
     fd_out = 1;
     if (lst->v_type[0] == 1)
     {
-       // printf("%s\n", lst->val[1])
        lst = lst->next;
+       printf("%s\n", lst->val[1]);
         while (lst && lst->v_type[0] == 8)
         {
+            puts("hana");
             fd_in = open(lst->val[1], O_RDONLY, 0444);
             if (fd_in < 0)
             {
                 fd_in = 0;
                 perror(NULL);
+                break;
             }
-            lst = lst->next;
+            if (lst->next)
+                lst = lst->next;
+            else
+                break;
         }
+        puts("hana");
         if (fd_in != 0)
         {
             if (lst->v_type[0] == 6)
@@ -109,8 +115,24 @@ void    ft_redin(t_shell *mini, t_list *lst)
     }
     else
     {
-        fd_in = open(lst->val[1], O_RDONLY);
-        if (fd_in < 0)
-            perror(NULL);
+        while (lst && lst->v_type[0] == 8)
+        {
+
+            fd_in = open(lst->val[1], O_RDONLY);
+            if (fd_in < 0)
+            {
+                fd_in = 0;
+                perror(NULL);
+            }
+            if (lst->next)
+                lst = lst->next;
+            else
+                break;
+        }
+        if (fd_in != 0)
+        {
+            if (lst->v_type[0] == 6)
+                open_all_files(lst);
+        }
     } 
 }
