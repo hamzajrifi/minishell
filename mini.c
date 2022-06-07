@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/05 16:45:45 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:01:39 by hjrifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ lexer_t *init_lexer(char *src)
     lexer_t *lexer ;
     
     lexer = malloc(sizeof(lexer_t));
-    
     lexer->src = src;
     lexer->i = 0;
     lexer->c = src[lexer->i];
@@ -165,6 +164,20 @@ void    check_backslash(lexer_t **lexer)
         lexer_advance(*lexer);
 }
 
+char	*check_arg_dollar(lexer_t *lexer, char *str, char c)
+{
+	str = ft_strjoin(str, check_var(lexer));
+
+	if (c == '"')
+		return (str);
+	if (lexer->c == '"')
+	{
+		str = ft_strjoin(str, lexer_collect_string(lexer)->val);
+		lexer->c = '"';
+	}
+	return (str);
+}
+
 token_t *lexer_collect_string(lexer_t *lexer)
 {
     char    *tmp;
@@ -182,8 +195,8 @@ token_t *lexer_collect_string(lexer_t *lexer)
     while(lexer->c && lexer->c != c)
     {
         if (lexer->c == '$' && c == '"')
-        	str = ft_strjoin(str, check_var(lexer));
-        else
+			str = check_arg_dollar(lexer, str, c);
+		else
         {
             check_backslash(&lexer);
             tmp = lexer_get_current_char_as_string(lexer);
@@ -198,7 +211,13 @@ token_t *lexer_collect_string(lexer_t *lexer)
     if (check_lexer_c(lexer->c))
         str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
     else if (lexer->c == '\'' || lexer->c == '"')
-        str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+    {
+        tmp = (lexer_collect_string(lexer))->val;
+        if (!tmp)
+            return (init_token(t_error, NULL));
+        str = ft_strjoin(str, tmp);
+        free(tmp);
+    }
     return (init_token(t_args, str));
 }
 
@@ -211,7 +230,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
     while(lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|' && lexer->c != '>' && lexer->c != '<')
     {
 		if (lexer->c == '$')
-        	str = ft_strjoin(str, check_var(lexer));
+			str = check_arg_dollar(lexer, str, 0);
         else
 		{
             check_backslash(&lexer);
@@ -220,7 +239,13 @@ token_t *lexer_collect_arg(lexer_t *lexer)
         	free(tmp);
         	lexer_advance(lexer);
         	while (lexer->c == '"' ||lexer->c == '\'')
-                str = ft_strjoin(str, (lexer_collect_string(lexer))->val);
+            {
+                tmp = (lexer_collect_string(lexer))->val;
+                if (!tmp)
+                    return (init_token(t_error, NULL));
+                str = ft_strjoin(str, tmp);
+                free(tmp);
+            }
 		}
     }
     return (init_token(t_args, str));

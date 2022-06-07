@@ -64,29 +64,29 @@ void    ft_mini(t_shell *mini, char *src)
     int     i;
     lst = ft_parser(src);
     
-    // head = lst;
-    // while (lst)
-    // {
-    //     i = 1;
-    //     printf("%s ---\n" , lst->val[0]);
-    //     while (lst->val[i])
-    //         printf("%s | " , lst->val[i++]);
-    //     printf("\n");
-    //         lst = lst->next;
-    // }
+    head = lst;
+    while (lst)
+    {
+        i = 1;
+        printf("%s -- " , lst->val[0]);
+        while (lst->val[i])
+            printf("%s | " , lst->val[i++]);
+        printf("\n");
+            lst = lst->next;
+    }
     // lst = head;
-    if (!lst)
-        return;
-    else if (finde_her(lst) == 1)
-        pipes(mini, lst);
-    else if (finder_red(lst) == 2)
-       ft_redirection(mini, lst, 0);
-    else if (finder_red(lst) == 4)
-        check_herd(mini, lst);
-    else if (finder_red(lst) == 3)
-        ft_redin(mini, lst);
-    else 
-       ft_check_built(mini, lst, 1);
+    // if (!lst)
+    //     return;
+    // else if (finde_her(lst) == 1)
+    //     pipes(mini, lst);
+    // else if (finder_red(lst) == 2)
+    //    ft_redirection(mini, lst, 0);
+    // else if (finder_red(lst) == 4)
+    //     check_herd(mini, lst);
+    // else if (finder_red(lst) == 3)
+    //     ft_redin(mini, lst);
+    // else 
+    //    ft_check_built(mini, lst, 1);
 }
 
 int main(int ac, char **av, char **env)
