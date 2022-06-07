@@ -105,7 +105,7 @@ void    ft_redin(t_shell *mini, t_list *lst)
                 dup2(fd_in, 0);
                 dup2(fd_out, 1);
                 exec_cmd(mini, lst);
-                exit(1);
+                exit(0);
             }
             close(fd_in);
             if (fd_out != 1)
@@ -117,7 +117,6 @@ void    ft_redin(t_shell *mini, t_list *lst)
     {
         while (lst && lst->v_type[0] == 8)
         {
-
             fd_in = open(lst->val[1], O_RDONLY);
             if (fd_in < 0)
             {

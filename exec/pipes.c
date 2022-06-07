@@ -19,9 +19,8 @@ int     num_of_cmd(t_list *list)
 	count = 0;
 	while (list)
 	{
-		if (list->v_type[0] == 1)
+		if (list->v_type[0] == 1 || list->v_type[0] == 6 || list->v_type[0] == 8)
 		{
-			//printf("%s\n", list->val[0]);
 			count++;
 		}
 		if (list->next)
@@ -52,7 +51,7 @@ void    pipes(t_shell *mini, t_list *list)
 	int id;
 
 	num_cmd = num_of_cmd(list);
-	exec_first(mini, list);
+	//exec_first(mini, list);
 	i = 0;
 	temp_fd = 0;
 	while (i < num_cmd && list)
@@ -65,10 +64,15 @@ void    pipes(t_shell *mini, t_list *list)
 			if (i == 0)
 			{
 				close(fd[0]);
-				if (list->next && list->next->v_type[0] == 6)
+				if ((list->next && list->next->v_type[0] == 6) || list->v_type[0] == 6)
 				{
 					close(fd[1]);
 					ft_redirection(mini, list, 1);
+				}
+				if (list->v_type[0] == 8)
+				{
+					close(fd[1]);
+					ft_redin(mini, list);
 				}
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
@@ -81,10 +85,10 @@ void    pipes(t_shell *mini, t_list *list)
 				close(fd[0]);
 				close(fd[1]);
 				dup2(temp_fd, 0);
-				if (list->next && list->next->v_type[0] == 6)
-				{
+				if ((list->next && list->next->v_type[0] == 6) || list->v_type[0] == 6)
 					ft_redirection(mini, list, 1);
-				}
+				if (list->v_type[0] == 8)
+					ft_redin(mini, list);
 				else if (ft_strcmp(list->val[0], "exit") != 0)	
 				{
 					dup2(temp_fd, 0);
@@ -94,11 +98,16 @@ void    pipes(t_shell *mini, t_list *list)
 			else
 			{
 				close(fd[0]);
-				if (list->next && list->next->v_type[0] == 6)
+				if ((list->next && list->next->v_type[0] == 6) || list->v_type[0] == 6)
 				{
 					close(fd[1]);
 					dup2(temp_fd, 0);
 					ft_redirection(mini, list, 1);
+				}
+				if (list->v_type[0] == 8)
+				{
+					close(fd[1]);
+					ft_redin(mini, list);
 				}
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
@@ -115,6 +124,7 @@ void    pipes(t_shell *mini, t_list *list)
 		close(fd[1]);
 		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8) && list->next->next)
 		{
+			//puts("hana");
 			while (list && list->next && list->v_type[0] != 11 )
 				list = list->next;
 			list = list->next;
