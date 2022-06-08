@@ -12,6 +12,8 @@
 
 #include "../shell.h"
 
+int		check_her(t_list *list);
+
 int     num_of_cmd(t_list *list)
 {
 	int count;
@@ -31,13 +33,13 @@ int     num_of_cmd(t_list *list)
 	return count;
 }
 
-void    exec_first(t_shell *mini, t_list *list)
+void    exec_first(t_shell *mini, t_list *list , int a)
 {
     while (list && list->next)
     {
         if (list && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
 		{
-			heredoc(mini, list);
+			heredoc(mini, list, a);
 		}
 		if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
 		{
@@ -59,10 +61,10 @@ void    pipes(t_shell *mini, t_list *list)
 	int saver[100];
 	int i;
 	int id;
+	int ffd;
 
 	num_cmd = num_of_cmd(list);
-	printf("%d\n", num_cmd);
-	exec_first(mini, list);
+	exec_first(mini, list, 1);
 	i = 0;
 	temp_fd = 0;
 	while (i < num_cmd && list)

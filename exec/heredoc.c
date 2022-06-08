@@ -12,6 +12,7 @@
 
 #include "../shell.h"
 #include "../header/utiles_functions.h"
+
 char	**save_dele(t_list *list)
 {
 	int i;
@@ -45,7 +46,7 @@ int size_tab(char **tab)
 	return i;
 }
 
-void    heredoc(t_shell *mini, t_list *list)
+void    heredoc(t_shell *mini, t_list *list, int num)
 {
 	char *find;
 	int fd;
@@ -87,7 +88,10 @@ void    heredoc(t_shell *mini, t_list *list)
 		if (fork() == 0)
 		{
 			dup2(fd, 0);
-			dup2(out, 1);
+			if (out == 1 && num == 1)
+				dup2(fd, 1);
+			else
+				dup2(out, 1);
 			ft_check_built(mini, list, 1);
 			exit(0);
 		}

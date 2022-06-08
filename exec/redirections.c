@@ -17,6 +17,7 @@ int     open_all_files(t_list *list)
     int fd;
     int fd_in;
 
+    fd = 1;
     while (list && list->v_type[0] != 11)
     {
         if (list->v_type[0] == 6)
