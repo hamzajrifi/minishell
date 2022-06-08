@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/08 19:56:28 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:31:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int     num_of_cmd(t_list *list)
 	return count;
 }
 
-int    exec_first(t_shell *mini, t_list *list , int a)
+int    exec_first(t_shell *mini, t_list *list , int a, int count2)
 {
 	int save;
+	int count = 0;
 
 	save = 0;
     while (list && list->next)
@@ -43,6 +44,10 @@ int    exec_first(t_shell *mini, t_list *list , int a)
         if (list && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
 		{
 			save = check_her(list);
+			//printf("%d\n", count2);
+			//if (count == count2)
+			//	heredoc(mini, list, count2);
+			//else
 			heredoc(mini, list, a);
 		}
 		if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
@@ -54,6 +59,7 @@ int    exec_first(t_shell *mini, t_list *list , int a)
 			list = list->next;
 		else
 			break;
+		count++;
 	}
 	return save;
 }
@@ -70,7 +76,8 @@ void    pipes(t_shell *mini, t_list *list)
 	int k;
 
 	num_cmd = num_of_cmd(list);
-	k = exec_first(mini, list, 1);
+	k = exec_first(mini, list, 1, num_cmd);
+	printf("%d\n", k);
 	i = 0;
 	temp_fd = 0;
 	while (i < num_cmd && list)
@@ -165,6 +172,7 @@ void    pipes(t_shell *mini, t_list *list)
 			list = list->next->next;
 		i++;
 	}
+	unlink("/tmp/test");
 	while (--i >= 0)
 		waitpid(saver[i], 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:13:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/08 19:51:32 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:22:59 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	i = 0;
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 	out = open_all_files(list);
-	printf("%d\n", out);
 	if (list->v_type[0] != 1 && list->v_type[0] == 3)
 		tab = save_dele(list);
 	else

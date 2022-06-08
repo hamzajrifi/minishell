@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/06 19:52:08 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:28:44 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void    ft_redin(t_shell *mini, t_list *lst)
         }
         if (fd_in != 0)
         {
-            //puts("hana");
             if (lst->v_type[0] == 6)
                 fd_out =  open_all_files(lst);
             if (fd_out != -1)
