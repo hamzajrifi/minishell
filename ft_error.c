@@ -26,7 +26,9 @@ int	ft_error(lexer_t *lexer)
 		if ( lexer->src[i + 1] && (lexer->src[i] == '|' 
 			|| ((lexer->src[i] == '>' || lexer->src[i] == '<')
 			&& (lexer->src[i + 1] == '>' || lexer->src[i + 1] == '<'))
-			|| (lexer->i + 1 != i && (lexer->src[i]  == '<' || lexer->src[i]  == '>'))))
+			|| (lexer->i + 1 != i && (lexer->src[i]  == '<' || lexer->src[i]  == '>'))
+			|| (lexer->src[i] == '>' && lexer->c == '<')
+			|| (lexer->src[i] == '<' && lexer->c == '>')))
 			return (1);
 	}
 	else if (lexer->c == '|')
