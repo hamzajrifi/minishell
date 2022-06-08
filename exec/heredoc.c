@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:13:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/05 21:26:20 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:51:32 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 		close(fd);
 		wait(NULL);
 	}
-	unlink("/tmp/test");
+	if (num != 1 && out != 1)
+		unlink("/tmp/test");
 }

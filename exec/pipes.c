@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/06 19:01:05 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:56:28 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ int     num_of_cmd(t_list *list)
 	return count;
 }
 
-void    exec_first(t_shell *mini, t_list *list , int a)
+int    exec_first(t_shell *mini, t_list *list , int a)
 {
+	int save;
+
+	save = 0;
     while (list && list->next)
     {
         if (list && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
 		{
+			save = check_her(list);
 			heredoc(mini, list, a);
 		}
 		if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
@@ -51,6 +55,7 @@ void    exec_first(t_shell *mini, t_list *list , int a)
 		else
 			break;
 	}
+	return save;
 }
 
 void    pipes(t_shell *mini, t_list *list)
@@ -62,9 +67,10 @@ void    pipes(t_shell *mini, t_list *list)
 	int i;
 	int id;
 	int ffd;
+	int k;
 
 	num_cmd = num_of_cmd(list);
-	exec_first(mini, list, 1);
+	k = exec_first(mini, list, 1);
 	i = 0;
 	temp_fd = 0;
 	while (i < num_cmd && list)
@@ -104,7 +110,13 @@ void    pipes(t_shell *mini, t_list *list)
 					ft_redin(mini, list);
 				else if (ft_strcmp(list->val[0], "exit") != 0)	
 				{
-					dup2(temp_fd, 0);
+					if (k == 0)
+					{
+						int fs = open("/tmp/test", O_RDWR);
+						dup2(fs, 0);
+					}
+					else
+						dup2(temp_fd, 0);
 					ft_check_built(mini, list, 1);
 				}
 			}
@@ -124,7 +136,13 @@ void    pipes(t_shell *mini, t_list *list)
 				}
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
-					dup2(temp_fd, 0);
+					if (k == 0)
+					{
+						int fs = open("/tmp/test", O_RDWR);
+						dup2(fs, 0);
+					}
+					else
+						dup2(temp_fd, 0);
 					dup2(fd[1], 1);
 					ft_check_built(mini, list, 1);
 				}
@@ -149,4 +167,16 @@ void    pipes(t_shell *mini, t_list *list)
 	}
 	while (--i >= 0)
 		waitpid(saver[i], 0, 0);
+}
+
+
+int		check_her(t_list *list)
+{
+	while (list)
+	{
+		if (list->v_type[0] == 6 || list->v_type[0] == 4)
+			return 1;
+		list = list->next;
+	}
+	return 0;
 }
