@@ -45,7 +45,6 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a)
     int id;
 
     fd = open_all_files(lst);
-    printf("%d\n" , fd);
     if (a != 1 && fd != -1)
     {
         id = fork();
@@ -75,15 +74,14 @@ void    ft_redin(t_shell *mini, t_list *lst)
     t_list *head;
 
     head = lst;
-    fd_in = 0;
+    //fd_in = 0;
     fd_out = 1;
     if (lst->v_type[0] == 1)
     {
        lst = lst->next;
-       printf("%s\n", lst->val[1]);
+       //printf("%s\n", lst->val[1]);
         while (lst && lst->v_type[0] == 8)
         {
-            puts("hana");
             fd_in = open(lst->val[1], O_RDONLY, 0444);
             if (fd_in < 0)
             {
@@ -96,23 +94,26 @@ void    ft_redin(t_shell *mini, t_list *lst)
             else
                 break;
         }
-        puts("hana");
         if (fd_in != 0)
         {
+            //puts("hana");
             if (lst->v_type[0] == 6)
                 fd_out =  open_all_files(lst);
-            lst = head;
-            if (fork() == 0)
+            if (fd_out != -1)
             {
-                dup2(fd_in, 0);
-                dup2(fd_out, 1);
-                exec_cmd(mini, lst);
-                exit(0);
+                lst = head;
+                if (fork() == 0)
+                {
+                    dup2(fd_in, 0);
+                    dup2(fd_out, 1);
+                    exec_cmd(mini, lst);
+                    exit(0);
+                }
+                close(fd_in);
+                if (fd_out != 1)
+                    close(fd_out);
+                wait(NULL);
             }
-            close(fd_in);
-            if (fd_out != 1)
-                close(fd_out);
-            wait(NULL);
         }
     }
     else
