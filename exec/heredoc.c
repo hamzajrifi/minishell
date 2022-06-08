@@ -20,14 +20,14 @@ char	**save_dele(t_list *list)
 	tab = malloc(sizeof(char *)* 2);
 	tab[1] = 0;
 	tab[0] = ft_strdup(list->val[1]);
-	printf("Tab == %s\n", tab[0]);
+	//printf("Tab == %s\n", tab[0]);
 	i = 1;
 	list = list->next;
 	while (list && list->v_type[0] == 3)
 	{
 		tab = ft_realloc_char(tab);
 		tab[i] = list->val[1];
-		printf("Tab == %s\n", tab[i]);
+		//printf("Tab == %s\n", tab[i]);
 		list = list->next;
 		i++;
 	}
@@ -45,7 +45,7 @@ int size_tab(char **tab)
 	return i;
 }
 
-void    heredoc(t_shell *mini, t_list **list)
+void    heredoc(t_shell *mini, t_list *list)
 {
 	char *find;
 	int fd;
@@ -56,11 +56,11 @@ void    heredoc(t_shell *mini, t_list **list)
 	out = 1;
 	i = 0;
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
-	out = open_all_files(*list);
-	if ((*list)->v_type[0] != 1 && (*list)->v_type[0] == 3)
-		tab = save_dele(*list);
+	out = open_all_files(list);
+	if (list->v_type[0] != 1 && list->v_type[0] == 3)
+		tab = save_dele(list);
 	else
-		tab = save_dele((*list)->next);
+		tab = save_dele(list->next);
 	int size = size_tab(tab);
 	while (1)
 	{
@@ -79,7 +79,7 @@ void    heredoc(t_shell *mini, t_list **list)
 		else
 			ft_putendl_fd(find, fd);
 	}
-	if ((*list)->v_type[0] == 1)
+	if (list->v_type[0] == 1)
 	{
 		close(fd);
 		fd = open("/tmp/test", O_CREAT | O_RDWR, 0644);
@@ -87,7 +87,7 @@ void    heredoc(t_shell *mini, t_list **list)
 		{
 			dup2(fd, 0);
 			dup2(out, 1);
-			ft_check_built(mini, *list, 1);
+			ft_check_built(mini, list, 1);
 			exit(0);
 		}
 		close(fd);

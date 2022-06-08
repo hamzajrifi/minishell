@@ -33,12 +33,22 @@ int     num_of_cmd(t_list *list)
 
 void    exec_first(t_shell *mini, t_list *list)
 {
-    while (list)
+    while (list && list->next)
     {
-        if (list->next && list->v_type[0] == 3)
-			heredoc(mini, &list);
-		list = list->next;
-    }
+        if (list && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
+		{
+			heredoc(mini, list);
+		}
+		if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
+		{
+			while (list->next && list->next->v_type[0] == 3)
+				list = list->next;
+		}
+		if (list->next)
+			list = list->next;
+		else
+			break;
+	}
 }
 
 void    pipes(t_shell *mini, t_list *list)
