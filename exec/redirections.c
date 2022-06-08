@@ -19,7 +19,6 @@ int     open_all_files(t_list *list)
 
     while (list && list->v_type[0] != 11)
     {
-        //puts("here");
         if (list->v_type[0] == 6)
             fd = open(list->val[1], O_CREAT | O_RDWR | O_TRUNC , 0644);
         if (list->v_type[0] == 4)
@@ -30,7 +29,8 @@ int     open_all_files(t_list *list)
             if (fd_in < 0)
             {
                 perror(NULL);
-                fd = open("/tmp/test", O_CREAT, O_WRONLY, 0444);
+                fd = -1;
+                //fd = open("/tmp/test", O_CREAT, O_WRONLY, 0444);
                 return fd;
             }
         }
@@ -45,11 +45,13 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a)
     int id;
 
     fd = open_all_files(lst);
-    if (a != 1)
+    printf("%d\n" , fd);
+    if (a != 1 && fd != -1)
     {
         id = fork();
         if (id == 0)
         {
+            //if (fd != -1)
             dup2(fd, STDOUT_FILENO);
             ft_check_built(mini, lst, fd);
             exit(1);
@@ -57,7 +59,7 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a)
         close(fd);
         wait(NULL);
     }
-    else
+    else if (fd != -1)
     {
         dup2(fd, 1);
         ft_check_built(mini, lst, fd);
