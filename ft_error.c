@@ -19,11 +19,19 @@ int	ft_error(lexer_t *lexer)
 	i = lexer->i + 1;
 	if ((lexer->c == '|' && lexer->src[i] == '|') || lexer->c == '&')
 		return (1);
-	else if (lexer->c == '<' || lexer->c == '>')
+	else if ((lexer->src[i] == '>' && lexer->c == '>') || (lexer->src[i] == '<' && lexer->c == '<'))
+	{
+		while (lexer->src[i + 1] == ' ')
+            i++;
+		if (!lexer->src[i + 1])
+			return (1);
+		i = lexer->i + 1;
+	}
+	if (lexer->c == '<' || lexer->c == '>')
 	{
 		while (lexer->src[i] == ' ')
             i++;
-		if ( lexer->src[i + 1] && (lexer->src[i] == '|' 
+		if ( !lexer->src[i] || (lexer->src[i] == '|' 
 			|| ((lexer->src[i] == '>' || lexer->src[i] == '<')
 			&& (lexer->src[i + 1] == '>' || lexer->src[i + 1] == '<'))
 			|| (lexer->i + 1 != i && (lexer->src[i]  == '<' || lexer->src[i]  == '>'))
