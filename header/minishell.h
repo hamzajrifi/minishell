@@ -70,5 +70,9 @@ token_t *init_token(int t_type, char *val);
 t_list  *ft_parser(char *src);
 t_list    *print_error(char *str);
 
+
+/// error 
+
+int		ft_error(lexer_t *lexer);
 #endif
 

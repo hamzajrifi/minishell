@@ -46,28 +46,12 @@ token_t *lexer_get_next_token(lexer_t *lexer)
     {
         if (lexer->c == ' ')
             lexer_skip_whitespace(lexer);
-        if (lexer->c == '\'' || lexer->c == '"')
-            return (lexer_collect_string(lexer));
-		else if (lexer->c == '|' && lexer->src[lexer->i + 1] == '|')
-        {
-            lexer_advance(lexer);
-			lexer_advance(lexer);
+		if (ft_error(lexer))
            	return (init_token(t_error, NULL));
-            // return (lexer_advance_with_token(lexer , init_token(t_or, ft_strdup("||"))));
-        }
+        else if (lexer->c == '\'' || lexer->c == '"')
+            return (lexer_collect_string(lexer));
         else if (lexer->c == '|')
-        {
-            int i = lexer->i + 1;
-            while (lexer->src[i] == ' ')// error [  |  ]
-                i++;
-           	if(!lexer->src[i]  || lexer->src[i] == '|')
-			{
-            	lexer_skip_whitespace(lexer);
-				lexer_advance(lexer);
-           	    return (init_token(t_error, NULL));
-			}
             return (lexer_advance_with_token(lexer, init_token(t_pip, lexer_get_current_char_as_string(lexer))));
-        }
         else if (lexer->c == '<' && lexer->src[lexer->i + 1] == '<')
         {
             lexer_advance(lexer);
@@ -78,20 +62,12 @@ token_t *lexer_get_next_token(lexer_t *lexer)
             lexer_advance(lexer);
             return (lexer_advance_with_token(lexer, init_token(t_append, ft_strdup(">>"))));
         }
-        else if (lexer->c == '&' && lexer->src[lexer->i + 1] == '&')
-        {
-            lexer_advance(lexer);
-			lexer_advance(lexer);
-           	return (init_token(t_error, NULL));
-            // return (lexer_advance_with_token(lexer , init_token(t_and, ft_strdup("&&"))));
-        }
         else if (lexer->c == '>')
             return (lexer_advance_with_token(lexer , init_token(t_input, lexer_get_current_char_as_string(lexer))));
         else if (lexer->c == '<')
             return (lexer_advance_with_token(lexer , init_token(t_output, lexer_get_current_char_as_string(lexer))));
         else if (lexer->c)
             return (lexer_collect_arg(lexer));
-        lexer_advance(lexer);
     }
     return (NULL);
 }

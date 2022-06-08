@@ -28,7 +28,8 @@ C_FILES =	main.c\
 			utils/ft_itoa.c\
 			utils/ft_calloc.c\
 			exec/heredoc.c\
-			mini.c
+			mini.c\
+			ft_error.c
 
 OBJ = $(C_FILES:.c=.o)
 # main.o\
