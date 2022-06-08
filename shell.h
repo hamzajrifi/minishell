@@ -66,7 +66,7 @@ int     checker(char *str);
 int     finder(char *str);
 int     find_pipe(char *str);
 int		invalide_identifier(char *str, int fd);
-void    heredoc(t_shell *mini, t_list *list);
+void    heredoc(t_shell *mini, t_list *list, int num);
 int     open_all_files(t_list *list);
 void	red_in(t_shell *mini, char *str);
 int    ft_and_bonus(t_shell *mini, char *str);

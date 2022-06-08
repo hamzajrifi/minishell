@@ -126,6 +126,7 @@ void    ft_redin(t_shell *mini, t_list *lst)
             {
                 fd_in = 0;
                 perror(NULL);
+                break;
             }
             if (lst->next)
                 lst = lst->next;

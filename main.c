@@ -69,7 +69,7 @@ void    ft_mini(t_shell *mini, char *src)
     else if (finder_red(lst) == 2)
        ft_redirection(mini, lst, 0);
     else if (finder_red(lst) == 4)
-        heredoc(mini, lst);
+        heredoc(mini, lst, 0);
     else if (finder_red(lst) == 3)
         ft_redin(mini, lst);
     else 

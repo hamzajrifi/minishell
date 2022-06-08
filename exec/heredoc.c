@@ -88,7 +88,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 		if (fork() == 0)
 		{
 			dup2(fd, 0);
-			if (out == 1 && num == 1)
+			if (out == 1 &&  num == 1)
 				dup2(fd, 1);
 			else
 				dup2(out, 1);
