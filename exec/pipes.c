@@ -19,7 +19,7 @@ int     num_of_cmd(t_list *list)
 	count = 0;
 	while (list)
 	{
-		if (list->v_type[0] == 1 || list->v_type[0] == 6 || list->v_type[0] == 8)
+		if (list->v_type[0] == 1 || list->v_type[0] == 6 || list->v_type[0] == 8 || list->v_type[0] == 3)
 		{
 			count++;
 		}
@@ -61,6 +61,7 @@ void    pipes(t_shell *mini, t_list *list)
 	int id;
 
 	num_cmd = num_of_cmd(list);
+	printf("%d\n", num_cmd);
 	exec_first(mini, list);
 	i = 0;
 	temp_fd = 0;
@@ -132,10 +133,12 @@ void    pipes(t_shell *mini, t_list *list)
 		temp_fd = dup(fd[0]);
 		close(fd[0]);
 		close(fd[1]);
-		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3) && list->next->next)
+		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3 || list->v_type[0] == 3) && list->next->next)
 		{
 			while (list && list->next && list->v_type[0] != 11)
+			{
 				list = list->next;
+			}
 			list = list->next;
 		}
 		else if (list->next)
