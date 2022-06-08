@@ -57,6 +57,7 @@ void    heredoc(t_shell *mini, t_list *list)
 	i = 0;
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 	out = open_all_files(list);
+	printf("%d\n", out);
 	if (list->v_type[0] != 1 && list->v_type[0] == 3)
 		tab = save_dele(list);
 	else

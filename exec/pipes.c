@@ -134,7 +134,7 @@ void    pipes(t_shell *mini, t_list *list)
 		close(fd[1]);
 		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3) && list->next->next)
 		{
-			while (list && list->next && list->v_type[0] != 11 )
+			while (list && list->next && list->v_type[0] != 11)
 				list = list->next;
 			list = list->next;
 		}
