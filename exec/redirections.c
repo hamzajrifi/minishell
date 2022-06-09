@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/08 21:28:44 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:41:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void    ft_redin(t_shell *mini, t_list *lst)
     if (lst->v_type[0] == 1)
     {
        lst = lst->next;
-       //printf("%s\n", lst->val[1]);
         while (lst && lst->v_type[0] == 8)
         {
             fd_in = open(lst->val[1], O_RDONLY, 0444);

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/05 16:50:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:16:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,7 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 				temp[i] = ft_strjoin(temp[i], "/");
 				str = ft_strjoin(temp[i], lst->val[0]);
 				if (access(str, F_OK) == 0)
-				{
 					execve(str, &lst->val[0], mini->tab_save_env);
-				}
 				i++;
 			}
 			write(2, lst->val[0], ft_strlen(lst->val[0]));
