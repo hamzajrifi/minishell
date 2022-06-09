@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:39 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/04 15:14:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:40:34 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct  lexer_t
     char    c;
     unsigned int i;
     char    *src;
+    t_shell *mini;
 } lexer_t;
 
 
@@ -53,7 +54,7 @@ typedef struct token_struct
 
 
 void    ft_mini(t_shell *mini, char *src);
-lexer_t *init_lexer(char *src);
+lexer_t *init_lexer(char *src,t_shell *mini);
 void    lexer_advance(lexer_t *lexer);
 void    lixer_skip_whitespace(lexer_t *lexer);
 token_t *lexer_get_next_token(lexer_t *lexer);
@@ -67,8 +68,9 @@ token_t *init_token(int t_type, char *val);
 
 //// parser
 
-t_list  *ft_parser(char *src);
+t_list  *ft_parser(char *src, t_shell *mini);
 t_list    *print_error(char *str);
+char    *ft_getenv(t_shell *mini, char *str);
 
 
 /// error 

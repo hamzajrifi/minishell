@@ -6,13 +6,13 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/07 14:01:39 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/09 13:01:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header/minishell.h"
 
-lexer_t *init_lexer(char *src)
+lexer_t *init_lexer(char *src, t_shell *mini)
 {
     lexer_t *lexer ;
     
@@ -20,7 +20,7 @@ lexer_t *init_lexer(char *src)
     lexer->src = src;
     lexer->i = 0;
     lexer->c = src[lexer->i];
-
+    lexer->mini = mini;
     return (lexer);
 }
 
@@ -97,6 +97,11 @@ char	*check_var(lexer_t *lexer)
 	lexer_advance(lexer);
 	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|' || lexer->c == '=')
 		return (ft_strdup("$"));
+    else if (lexer->c == '?')
+    {
+		lexer_advance(lexer);
+        return (ft_itoa(status_exec_g));
+    }
     else if ((lexer->c >= '0' && lexer->c <= '9') || lexer->c == '*')
     {
 		lexer_advance(lexer);
@@ -106,7 +111,7 @@ char	*check_var(lexer_t *lexer)
 	{
 		while (lexer->c != '\0' && lexer->c != '\\' 
             && lexer->c != ' ' && lexer->c != '$' && lexer->c != '|' 
-            && lexer->c != '"' && lexer->c != '\''  && lexer->c != '='
+            && lexer->c != '"' && lexer->c != '\''  && lexer->c != '=' && lexer->c !=  '/'
 			)
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
@@ -114,8 +119,8 @@ char	*check_var(lexer_t *lexer)
         	free(tmp);
         	lexer_advance(lexer);
 		}
-		if (getenv(str))
-			return (getenv(str));
+		if (ft_getenv(lexer->mini, str))
+			return (ft_getenv(lexer->mini, str));
 		else 
 			return (ft_strdup(""));
 	}
@@ -151,6 +156,11 @@ char	*check_arg_dollar(lexer_t *lexer, char *str, char c)
 		str = ft_strjoin(str, lexer_collect_string(lexer)->val);
 		lexer->c = '"';
 	}
+    else if (lexer->c == '/')
+    {
+		str = ft_strjoin(str, ft_strdup("/"));
+        lexer_advance(lexer);
+    }
 	return (str);
 }
 

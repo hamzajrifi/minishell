@@ -27,6 +27,7 @@ C_FILES =	main.c\
 			utils/ft_strcmp.c\
 			utils/ft_itoa.c\
 			utils/ft_calloc.c\
+			exec/ft_getenv.c\
 			exec/heredoc.c\
 			mini.c\
 			ft_error.c

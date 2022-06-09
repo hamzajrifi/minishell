@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:32:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/06 16:53:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:36:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void    ft_mini(t_shell *mini, char *src)
     t_list *lst;
     t_list *head;
     int     i;
-    lst = ft_parser(src);
+    lst = ft_parser(src, mini);
     
     // head = lst;
     // while (lst)

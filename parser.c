@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:12 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/31 13:20:35 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/09 12:35:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ t_list    *print_error(char *str)
     return (NULL);
 }
 
-t_list  *ft_parser(char *src)
+t_list  *ft_parser(char *src, t_shell *mini)
 {
     lexer_t *lexer;
     token_t *token;
     t_list  *lst;
     t_list  *head;
     
-    lexer = init_lexer(src);
+    lexer = init_lexer(src, mini);
     token = lexer_get_next_token(lexer);
     lst = NULL;
     if (token)

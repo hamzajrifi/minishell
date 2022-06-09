@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/08 21:31:05 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:13:53 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,20 @@ int    exec_first(t_shell *mini, t_list *list , int a, int count2)
     {
         if (list && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
 		{
+			count++;
 			save = check_her(list);
-			//printf("%d\n", count2);
-			//if (count == count2)
-			//	heredoc(mini, list, count2);
-			//else
-			heredoc(mini, list, a);
+			printf("%d -- %d", count2, count);
+			if (count == count2)
+				heredoc(mini, list, count2);
+			else
+				heredoc(mini, list, a);
 		}
 		if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
 		{
 			while (list->next && list->next->v_type[0] == 3)
+			{
 				list = list->next;
+			}
 		}
 		if (list->next)
 			list = list->next;
@@ -77,8 +80,8 @@ void    pipes(t_shell *mini, t_list *list)
 
 	num_cmd = num_of_cmd(list);
 	k = exec_first(mini, list, 1, num_cmd);
-	printf("%d\n", k);
 	i = 0;
+	int fs = 0;
 	temp_fd = 0;
 	while (i < num_cmd && list)
 	{
@@ -99,7 +102,7 @@ void    pipes(t_shell *mini, t_list *list)
 				{
 					close(fd[1]);
 					ft_redin(mini, list);
-				}
+				}	
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
 					dup2(fd[1], 1);
@@ -117,9 +120,10 @@ void    pipes(t_shell *mini, t_list *list)
 					ft_redin(mini, list);
 				else if (ft_strcmp(list->val[0], "exit") != 0)	
 				{
-					if (k == 0)
+					printf("k = %d\n", k);
+					if (k == 0) // herdoc if exi
 					{
-						int fs = open("/tmp/test", O_RDWR);
+						fs = open("/tmp/test", O_RDWR);
 						dup2(fs, 0);
 					}
 					else
@@ -143,9 +147,10 @@ void    pipes(t_shell *mini, t_list *list)
 				}
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
+					printf("k = %d\n", k);
 					if (k == 0)
 					{
-						int fs = open("/tmp/test", O_RDWR);
+						fs = open("/tmp/test", O_RDWR);
 						dup2(fs, 0);
 					}
 					else
@@ -160,6 +165,8 @@ void    pipes(t_shell *mini, t_list *list)
 		temp_fd = dup(fd[0]);
 		close(fd[0]);
 		close(fd[1]);
+		if (fs != 0)
+			close(fs);
 		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3 || list->v_type[0] == 3) && list->next->next)
 		{
 			while (list && list->next && list->v_type[0] != 11)
