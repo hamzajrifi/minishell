@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/10 11:59:39 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:00:48 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int main(int ac, char **av, char **env)
    (void)av;
     mini.tab_save_env = env;
     mini.tab_save_exp = NULL;
+    mini.counter = 0;
 	// signal(SIGINT, checksignal);
     while(1337)
     {

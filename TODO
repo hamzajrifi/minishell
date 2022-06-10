@@ -3,3 +3,7 @@ exit status
 ft_getenv
 
 1): herdoc inside pipes
+
+
+
+allocate all_fd 10case*
