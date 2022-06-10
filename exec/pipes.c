@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/10 20:31:21 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:53:47 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void    pipes(t_shell *mini, t_list *list)
 	int *k;
 
 	num_cmd = num_of_cmd(list);
-	printf("%d\n" , num_cmd);
+	//printf("%d\n" , num_cmd);
 	k = exec_first(mini, list, 1);
 	// exit(0);
 	// exit(0);
@@ -95,7 +95,7 @@ void    pipes(t_shell *mini, t_list *list)
 		// if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
 		// 	l = 1;
 		// else
-		// 	l = 0;	
+		// 	l = 0;
 		id = fork();
 		//puts("hana");
 		if (id == 0)
@@ -113,8 +113,8 @@ void    pipes(t_shell *mini, t_list *list)
 					close(fd[1]);
 					ft_redin(mini, list);
 				}
-				// else if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
-				// 	close(fd[1]);
+				else if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
+				{}
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
 					printf("%s\n", list->val[0]);
@@ -203,11 +203,11 @@ void    pipes(t_shell *mini, t_list *list)
 				list = list->next;
 			}
 			list = list->next;
-			printf("val == %s\n", list->val[0]);
+			//printf("val == %s\n", list->val[0]);
 		}
 		else if (list->next)
 			list = list->next->next;
-		printf("i = %d\n", i);
+		//printf("i = %d\n", i);
 		i++;
 	}
 	unlink("/tmp/test");

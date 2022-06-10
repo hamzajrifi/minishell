@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:13:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/10 20:29:21 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 21:02:25 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,20 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	int size = size_tab(tab);
 	if (num == 1 && out == 1)
 	{
+		//puts("latiife");
 		str = ft_strjoin("/tmp/test", ft_itoa(mini->counter));
 		mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		mini->counter++;
 	}
 	else
+	{
 		fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
+	}
 	while (1)
 	{
 		find = readline(">");
 		if (find == NULL)
-		{
-			puts(" 9alwa"); 
 			break ;
-		}
 		if (strcmp(find, tab[i]) == 0 && tab[i])
 		{
 			size--;
@@ -97,7 +97,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 				fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 		}
 		if (num == 1 && out == 1)
-			ft_putendl_fd(find, tabint[mini->counter - 1]);
+			ft_putendl_fd(find, mini->all_fd[mini->counter - 1]);
 		else
 			ft_putendl_fd(find, fd);
 	}
@@ -105,8 +105,8 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	{
 		if (num == 1 && out == 1)
 		{
-			close(tabint[mini->counter - 1]);
-			tabint[mini->counter - 1] = open(str, O_CREAT | O_RDWR, 0644);
+			close(mini->all_fd[mini->counter - 1]);
+			mini->all_fd[mini->counter - 1] = open(str, O_CREAT | O_RDWR, 0644);
 		}
 		else
 		{
@@ -129,7 +129,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 		{
 			dup2(fd, 0);
 			if (out == 1 &&  num == 1)
-				dup2(mini->all_fd[mini->counter - 1], 1);
+				dup2(fd, 1);
 			else
 				dup2(out, 1);
 			ft_check_built(mini, list, 1);
@@ -145,7 +145,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	{
 		if (num == 1 && out == 1)
 		{
-			close(tabint[mini->counter - 1]);
+			close(mini->all_fd[mini->counter - 1]);
 			mini->all_fd[mini->counter - 1] = open(str, O_CREAT | O_RDWR, 0644);
 		}
 		else
@@ -176,7 +176,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 		{
 			dup2(fd, 0);
 			if (out == 1 &&  num == 1)
-				dup2(mini->all_fd[mini->counter - 1], 1);
+				dup2(fd, 1);
 			else
 				dup2(out, 1);
 			ft_check_built(mini, list, 1);
@@ -190,7 +190,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	}
 	if (out == -1)
 		printf("No such file or directory\n");
-	if (num != 1 && out != 1)
+	if (num != 1 || out != 1)
 		unlink("/tmp/test");
 	//mini->all_fd = tabint;
 }
