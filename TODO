@@ -2,10 +2,4 @@
 exit status 
 ft_getenv
 
-
-herdoc save alloc all out
-heredoc save all in 
-
-test
-
-teste
+1): herdoc inside pipes

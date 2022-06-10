@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/10 12:47:06 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:14:42 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int    *exec_first(t_shell *mini, t_list *list , int a)
 				save[i] = check_her(list);
 			else
 				save[i] = check_her(list->next);
+			printf("k = %d\n", save[i]);
 			heredoc(mini, list, a);
 			i++;
 		}
@@ -79,9 +80,10 @@ void    pipes(t_shell *mini, t_list *list)
 	int *k;
 
 	num_cmd = num_of_cmd(list);
-	printf("%d\n" , num_cmd);
+	//printf("%d\n" , num_cmd);
 	k = exec_first(mini, list, 1);
-	// printf("k = %d\n", k[0]);
+	//exit(0);
+	//printf("k = %d\n", k[0]);
 	// printf("k = %d\n", k[1]);
 	i = 0;
 	int fs = 0;
@@ -91,6 +93,7 @@ void    pipes(t_shell *mini, t_list *list)
 		if (pipe(fd) < 0)
 			perror("pipe");
 		id = fork();
+		puts("hana");
 		if (id == 0)
 		{
 			if (i == 0)
@@ -106,11 +109,8 @@ void    pipes(t_shell *mini, t_list *list)
 					close(fd[1]);
 					ft_redin(mini, list);
 				}
-				// else if (list->next && ( list->v_type[0] == 3 || list->next->v_type[0] == 3))
-				// {
-				// 	printf("%s\n", list->val[0]);
-				// 	heredoc(mini, list, 1, fd[1]);
-				// }
+				// else if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
+				// 	close(fd[1]);
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
 					dup2(fd[1], 1);
@@ -129,14 +129,12 @@ void    pipes(t_shell *mini, t_list *list)
 					close(temp_fd);
 					ft_redin(mini, list);
 				}
-				// else if (list->next && ( list->v_type[0] == 3 || list->next->v_type[0] == 3))
-				// {
-				// 	close(temp_fd);
-				// 	heredoc(mini, list, 1, 1);
-				// }
 				else if (ft_strcmp(list->val[0], "exit") != 0)	
 				{
-					printf("%s\n", list->val[0]);
+					// printf("ks = %d\n", k[fs]);
+					// if (k[fs] == 0)
+						// dup2(mini->all_fd[fs], 0);
+					// else
 					dup2(temp_fd, 0);
 					ft_check_built(mini, list, 1);
 				}
@@ -155,13 +153,17 @@ void    pipes(t_shell *mini, t_list *list)
 					close(fd[1]);
 					ft_redin(mini, list);
 				}
-				// else if (list->next && ( list->v_type[0] == 3 || list->next->v_type[0] == 3))
-				// {
-				// 	close(temp_fd);
-				// 	heredoc(mini, list, 1, fd[1]);
-				// }
 				else if (ft_strcmp(list->val[0], "exit") != 0)
 				{
+					//printf("ll = %s\n", list->val[0]);
+					// if (k[fs] == 0)
+					// {
+						// close(temp_fd);
+						//close(fd[1]);
+						// dup2(mini->all_fd[fs], 0);
+					// }
+					// else
+					// {
 					dup2(temp_fd, 0);
 					dup2(fd[1], 1);
 					ft_check_built(mini, list, 1);
@@ -173,8 +175,9 @@ void    pipes(t_shell *mini, t_list *list)
 		temp_fd = dup(fd[0]);
 		close(fd[0]);
 		close(fd[1]);
-		if (fs != 0)
-			close(fs);
+		// if (list->v_type[0] == 3 || list->next->v_type[0]  == 3)
+		// 	fs++;
+		//printf("fs == %d\n", fs);
 		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3 || list->v_type[0] == 3) && list->next->next)
 		{
 			while (list && list->next && list->v_type[0] != 11)

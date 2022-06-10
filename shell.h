@@ -15,6 +15,8 @@ typedef struct s_shell {
 	char *save_pwd;
 	char *save_old_pwd;
 	int	checker;
+	int	*all_fd;
+	int	counter;
 }   t_shell;
 
 typedef struct t_list
@@ -66,8 +68,8 @@ int     checker(char *str);
 int     finder(char *str);
 int     find_pipe(char *str);
 int		invalide_identifier(char *str, int fd);
-void    heredoc(t_shell *mini, t_list *list, int num);
-int     open_all_files(t_list *list);
+void	heredoc(t_shell *mini, t_list *list, int num);
+int     open_all_files(t_list *list, int a);
 void	red_in(t_shell *mini, char *str);
 int    ft_and_bonus(t_shell *mini, char *str);
 int	    exec_pipe(t_shell *mini, char *tab);
@@ -88,3 +90,4 @@ void    ft_cd(char *path, t_shell *mini);
 void	ft_pwd(int fd);
 int     tablen(char **tab);
 int	    ft_pipe(t_shell *mini, char *str);
+char **save_cmd(t_list *list);
