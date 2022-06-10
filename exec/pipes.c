@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/10 20:53:47 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 21:28:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,22 +182,33 @@ void    pipes(t_shell *mini, t_list *list)
 			exit(0);
 		}
 		saver[i] = id;
-		if (list && (list->v_type[0] == 3))
-		{
-			puts("haanaa");
-			temp_fd = dup(mini->all_fd[fs]);
-			if (mini->counter - 1 > fs)
-				fs++;
-		}
-		else if (i != (num_cmd - 1))
-			temp_fd = dup(fd[0]);
 		close(fd[0]);
 		close(fd[1]);
 		// if (list->v_type[0] == 3 || list->next->v_type[0]  == 3)
 		// 	fs++;
 		//printf("fs == %d\n", fs);
+		// if (list && (list->v_type[0] == 3 ))
+		// {
+		// 	puts("haanaa");
+		// 	temp_fd = dup(mini->all_fd[fs]);
+		// 	printf("%d\n", temp_fd);
+		// 	//if (mini->counter - 1 > fs)
+		// 	fs++;
+		// }
+		// else if (i != (num_cmd - 1))
+		// 	temp_fd = dup(fd[0]);
 		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3 || list->v_type[0] == 3) && list->next->next)
 		{
+			if (list && (list->v_type[0] == 3 ))
+			{
+				puts("haanaa");
+				temp_fd = dup(mini->all_fd[fs]);
+				printf("%d\n", temp_fd);
+				//if (mini->counter - 1 > fs)
+				fs++;
+			}
+			else if (i != (num_cmd - 1))
+				temp_fd = dup(fd[0]);
 			while (list && list->next && list->v_type[0] != 11)
 			{
 				list = list->next;
