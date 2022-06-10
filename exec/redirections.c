@@ -6,13 +6,13 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/09 16:41:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:04:10 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-int     open_all_files(t_list *list)
+int     open_all_files(t_list *list, int a)
 {
     int fd;
     int fd_in;
@@ -29,7 +29,8 @@ int     open_all_files(t_list *list)
             fd_in = open(list->val[1], O_RDWR, 0666);
             if (fd_in < 0)
             {
-                perror(NULL);
+                if (a != 1)
+                    perror(NULL);
                 fd = -1;
                 //fd = open("/tmp/test", O_CREAT, O_WRONLY, 0444);
                 return fd;
@@ -45,7 +46,7 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a)
     int fd;
     int id;
 
-    fd = open_all_files(lst);
+    fd = open_all_files(lst, 0);
     if (a != 1 && fd != -1)
     {
         id = fork();
@@ -97,7 +98,7 @@ void    ft_redin(t_shell *mini, t_list *lst)
         if (fd_in != 0)
         {
             if (lst->v_type[0] == 6)
-                fd_out =  open_all_files(lst);
+                fd_out =  open_all_files(lst, 0);
             if (fd_out != -1)
             {
                 lst = head;
@@ -134,7 +135,7 @@ void    ft_redin(t_shell *mini, t_list *lst)
         if (fd_in != 0)
         {
             if (lst->v_type[0] == 6)
-                open_all_files(lst);
+                open_all_files(lst, 0);
         }
     } 
 }

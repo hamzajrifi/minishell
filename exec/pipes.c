@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/09 19:08:36 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:47:06 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int     num_of_cmd(t_list *list)
 	return count;
 }
 
-int    exec_first(t_shell *mini, t_list *list , int a, int count2)
+int    *exec_first(t_shell *mini, t_list *list , int a)
 {
-	int save;
+	int save[100];
 	int count = 0;
 	int i = 0;
 
@@ -44,11 +44,11 @@ int    exec_first(t_shell *mini, t_list *list , int a, int count2)
         if (list && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
 		{
 			count++;
-			save = check_her(list);
-			if (count == count2)
-				heredoc(mini, list, count2, 1);
+			if (list->v_type[0] == 3)
+				save[i] = check_her(list);
 			else
-				heredoc(mini, list, a, 1);
+				save[i] = check_her(list->next);
+			heredoc(mini, list, a);
 			i++;
 		}
 		if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
@@ -76,11 +76,11 @@ void    pipes(t_shell *mini, t_list *list)
 	int i;
 	int id;
 	int ffd;
-	int k;
+	int *k;
 
 	num_cmd = num_of_cmd(list);
 	printf("%d\n" , num_cmd);
-	k = exec_first(mini, list, 1, num_cmd);
+	k = exec_first(mini, list, 1);
 	// printf("k = %d\n", k[0]);
 	// printf("k = %d\n", k[1]);
 	i = 0;
@@ -195,9 +195,9 @@ void    pipes(t_shell *mini, t_list *list)
 
 int		check_her(t_list *list)
 {
-	while (list)
+	while (list && list->v_type[0] != 11)
 	{
-		if (list->v_type[0] == 6 || list->v_type[0] == 4 || list->v_type[0] == 6)
+		if (list->v_type[0] == 6 || list->v_type[0] == 4)
 			return 1;
 		list = list->next;
 	}

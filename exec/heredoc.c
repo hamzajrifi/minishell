@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:13:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/09 18:30:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/10 13:47:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int size_tab(char **tab)
 	return i;
 }
 
-void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
+void    heredoc(t_shell *mini, t_list *list, int num)
 {
 	char *find;
 	int fd;
@@ -56,11 +56,13 @@ void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
 	int i;
 	char **tab;
 	char **sec_tab;
+	char ostr;
 
 	out = 1;
 	i = 0;
+	mini->counter = 0;
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
-	out = open_all_files(list);
+	out = open_all_files(list, 1);
 	if (list->v_type[0] != 1 && list->v_type[0] == 3)
 		tab = save_dele(list);
 	else
@@ -77,13 +79,17 @@ void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
 			i++;
 			if (size == 0)
 				break;
+			else if (num == 1 && out != 1)
+			{
+				str = ft_strjoin("/tmp/test", &mini->counter);
+			}
 			else
 				fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 		}
 		else
 			ft_putendl_fd(find, fd);
 	}
-	if (list->v_type[0] == 1)
+	if (list->v_type[0] == 1 && out != -1)
 	{
 		close(fd);
 		fd = open("/tmp/test", O_CREAT | O_RDWR, 0644);
@@ -103,7 +109,7 @@ void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
 		{
 			dup2(fd, 0);
 			if (out == 1 &&  num == 1)
-				dup2(pipe_fd, 1);
+				dup2(out, 1);
 			else
 				dup2(out, 1);
 			ft_check_built(mini, list, 1);
@@ -112,7 +118,7 @@ void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
 		close(fd);
 		wait(NULL);
 	}
-	else
+	else if (out != -1)
 	{
 		close(fd);
 		fd = open("/tmp/test", O_CREAT | O_RDWR, 0644);
@@ -139,7 +145,7 @@ void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
 		{
 			dup2(fd, 0);
 			if (out == 1 &&  num == 1)
-				dup2(pipe_fd, 1);
+				dup2(out, 1);
 			else
 				dup2(out, 1);
 			ft_check_built(mini, list, 1);
@@ -148,6 +154,8 @@ void    heredoc(t_shell *mini, t_list *list, int num, int pipe_fd)
 		close(fd);
 		wait(NULL);
 	}
+	if (out == -1)
+		printf("No such file or directory\n");
 	if (num != 1 && out != 1)
 		unlink("/tmp/test");
 }
