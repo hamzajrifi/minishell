@@ -107,6 +107,11 @@ char	*check_var(lexer_t *lexer)
 		lexer_advance(lexer);
 	    return (ft_strdup(""));
 	}
+    else if (lexer->c == '$')
+    {
+        lexer_advance(lexer);
+		return (ft_itoa(getpid()));
+    }
 	else
 	{
 		while (lexer->c != '\0' && lexer->c != '\\' 
