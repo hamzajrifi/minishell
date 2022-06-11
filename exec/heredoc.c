@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:13:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/10 21:02:25 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/11 15:27:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,11 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	char **tab;
 	char **sec_tab;
 	char *str;
-	int tabint[100];
 
 	out = 1;
 	i = 0;
-	///mini->counter = 0;
-	mini->all_fd = malloc(sizeof(int) * 10);
+	//mini->counter = 0;
+	//printf("num ============  %d\n", mini->counter);
 	out = open_all_files(list, 1);
 	if (list->v_type[0] != 1 && list->v_type[0] == 3)
 		tab = save_dele(list);
@@ -71,10 +70,12 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	int size = size_tab(tab);
 	if (num == 1 && out == 1)
 	{
-		//puts("latiife");
+		puts("latiife");
 		str = ft_strjoin("/tmp/test", ft_itoa(mini->counter));
+		printf("counter = %d\n", mini->counter);
 		mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		mini->counter++;
+		printf("fd* = %d\n", mini->all_fd[mini->counter]);
+		//mini->counter++;
 	}
 	else
 	{
@@ -92,21 +93,24 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 			if (size == 0)
 				break;
 			if (num == 1 && out == 1)
-				mini->all_fd[mini->counter - 1] = open(str , O_CREAT | O_RDWR | O_TRUNC, 0644);
+			{
+				mini->all_fd[mini->counter] = open(str , O_CREAT | O_RDWR | O_TRUNC, 0644);
+				printf("fd == %d\n" , mini->all_fd[mini->counter]);
+			}
 			else
 				fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 		}
 		if (num == 1 && out == 1)
-			ft_putendl_fd(find, mini->all_fd[mini->counter - 1]);
+			ft_putstr_fd(find, mini->all_fd[mini->counter]);
 		else
-			ft_putendl_fd(find, fd);
+			ft_putstr_fd(find, fd);
 	}
 	if (list->v_type[0] == 1 && out != -1)
 	{
 		if (num == 1 && out == 1)
 		{
-			close(mini->all_fd[mini->counter - 1]);
-			mini->all_fd[mini->counter - 1] = open(str, O_CREAT | O_RDWR, 0644);
+			close(mini->all_fd[mini->counter]);
+			mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR , 0644);
 		}
 		else
 		{
@@ -127,26 +131,32 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 		list->v_type[1] = 2;
 		if (fork() == 0)
 		{
-			dup2(fd, 0);
 			if (out == 1 &&  num == 1)
-				dup2(fd, 1);
+			{
+				int hu;
+				hu = dup(mini->all_fd[mini->counter]);
+				//printf("hu = %d\n", hu);
+				dup2(hu, 0);
+				dup2(mini->all_fd[mini->counter], 1);
+			}
 			else
+			{
+				dup2(fd, 0);
 				dup2(out, 1);
+			}
 			ft_check_built(mini, list, 1);
 			exit(0);
 		}
-		if (out == 1 &&  num == 1)
-			close(mini->all_fd[mini->counter - 1]);
-		else
-			close(fd);
+		//else
+		close(fd);
 		wait(NULL);
 	}
 	else if (out != -1)
 	{
 		if (num == 1 && out == 1)
 		{
-			close(mini->all_fd[mini->counter - 1]);
-			mini->all_fd[mini->counter - 1] = open(str, O_CREAT | O_RDWR, 0644);
+			close(mini->all_fd[mini->counter]);
+			mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR, 0644);
 		}
 		else
 		{
@@ -174,24 +184,28 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 		}
 		if (fork() == 0)
 		{
-			dup2(fd, 0);
 			if (out == 1 &&  num == 1)
-				dup2(fd, 1);
+				dup2(mini->all_fd[mini->counter], 1);
 			else
+			{
+				dup2(fd, 0);
 				dup2(out, 1);
+			}
 			ft_check_built(mini, list, 1);
 			exit(0);
 		}
-		if (out == 1 &&  num == 1)
-			close(mini->all_fd[mini->counter - 1]);
-		else
-			close(fd);
+		//else
+		close(fd);
 		wait(NULL);
 	}
 	if (out == -1)
 		printf("No such file or directory\n");
 	if (num != 1 || out != 1)
 		unlink("/tmp/test");
+	if (num == 1 && out == 1)
+		mini->counter++;
+	//free(str);
+	///printf("%d    %d ",mini->all_fd[0] , mini->all_fd[1]);
 	//mini->all_fd = tabint;
 }
 

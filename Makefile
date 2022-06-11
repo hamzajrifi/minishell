@@ -30,7 +30,8 @@ C_FILES =	main.c\
 			exec/ft_getenv.c\
 			exec/heredoc.c\
 			mini.c\
-			ft_error.c
+			ft_error.c\
+			get/get_next_line.c
 
 OBJ = $(C_FILES:.c=.o)
 # main.o\
