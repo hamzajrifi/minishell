@@ -11,7 +11,7 @@ C_FILES =	main.c\
 			functions/utiles_functions.c\
 			exec/exec_cmd.c\
 			exec/redirections.c\
-			exec/pipes.c\
+			exec/sec_pipe.c\
 			built_func/cd.c\
 			built_func/echo.c\
 			built_func/env.c\
@@ -28,7 +28,7 @@ C_FILES =	main.c\
 			utils/ft_itoa.c\
 			utils/ft_calloc.c\
 			exec/ft_getenv.c\
-			exec/heredoc.c\
+			exec/sec_heredoc.c\
 			mini.c\
 			ft_error.c\
 			get/get_next_line.c
@@ -44,7 +44,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ)
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC)  -o minishell main.c -lreadline $(NAME)\
+			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
 
 clean :	
 		rm -f *.o functions/*.o
