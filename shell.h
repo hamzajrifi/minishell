@@ -1,3 +1,5 @@
+#ifndef  SHELL_H
+#define SHELL_H
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -24,6 +26,7 @@ typedef struct t_list
     char            **val;
     int             *v_type;
     struct t_list   *next;
+	struct t_list	*prev;
 }t_list;
 
 unsigned int status_exec_g;
@@ -91,4 +94,5 @@ void	ft_pwd(int fd);
 int     tablen(char **tab);
 int	    ft_pipe(t_shell *mini, char *str);
 char **save_cmd(t_list *list);
-char	*get_next_line(int fd);
+
+#endif

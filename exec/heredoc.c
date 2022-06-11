@@ -70,11 +70,11 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 	int size = size_tab(tab);
 	if (num == 1 && out == 1)
 	{
-		puts("latiife");
+		//puts("latiife");
 		str = ft_strjoin("/tmp/test", ft_itoa(mini->counter));
-		printf("counter = %d\n", mini->counter);
+		//printf("counter = %d\n", mini->counter);
 		mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		printf("fd* = %d\n", mini->all_fd[mini->counter]);
+		//printf("fd* = %d\n", mini->all_fd[mini->counter]);
 		//mini->counter++;
 	}
 	else
@@ -95,7 +95,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 			if (num == 1 && out == 1)
 			{
 				mini->all_fd[mini->counter] = open(str , O_CREAT | O_RDWR | O_TRUNC, 0644);
-				printf("fd == %d\n" , mini->all_fd[mini->counter]);
+				//printf("fd == %d\n" , mini->all_fd[mini->counter]);
 			}
 			else
 				fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
@@ -137,6 +137,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 				hu = dup(mini->all_fd[mini->counter]);
 				//printf("hu = %d\n", hu);
 				dup2(hu, 0);
+				mini->all_fd[mini->counter] = open(str, O_RDWR | O_TRUNC, 0644);
 				dup2(mini->all_fd[mini->counter], 1);
 			}
 			else

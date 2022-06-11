@@ -29,10 +29,17 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
     new->val[1] = NULL;
     new->v_type[0] = v_type;
 	new->next = NULL;
+    new->prev = NULL;
 	if(lst)
 	{
 		while (lst->next)
+        {
+            if(lst->next)
+            {
+                lst->next->prev = lst;
+            }
 			lst = lst->next;
+        }
 		lst->next = new;
 	}
 	else

@@ -51,17 +51,27 @@ void    ft_mini(t_shell *mini, char *src)
     int     i;
     lst = ft_parser(src, mini);
     
-    // head = lst;
+        i = 0;
+    // // head = lst;
+    //             printf("list [%d] = %s", i++, lst->val[0]);
     // while (lst)
     // {
-    //     i = 1;
-    //     printf("%s -- " , lst->val[0]);
-    //     while (lst->val[i])
-    //         printf("%s | " , lst->val[i++]);
+    //     // printf("%s -- " , lst->val[0]);
+    //     // while (lst->val[i])
+    //     // {
+    //         if(lst->prev)
+    //         {
+    //             printf("prev [%d] = %s", i ,lst->prev->val[0]);
+    //         printf("\n");
+    //             printf("list [%d] = %s", i++, lst->val[0]);
+
+    //         }
+    //     // }
+    //         // printf("%s | " , lst->val[i++]);
     //     printf("\n");
     //         lst = lst->next;
     // }
-    // lst = head;
+    // // lst = head;
     if (!lst)
         return;
     else if (finde_her(lst) == 1)

@@ -83,7 +83,7 @@ void    pipes(t_shell *mini, t_list *list)
 	num_cmd = num_of_cmd(list);
 	//printf("%d\n" , num_cmd);
 	k = exec_first(mini, list, 1);
-	printf("k == %d\n", k[0]);
+	//printf("k == %d\n", k[0]);
 	// exit(0);
 	// exit(0);
 	int fs = 0;
@@ -93,8 +93,8 @@ void    pipes(t_shell *mini, t_list *list)
 	int l;
 	while (i < num_cmd && list)
 	{
-		if (pipe(fd) < 0)
-			perror("pipe");
+			if (pipe(fd) < 0)
+				perror("pipe");
 		id = fork();
 		//puts("hana");
 		if (id == 0)
@@ -113,11 +113,8 @@ void    pipes(t_shell *mini, t_list *list)
 					close(fd[1]);
 					ft_redin(mini, list);
 				}
-				else if (list->v_type[0] == 3 || list->next->v_type[0] == 3)
-				{
-					puts("hana00000000000000000");
-				}
-				else if (ft_strcmp(list->val[0], "exit") != 0)
+
+				else if (ft_strcmp(list->val[0], "exit") != 0 && list->v_type[0] == 1)
 				{
 					printf("val == %s\n", list->val[0]);
 					dup2(fd[1], 1);
@@ -130,13 +127,17 @@ void    pipes(t_shell *mini, t_list *list)
 				close(fd[1]);
 				dup2(temp_fd, 0);
 				if ((list->next && list->next->v_type[0] == 6) || list->v_type[0] == 6)
+				{
+					dup2(temp_fd, 0);
 					ft_redirection(mini, list, 1);
+				}
 				else if (list->v_type[0] == 8)
 				{
 					close(temp_fd);
 					ft_redin(mini, list);
 				}
-				else if (ft_strcmp(list->val[0], "exit") != 0)	
+
+				else if (ft_strcmp(list->val[0], "exit") != 0 && list->v_type[0] == 1)
 				{
 					printf("val  == %s\n", list->val[0]);
 					dup2(temp_fd, 0);
@@ -157,9 +158,10 @@ void    pipes(t_shell *mini, t_list *list)
 					close(fd[1]);
 					ft_redin(mini, list);
 				}
-				else if (ft_strcmp(list->val[0], "exit") != 0)
+
+				else if (ft_strcmp(list->val[0], "exit") != 0 && list->v_type[0] == 1)
 				{
-					printf("ll = %s\n", list->val[0]);
+					printf("ll1 = %s\n", list->val[0]);
 					dup2(temp_fd, 0);
 					dup2(fd[1], 1);
 					ft_check_built(mini, list, 1);
@@ -168,7 +170,7 @@ void    pipes(t_shell *mini, t_list *list)
 			exit(0);
 		}
 		saver[i] = id;
-		temp_fd = fd[0];
+		//temp_fd = fd[0];
 		if (list && list->next && (list->next->v_type[0] == 6 || list->next->v_type[0] == 8 || list->next->v_type[0] == 3 || list->v_type[0] == 3) && list->next->next)
 		{
 			while (list && list->next && list->v_type[0] != 11)
@@ -183,12 +185,30 @@ void    pipes(t_shell *mini, t_list *list)
 			list = list->next->next;
 			temp_fd = dup(fd[0]);
 		}
+		if (list->prev && list->prev->prev && list->prev->prev->v_type[0] == 3)
+		{
+			char *str;
+			if (k[fs] == 0)
+			{
+				close(mini->all_fd[fs]);
+				mini->all_fd[fs] = open("/tmp/test0", O_CREAT | O_RDWR, 0644);
+				temp_fd = dup(mini->all_fd[fs]);
+				str = get_next_line(temp_fd);
+				printf("str = %s\n", str);
+				//exit(0);
+				if (fs < mini->counter)
+					fs++;
+			}
+			else
+				temp_fd = dup(fd[0]);
+		}
 		close(fd[0]);
 		close(fd[1]);
 		//printf("i = %d\n", i);
 		i++;
 	}
 	unlink("/tmp/test");
+	//unlink("/tmp/test0");
 	while (--i >= 0)
 		waitpid(saver[i], 0, 0);
 }

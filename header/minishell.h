@@ -52,7 +52,7 @@ typedef struct token_struct
 } token_t;
 
 
-
+char	*get_next_line(int fd);
 void    ft_mini(t_shell *mini, char *src);
 lexer_t *init_lexer(char *src,t_shell *mini);
 void    lexer_advance(lexer_t *lexer);
