@@ -100,7 +100,9 @@ int main(int ac, char **av, char **env)
     {
         mini.counter = 0;
         src = readline("mimishell : ");
-        ft_mini(&mini, src);
+        if (src == NULL)
+			exit(0);
+		ft_mini(&mini, src);
         add_history(src);
         free(src);
     }

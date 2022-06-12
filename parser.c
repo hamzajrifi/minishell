@@ -41,6 +41,7 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
 			lst = lst->next;
         }
 		lst->next = new;
+        lst->next->prev = lst;
 	}
 	else
 		head = new;

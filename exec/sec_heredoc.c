@@ -85,11 +85,26 @@ int size_tab(char **tab)
 	return i;
 }
 
+int fd_i(t_list *list)
+{
+	int fd;
+
+	fd = 0;
+	while (list && list->v_type[0] != 11)
+	{
+		if (list->v_type[0] == 8)
+			fd = open(list->val[1], O_RDWR, 0644);
+		list = list->next;
+	}
+	return fd;
+}
 
 void    exec_first_cmd_in_her(t_list *list, t_shell *mini, char *str, int num, int out, int fd)
 {
     char **sec_tab;
+	int fd_in;
 
+	fd_in = fd_i(list);
 	if (num == 1 && out == 1)
 	{
 		close(mini->all_fd[mini->counter]);
@@ -118,14 +133,17 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, char *str, int num, i
 		{
 			int hu;
 			hu = dup(mini->all_fd[mini->counter]);
-			//printf("hu = %d\n", hu);
+			printf("hu = %d\n", hu);
 			dup2(hu, 0);
-			mini->all_fd[mini->counter] = open(str, O_RDWR | O_TRUNC, 0644);
+			mini->all_fd[mini->counter] = open(str, O_RDWR , 0644);
 			dup2(mini->all_fd[mini->counter], 1);
 		}
 		else
 		{
-			dup2(fd, 0);
+			if (fd_in != 0)
+				dup2(fd_in, 0);
+			else
+				dup2(fd, 0);
 			dup2(out, 1);
 		}
 		ft_check_built(mini, list, 1);
@@ -139,7 +157,10 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, char *str, int num, i
 void    exec_her(t_list *list, t_shell *mini, int out, int num, char *str, int fd)
 {
     char **sec_tab;
+	int fd_in;
 
+	fd_in = fd_i(list);
+	printf("num %d\n", fd_in);
 	if (num == 1 && out == 1)
 	{
 		close(mini->all_fd[mini->counter]);
@@ -175,7 +196,10 @@ void    exec_her(t_list *list, t_shell *mini, int out, int num, char *str, int f
 			dup2(mini->all_fd[mini->counter], 1);
 		else
 		{
-			dup2(fd, 0);
+			if (fd_in != 0)
+				dup2(fd_in, 0);
+			else
+				dup2(fd, 0);
 			dup2(out, 1);
 		}
 		ft_check_built(mini, list, 1);
@@ -225,11 +249,11 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 				fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 		}
 		if (num == 1 && out == 1)
-			ft_putstr_fd(find, mini->all_fd[mini->counter]);
+			ft_putendl_fd(find, mini->all_fd[mini->counter]);
 		else
-			ft_putstr_fd(find, fd);
+			ft_putendl_fd(find, fd);
 	}
-    if (list->v_type[0] == 1 && out != 1)
+    if (list->v_type[0] == 1 && out != -1)
         exec_first_cmd_in_her(list, mini, str, num , out, fd);
     else if (out != -1)
         exec_her(list, mini, out,  num, str, fd);
