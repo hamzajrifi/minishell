@@ -162,12 +162,7 @@ void    pipes(t_shell *mini, t_list *list)
     num_cmd = num_of_cmd(list);
     k = exec_first(mini, list, 1);
     i = 0;
-    while (i < mini->counter)
-    {
-        printf("%d\n", mini->all_fd[i]);
-        i++;
-    }
-    exit(0);
+    //exit(0);
     while (i < num_cmd && list)
     {
         if (pipe(fd) < 0)
@@ -198,10 +193,21 @@ void    pipes(t_shell *mini, t_list *list)
 			list = list->next->next;
             temp_fd = dup(fd[0]);
         }
+		if (list && list->next && (list->v_type[0] == 3 || list->next->v_type[0] == 3))
+		{
+				puts("yalatiifwe");
+			while (list && list->next && list->v_type[0] != 11)
+			{
+				list = list->next;
+			}
+			if (list->next)
+				list = list->next;
+		}
         if (list->prev && list->prev->prev && list->prev->prev->v_type[0] == 3)
         {
             if (k[fs] == 0)
             {
+				puts("hnaya");
                 close(mini->all_fd[fs]);
                 mini->all_fd[fs] = open("/test/test0", O_RDWR, 0644);
                 temp_fd = dup(mini->all_fd[fs]);

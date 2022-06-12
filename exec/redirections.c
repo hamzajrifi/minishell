@@ -41,18 +41,93 @@ int     open_all_files(t_list *list, int a)
     return fd;
 }
 
+char  **cmd(t_list *list)
+{
+	int i;
+	t_list *head;
+	char **tab;
+
+	i = 0;
+	head = list;
+	while (list && list->v_type[0] != 11)
+	{
+		if (list->v_type[0] == 6 || list->v_type[0] == 4)
+		{
+			if ((list->val[3] || list->val[2]) && i == 0)
+            {
+                i++;
+                if (list->val[3])
+                    i++;
+            }
+            else if ((list->val[3] || list->val[2]))
+            {
+                i++;
+                if (list->val[3])
+                    i++;
+            }
+		}
+		else if (list->v_type[0] == 11)
+			break;
+		list = list->next;
+	}
+	tab = (char **)malloc(sizeof(char *) * (i));
+	i = 0;
+	list = head;
+	while (list && list->v_type[0] != 11)
+	{
+		if (list->v_type[0] == 6 || list->v_type[0] == 4 )
+		{
+			if ((list->val[3] || list->val[2]) && i == 0)
+            {
+				tab[i++] = list->val[2];
+                if (list->val[3])
+				    tab[i++] = list->val[3];
+            }
+            else if (list->val[2])
+            {
+				tab[i++] = list->val[2];
+                if (list->val[3])
+				    tab[i++] = list->val[3];
+            }
+		}
+		list = list->next;
+	}
+	tab[i] = NULL;
+	return tab;
+}
+
 void    ft_redirection(t_shell *mini, t_list *lst, int a)
 {
     int fd;
     int id;
+    char **tab;
+    int io = 0;
+    int ij = 0;
 
     fd = open_all_files(lst, 0);
     if (a != 1 && fd != -1)
     {
+        if (lst->v_type[0] != 1 || lst->next->val[2] || lst->next->val[3])
+        {
+            tab = cmd(lst);
+            printf("tab %s\n", tab[0]);
+            printf("tab %s\n", tab[1]);
+            printf("tab %s\n", tab[2]);
+            if (lst->v_type[0] == 1)
+                ij = 1;
+            while (tab[io])
+            {
+                lst->val[ij] = strdup(tab[io]);
+                io++;
+                ij++;
+            }
+            lst->val[ij]  = NULL;
+            lst->v_type[0] = 1;
+            lst->v_type[1] = 2;
+        }
         id = fork();
         if (id == 0)
         {
-            //if (fd != -1)
             dup2(fd, STDOUT_FILENO);
             ft_check_built(mini, lst, fd);
             exit(1);
