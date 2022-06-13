@@ -71,7 +71,7 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd);
 int     finder(char *str);
 //int     find_pipe(char *str);
 int		invalide_identifier(char *str, int fd);
-void	heredoc(t_shell *mini, t_list *list, int num);
+void    heredoc(t_shell *mini, t_list *list, int num, int fd_out);
 int     open_all_files(t_list *list, int a);
 void	red_in(t_shell *mini, char *str);
 int    ft_and_bonus(t_shell *mini, char *str);
@@ -93,6 +93,6 @@ void    ft_cd(char *path, t_shell *mini);
 void	ft_pwd(int fd);
 int     tablen(char **tab);
 int	    ft_pipe(t_shell *mini, char *str);
-char **save_cmd(t_list *list);
+char 	**save_cmd(t_list *list);
 
 #endif

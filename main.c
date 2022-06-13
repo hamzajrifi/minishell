@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/13 14:40:34 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:04:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ void    ft_mini(t_shell *mini, char *src)
     else if (finder_red(lst) == 2)
        ft_redirection(mini, lst, 0, 1);
     else if (finder_red(lst) == 4)
-        heredoc(mini, lst, 0);
+        heredoc(mini, lst, 0, 1);
     else if (finder_red(lst) == 3)
         ft_redin(mini, lst, 1, 0);
-    else 
+    else
+    {
        ft_check_built(mini, lst, 1);
+    }
 }
 
 int main(int ac, char **av, char **env)

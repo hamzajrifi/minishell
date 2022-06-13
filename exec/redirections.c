@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/13 14:40:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:49:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
     if (fd != -1)
     {
         tab = cmd(lst);
-        if (tab)
+        printf("%s\n", tab[0]);
+        if (tab[0])
         {
             if (lst->v_type[0] == 1)
                 ij = 1;
@@ -108,11 +109,14 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
                 ij++;
             }
             lst->val[ij]  = NULL;
-            lst->v_type[0] = 1;
-            lst->v_type[1] = 2;
+            if (tab[0])
+            {
+                lst->v_type[0] = 1;
+                lst->v_type[1] = 2;
+            }
         }
         id = fork();
-        if (id == 0)
+        if (id == 0 && lst->v_type[0] == 1)
         {
             if (fd != 1)
                 dup2(fd, STDOUT_FILENO);
@@ -121,6 +125,8 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
             ft_check_built(mini, lst, fd);
             exit(0);
         }
+        else if (id == 0)
+            exit(0);
         close(fd);
         wait(NULL);
     }
@@ -152,7 +158,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
                     if (fd_in < 0)
                     {
                         fd_in = 0;
-                        perror(NULL);
+                        //perror(NULL);
                         break;
                     }
                     k++;
@@ -174,7 +180,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
         }
         lst = head;
         tab = cmd(lst);
-        if (tab)
+        if (tab[0])
         {
             if (lst->v_type[0] == 1)
                 i = 1;
@@ -229,7 +235,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
         }
         lst = head;
         tab = cmd(lst);
-        if (tab)
+        if (tab[0])
         {
             while (tab[i])
             {
