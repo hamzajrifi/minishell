@@ -53,6 +53,7 @@ void    ft_mini(t_shell *mini, char *src)
     
         i = 0;
     // // head = lst;
+    
     //             printf("list [%d] = %s", i++, lst->val[0]);
     // while (lst)
     // {
