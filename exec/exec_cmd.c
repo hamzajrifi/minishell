@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/09 18:16:24 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:51:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int find(char *str)
 
 void	exec_cmd(t_shell *mini, t_list *lst)
 {
-	char **temp;
-	char *str;
+	char **temp = NULL;
+	char *str = NULL;
 	int i;
 	int size;
 
@@ -131,7 +131,7 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 	else
 	{
 		write(2, lst->val[0], ft_strlen(lst->val[0]));
-		write (2, " :command not found\n", 20);
+		write (2, " :command not3found\n", 20);
 		exit(0);
 	}
 }

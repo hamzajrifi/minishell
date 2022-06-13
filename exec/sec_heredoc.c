@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/11 21:50:52 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/13 15:25:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, char *str, int num, i
 	if (num == 1 && out == 1)
 	{
 		close(mini->all_fd[mini->counter]);
-		mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR , 0644);
+		mini->all_fd[mini->counter] = open(str,  O_RDWR , 0644);
 	}
 	else
 	{
 		close(fd);
-		fd = open("/tmp/test", O_CREAT | O_RDWR, 0644);
+		fd = open("/tmp/test",  O_RDWR, 0644);
 	}
 	sec_tab = save_cmd(list);
 	int io = 0;
@@ -133,9 +133,8 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, char *str, int num, i
 		{
 			int hu;
 			hu = dup(mini->all_fd[mini->counter]);
-			printf("hu = %d\n", hu);
 			dup2(hu, 0);
-			mini->all_fd[mini->counter] = open(str, O_RDWR , 0644);
+			mini->all_fd[mini->counter] = open(str, O_RDWR, 0644);
 			dup2(mini->all_fd[mini->counter], 1);
 		}
 		else
@@ -150,8 +149,9 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, char *str, int num, i
 		exit(0);
 	}
 	//else
-	close(fd);
+	//close(fd);
 	wait(NULL);
+	puts("hani hnaya");
 }
 
 void    exec_her(t_list *list, t_shell *mini, int out, int num, char *str, int fd)
@@ -164,12 +164,12 @@ void    exec_her(t_list *list, t_shell *mini, int out, int num, char *str, int f
 	if (num == 1 && out == 1)
 	{
 		close(mini->all_fd[mini->counter]);
-		mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR, 0644);
+		mini->all_fd[mini->counter] = open(str,  O_RDWR, 0644);
 	}
 	else
 	{
 		close(fd);
-		fd = open("/tmp/test", O_CREAT | O_RDWR, 0644);
+		fd = open("/tmp/test", O_RDWR, 0644);
 	}
 	sec_tab = save_cmd(list);
 	int io = 0;
@@ -205,7 +205,8 @@ void    exec_her(t_list *list, t_shell *mini, int out, int num, char *str, int f
 		ft_check_built(mini, list, 1);
 		exit(0);
 	}
-	//else
+	if (out == 1 &&  num == 1)
+		close(mini->all_fd[mini->counter]);
 	close(fd);
 	wait(NULL);  
 }
@@ -227,8 +228,8 @@ void    heredoc(t_shell *mini, t_list *list, int num)
     int size = size_tab(tab);
     if (num == 1 && out == 1)
 	{
-		str = ft_strjoin("/tmp/test", ft_itoa(mini->counter));
-		mini->all_fd[mini->counter] = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		mini->save_all_namefiles[mini->counter] = ft_strjoin("/tmp/test", ft_itoa(mini->counter));
+		mini->all_fd[mini->counter] = open(mini->save_all_namefiles[mini->counter], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	}
 	else
 		fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
@@ -244,7 +245,7 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 			if (size == 0)
 				break;
 			if (num == 1 && out == 1)
-				mini->all_fd[mini->counter] = open(str , O_CREAT | O_RDWR | O_TRUNC, 0644);
+				mini->all_fd[mini->counter] = open(mini->save_all_namefiles[mini->counter] , O_CREAT | O_RDWR | O_TRUNC, 0644);
 			else
 				fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
 		}
@@ -254,9 +255,10 @@ void    heredoc(t_shell *mini, t_list *list, int num)
 			ft_putendl_fd(find, fd);
 	}
     if (list->v_type[0] == 1 && out != -1)
-        exec_first_cmd_in_her(list, mini, str, num , out, fd);
+        exec_first_cmd_in_her(list, mini, mini->save_all_namefiles[mini->counter], num , out, fd);
     else if (out != -1)
-        exec_her(list, mini, out,  num, str, fd);
+        exec_her(list, mini, out,  num, mini->save_all_namefiles[mini->counter], fd);
+	puts("***********-----******");
 	if (out == -1)
 		printf("No such file or directory\n");
 	if (num != 1 || out != 1)

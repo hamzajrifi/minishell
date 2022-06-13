@@ -16,7 +16,7 @@ typedef struct s_shell {
 	char **tab_save_exp;
 	char *save_pwd;
 	char *save_old_pwd;
-	int	checker;
+	char **save_all_namefiles;
 	int	*all_fd;
 	int	counter;
 }   t_shell;
@@ -66,7 +66,7 @@ void	ft_check_cmd(t_shell *mini, t_list *list);
 char	*check_path_if_exi(t_shell *mini);
 void    ft_echo(t_shell *mini, char **str, int fd);
 void    ft_check_built(t_shell *mini, t_list *lst, int fd);
-void    ft_redirection(t_shell *mini, t_list *lst, int a);
+void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd);
 //int     checker(char *str);
 int     finder(char *str);
 //int     find_pipe(char *str);
@@ -82,7 +82,7 @@ int		search_path_in_env(t_shell *mini, int a);
 int find_both(char *str);
 void    ft_both(t_shell *mini, char *str);
 void    ft_wildcars(t_shell *mini, char *str);
-void    ft_redin(t_shell *mini, t_list *lst);
+void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
 
 // exit
 

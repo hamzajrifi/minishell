@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/11 14:52:26 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:40:34 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void    ft_mini(t_shell *mini, char *src)
     else if (finde_her(lst) == 1)
         pipes(mini, lst);
     else if (finder_red(lst) == 2)
-       ft_redirection(mini, lst, 0);
+       ft_redirection(mini, lst, 0, 1);
     else if (finder_red(lst) == 4)
         heredoc(mini, lst, 0);
     else if (finder_red(lst) == 3)
-        ft_redin(mini, lst);
+        ft_redin(mini, lst, 1, 0);
     else 
        ft_check_built(mini, lst, 1);
 }
@@ -96,6 +96,7 @@ int main(int ac, char **av, char **env)
    (void)av;
     mini.tab_save_env = env;
     mini.tab_save_exp = NULL;
+    mini.save_all_namefiles = (char **)malloc(sizeof(char *) * 10);
 	// signal(SIGINT, checksignal);
     while(1337)
     {
