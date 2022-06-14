@@ -95,7 +95,7 @@ char	*check_var(lexer_t *lexer)
 
 	str = NULL;
 	lexer_advance(lexer);
-	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|' || lexer->c == '=')
+	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|' || lexer->c == '=' || lexer->c == '/')
 		return (ft_strdup("$"));
     else if (lexer->c == '?')
     {
@@ -185,8 +185,10 @@ token_t *lexer_collect_string(lexer_t *lexer)
     }
     while(lexer->c && lexer->c != c)
     {
-        if (lexer->c == '$' && c == '"')
-			str = check_arg_dollar(lexer, str, c);
+        if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\')
+			str = check_arg_dollar(lexer, str, 0);
+        else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
+            return (init_token(t_error, NULL));
 		else
         {
             check_backslash(&lexer);
@@ -220,8 +222,10 @@ token_t *lexer_collect_arg(lexer_t *lexer)
     str = NULL;
     while(lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|' && lexer->c != '>' && lexer->c != '<')
     {
-		if (lexer->c == '$')
+		if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\')
 			str = check_arg_dollar(lexer, str, 0);
+        else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
+            return (init_token(t_error, NULL));
         else
 		{
             check_backslash(&lexer);

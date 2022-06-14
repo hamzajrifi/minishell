@@ -74,42 +74,42 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
 
 t_list    *print_error(char *str)
 {
-    printf("%s\n",str);
-    return (NULL);
+	printf("%s\n",str);
+	return (NULL);
 }
 
 t_list  *ft_parser(char *src, t_shell *mini)
 {
-    lexer_t *lexer;
-    token_t *token;
-    t_list  *lst;
-    t_list  *head;
-    
-    lexer = init_lexer(src, mini);
-    token = lexer_get_next_token(lexer);
-    lst = NULL;
-    if (token)
-        lst = add_node_in_lst(token->val, token->type, lst);
-    if(token && token->type == t_error)
-        return (print_error("minishell: syntax error 3"));
-    head = lst;
-    while(token && token->type != t_error)
-    {
-        if (!(lst = ft_check_parser(&token, lexer, lst)))
+	lexer_t *lexer;
+	token_t *token;
+	t_list  *lst;
+	t_list  *head;
+
+	lexer = init_lexer(src, mini);
+	token = lexer_get_next_token(lexer);
+	lst = NULL;
+	if (token)
+		lst = add_node_in_lst(token->val, token->type, lst);
+	if(token && token->type == t_error)
+		return (print_error("minishell: syntax error 3"));
+	head = lst;
+	while(token && token->type != t_error)
+	{
+		if (!(lst = ft_check_parser(&token, lexer, lst)))
 			return (NULL);
-        if (token && lst)
-        {
-            if (!(lst = add_node_in_lst(token->val, token->type, head)))
+		if (token && lst)
+		{
+			if (!(lst = add_node_in_lst(token->val, token->type, head)))
 				return(NULL);
-            if (token->type > t_output && token->type <= t_error )
-            {
-                token = lexer_get_next_token(lexer);
-                if (!(lst = add_node_in_lst(token->val, token->type, head)))
+			if (token->type > t_output && token->type <= t_error )
+			{
+				token = lexer_get_next_token(lexer);
+				if (!(lst = add_node_in_lst(token->val, token->type, head)))
 					return(NULL);
-            }
-            while (lst->next)
-                lst = lst->next;
-        }
-    }
-    return (head);
+			}
+			while (lst->next)
+				lst = lst->next;
+		}
+	}
+	return (head);
 }
