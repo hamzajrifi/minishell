@@ -120,7 +120,7 @@ char	*check_var(lexer_t *lexer)
 			)
 		{
 			tmp = lexer_get_current_char_as_string(lexer);
-			str = ft_strjoin(str, tmp);
+			str = ft_h_strjoin(str, tmp);
         	free(tmp);
         	lexer_advance(lexer);
 		}
@@ -152,18 +152,18 @@ void    check_backslash(lexer_t **lexer)
 
 char	*check_arg_dollar(lexer_t *lexer, char *str, char c)
 {
-	str = ft_strjoin(str, check_var(lexer));
+	str = ft_h_strjoin(str, check_var(lexer));
 
 	if (c == '"')
 		return (str);
 	if (lexer->c == '"')
 	{
-		str = ft_strjoin(str, lexer_collect_string(lexer)->val);
+		str = ft_h_strjoin(str, lexer_collect_string(lexer)->val);
 		lexer->c = '"';
 	}
     else if (lexer->c == '/')
     {
-		str = ft_strjoin(str, ft_strdup("/"));
+		str = ft_h_strjoin(str, ft_strdup("/"));
         lexer_advance(lexer);
     }
 	return (str);
@@ -193,7 +193,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
         {
             check_backslash(&lexer);
             tmp = lexer_get_current_char_as_string(lexer);
-            str = ft_strjoin(str, tmp);
+            str = ft_h_strjoin(str, tmp);
             free(tmp);
             lexer_advance(lexer);
         }
@@ -202,13 +202,13 @@ token_t *lexer_collect_string(lexer_t *lexer)
         return (init_token(t_error, NULL));
     lexer_advance(lexer);
     if (check_lexer_c(lexer->c))
-        str = ft_strjoin(str, (lexer_collect_arg(lexer))->val);
+        str = ft_h_strjoin(str, (lexer_collect_arg(lexer))->val);
     else if (lexer->c == '\'' || lexer->c == '"')
     {
         tmp = (lexer_collect_string(lexer))->val;
         if (!tmp)
             return (init_token(t_error, NULL));
-        str = ft_strjoin(str, tmp);
+        str = ft_h_strjoin(str, tmp);
         free(tmp);
     }
     return (init_token(t_args, str));
@@ -230,7 +230,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
 		{
             check_backslash(&lexer);
 			tmp = lexer_get_current_char_as_string(lexer);
-        	str = ft_strjoin(str, tmp);
+        	str = ft_h_strjoin(str, tmp);
         	free(tmp);
         	lexer_advance(lexer);
         	while (lexer->c == '"' ||lexer->c == '\'')
@@ -238,7 +238,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
                 tmp = (lexer_collect_string(lexer))->val;
                 if (!tmp)
                     return (init_token(t_error, NULL));
-                str = ft_strjoin(str, tmp);
+                str = ft_h_strjoin(str, tmp);
                 free(tmp);
             }
 		}
