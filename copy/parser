@@ -48,26 +48,26 @@ t_list *add_node_in_lst(char *str, int v_type, t_list *lst)
 	return (head);
 }
 
-t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
+t_list  *ft_check_parser(token_t *token, lexer_t *lexer, t_list *lst)
 {
     int     i;
 
     i = 1;
-    *token = lexer_get_next_token(lexer);
-    while (*token && (*token)->type == t_args)
+    lexer_get_next_token(lexer, token);
+	// system("leaks minishell");
+    while (token && (token)->type == t_args)
     {
         lst->val =  ft_realloc_char(lst->val); /// return str 
         lst->v_type =  ft_realloc_int(lst->v_type, lst->val); /// return str 
-        lst->val[i] = ft_strdup((*token)->val);
-        lst->v_type[i++] = (*token)->type;
-        *token = lexer_get_next_token(lexer);
+        lst->val[i] = ft_strdup((token)->val);
+        lst->v_type[i++] = (token)->type;
+        token = lexer_get_next_token(lexer, token);
     }
-
     if (i > 1 && lst->v_type[0] == 3)
         lst->v_type[1] = t_end;
     else if (i > 1 && lst->v_type[0] == t_output)
         lst->v_type[1] = t_file;
-    if ((*token) && (*token)->type == t_error)
+    if ((token) && (token)->type == t_error)
         return (print_error("minishell: syntax error 2"));
     return (lst);
 }
@@ -96,30 +96,34 @@ t_list  *ft_parser(char *src, t_shell *mini)
 	t_list  *lst;
 	t_list  *head;
 
+    token = malloc(sizeof(token_t));
+
 	if (is_string_empty(src))
 		return (NULL);
 	lexer = init_lexer(src, mini);
-	token = lexer_get_next_token(lexer);
+	token = lexer_get_next_token(lexer, token);
 	
 	lst = NULL;
 	if (token)
 		lst = add_node_in_lst(token->val, token->type, lst);
 	if(token && token->type == t_error)
 		return (print_error("minishell: syntax error 3"));
+	
 	head = lst;
 	while(token && token->type != t_error)
 	{
-		if (!(lst = ft_check_parser(&token, lexer, lst)))
+		// printf("i'm here 2= %s\n", token->val);
+		if (!(lst = ft_check_parser(token, lexer, lst)))
 			return (NULL);
 		if (token && lst)
 		{
 			if (!(lst = add_node_in_lst(token->val, token->type, head)))
-				return (print_error("minishell: syntax error 4"));
+				return(NULL);
 			if (token->type > t_output && token->type <= t_error )
 			{
-				token = lexer_get_next_token(lexer);
-				if (!(lst = add_node_in_lst(token->val, token->type, head)) || token->type == t_error)
-					return (print_error("minishell: syntax error 5"));
+				token = lexer_get_next_token(lexer, token);
+				if (!(lst = add_node_in_lst(token->val, token->type, head)))
+					return(NULL);
 			}
 			while (lst->next)
 				lst = lst->next;
