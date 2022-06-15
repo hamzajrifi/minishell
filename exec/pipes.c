@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/15 21:54:04 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 23:10:23 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,22 +129,23 @@ void    pipes(t_shell *mini, t_list *list)
     {
 		//mini->counter++;
 		ft_exit_status(mini, list);
+		if (ft_strcmp(list->val[0], "exit") == 0)
+		{
+			if (list->val[1])
+				status_exec_g = atoi(list->val[1]);
+		}
         if (pipe(fd) < 0)
             perror("pipe");
-		if (i == 0 && (TEST_HACK1 || TEST_HACK2 || TEST_HACK3))
-		{
-			puts("hana hna");
+		if (i == 0 && (TEST_HACK1 || TEST_HACK2 || TEST_HACK3 || TEST_HACK4))
 			cnt = 2;
-		}
 		else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
 		{
 			mini->counter = i + 1;
 			heredoc(mini, list, 1, fd[1]);
 			wait(NULL);
 		}
-		else if (i != 0)
+		else
 		{
-			puts("hana");
 			mini->counter = i + 1;
 			id = fork();
 			if (id == 0)
@@ -188,6 +189,7 @@ void    pipes(t_shell *mini, t_list *list)
 		{
 			dup2(fd, 1);
 			exec_cmd(mini, list);
+			exit(0);
 		}
 		save[fs] = id;
 	}
@@ -196,5 +198,5 @@ void    pipes(t_shell *mini, t_list *list)
 		waitpid(save[fs], 0, 0);
 		fs--;
 	}
-	//unlink("/tmp/test");
+	unlink("/tmp/test");
 }

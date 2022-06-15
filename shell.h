@@ -13,7 +13,8 @@
 
 #define TEST_HACK1 ft_strcmp(list->val[0], "cat") == 0
 #define TEST_HACK2 ft_strcmp(list->val[0], "wc") == 0
-#define TEST_HACK3 ft_strcmp(list->val[0], "grep") == 0
+#define TEST_HACK3 ft_strcmp(list->val[0], "grep") == 0 
+#define TEST_HACK4 ft_strcmp(list->val[0], "more") == 0   
 
 typedef struct s_shell {
 	char **tab_save_env;
