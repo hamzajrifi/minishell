@@ -22,6 +22,7 @@ C_FILES =	main.c\
 			built_func/utils_exp.c\
 			parser.c\
 			utils/ft_split.c\
+			utils/ft_strjoin.c\
 			utils/ft_substr.c\
 			utils/all_func.c\
 			utils/ft_strcmp.c\

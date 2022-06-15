@@ -233,7 +233,7 @@ void    heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 		}
 		ft_putendl_fd(find, fd);
 	}
-    out = open_all_files(list, 1);
+    out = open_all_files(list, 2);
     if (list->v_type[0] == 1 && out != -1)
         exec_first_cmd_in_her(list, mini, fd_out, num , out, fd);
     else if (out != -1)

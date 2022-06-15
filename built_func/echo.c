@@ -26,11 +26,19 @@ void    ft_echo(t_shell *mini, char **str, int fd)
     {
         if (ft_strcmp(str[i], "-n") == 0)
             i++;
-        write (fd, str[i], ft_strlen(str[i]));
-        if (str[i + 1] != NULL)
-            write(fd, " ", 1);
-        i++;
+        if (str[i])
+        {
+            write (fd, str[i], ft_strlen(str[i]));
+            if (str[i + 1] != NULL)
+                write(fd, " ", 1);
+            i++;
+        }
     }
-    if (strcmp(str[1], "-n") != 0)
+    if (str[1])
+    {
+        if (strcmp(str[1], "-n") != 0)
+            ft_putstr_fd("\n", fd);
+    }
+    else
         ft_putstr_fd("\n", fd);
 }

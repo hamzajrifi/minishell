@@ -101,11 +101,8 @@ char	*check_var(lexer_t *lexer)
 
 	str = NULL;
 	lexer_advance(lexer);
-<<<<<<< HEAD
-	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '"' || lexer->c == '|' || lexer->c == '=')
-=======
+
 	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '"' || lexer->c == '|' || lexer->c == '=' || lexer->c == '/')
->>>>>>> aa56db1cb89061811f73e84e704e5c791f795549
 		return (ft_strdup("$"));
     else if (lexer->c == '?')
     {

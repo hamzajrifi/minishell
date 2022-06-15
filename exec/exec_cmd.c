@@ -59,7 +59,7 @@ void    ft_check_built(t_shell *mini, t_list *lst, int fd)
         }
 		else if (ft_strcmp(lst->val[0], "echo") == 0)
 			ft_echo(mini, lst->val, fd);
-        else
+		else
         {
             if (fork() == 0)
 				exec_cmd(mini, lst);

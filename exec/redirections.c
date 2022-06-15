@@ -36,7 +36,7 @@ int     open_all_files(t_list *list, int a)
                 return fd;
             }
         }
-        if (list->v_type[0] == 3)
+        if (list->v_type[0] == 3 && a != 2)
         {
             while (1337)
             {
@@ -137,6 +137,7 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
         id = fork();
         if (id == 0 && lst->v_type[0] == 1)
         {
+            puts("hana");
             if (fd != 1)
                 dup2(fd, STDOUT_FILENO);
             if (in != 0)
@@ -222,7 +223,9 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
                 if (fork() == 0)
                 {
                     dup2(fd_in, 0);
-                    if (num == 1 && fd_out == 1)
+                    if (mini->counter == mini->num_ofall_cmd)
+				        dup2(1, 1);
+                    else if (num == 1 && fd_out == 1)
                         dup2(te_fd, 1);
                     else
                         dup2(fd_out, 1);

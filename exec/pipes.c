@@ -68,7 +68,7 @@ void    exec_first_cmd(t_list *list, t_shell *mini, int *fd)
 void    exec_last_cmd(t_list *list, t_shell *mini, int temp_fd, int *fd)
 {
     close(fd[0]);
-	if ((list->next && list->next->v_type[0] == 6) || list->v_type[0] == 6)
+	if ((list->next && list->next->v_type[0] == 6) || list->v_type[0] == 4)
 	{
 		dup2(temp_fd, 0);
 		ft_redirection(mini, list, 1, fd[1]);
@@ -137,6 +137,7 @@ void    pipes(t_shell *mini, t_list *list)
 		}
 		else
 		{
+			mini->counter = i + 1;
 			id = fork();
 			if (id == 0)
 			{
