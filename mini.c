@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/14 20:49:38 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:21:32 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ void    check_backslash(lexer_t **lexer)
 char	*check_arg_dollar(lexer_t *lexer, char *str, char c)
 {
 	str = ft_h_strjoin(str, check_var(lexer));
-
 	if (c == '"')
 		return (str);
 	if (lexer->c == '"')
@@ -194,7 +193,7 @@ token_t *lexer_collect_string(lexer_t *lexer)
     {
         if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' 
 			&& lexer->src[lexer->i + 1] != '\'' 
-			&& lexer->src[lexer->i + 1] != '"')
+			&& lexer->src[lexer->i + 1] != '"' && c == '"')
 			str = check_arg_dollar(lexer, str, 0);
         else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
             return (init_token(t_error, NULL));
