@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/15 13:00:25 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:15:03 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int main(int ac, char **av, char **env)
     //signal(SIGINT, handler);
     while(1337)
     {
-        printf("errno = %d\n", errno);
+        //printf("errno = %d\n", errno);
         mini.counter = 0;
         src = readline("mimishell : ");
         if (errno == 13)

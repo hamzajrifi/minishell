@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/14 18:25:45 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:54:04 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void    pipes(t_shell *mini, t_list *list)
     int fd[2];
     int id;
     int num_cmd;
+	t_list *head = list;
     int i;
     int *save;
     int temp_fd;
@@ -122,6 +123,7 @@ void    pipes(t_shell *mini, t_list *list)
     num_cmd = num_of_cmd(list);
 	mini->num_ofall_cmd = num_cmd;
 	save =  malloc(sizeof(int) * num_cmd);
+	int cnt = 0;
     i = 0;
     while (i < num_cmd && list)
     {
@@ -129,14 +131,20 @@ void    pipes(t_shell *mini, t_list *list)
 		ft_exit_status(mini, list);
         if (pipe(fd) < 0)
             perror("pipe");
-		if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
+		if (i == 0 && (TEST_HACK1 || TEST_HACK2 || TEST_HACK3))
+		{
+			puts("hana hna");
+			cnt = 2;
+		}
+		else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
 		{
 			mini->counter = i + 1;
 			heredoc(mini, list, 1, fd[1]);
 			wait(NULL);
 		}
-		else
+		else if (i != 0)
 		{
+			puts("hana");
 			mini->counter = i + 1;
 			id = fork();
 			if (id == 0)
@@ -171,7 +179,19 @@ void    pipes(t_shell *mini, t_list *list)
 			list = list->next->next;
 		}
 	}
-    while (fs >= 0)
+	if (cnt == 2)
+    {
+		list = head;
+		int fd = open("/tmp/test", O_RDWR);
+		id = fork();
+		if (id == 0)
+		{
+			dup2(fd, 1);
+			exec_cmd(mini, list);
+		}
+		save[fs] = id;
+	}
+	while (fs >= 0)
 	{
 		waitpid(save[fs], 0, 0);
 		fs--;
