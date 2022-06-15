@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/13 13:51:45 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:10:32 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void    ft_check_built(t_shell *mini, t_list *lst, int fd)
         else if (strcmp(lst->val[0], "exit") == 0)
         {
             if (lst->val[1] != NULL && lst->v_type[1] != 0)
-                ft_exit(lst->val[1], fd);
+                ft_exit(lst->val, fd);
             else
                 ft_exit(NULL, fd);
         }
@@ -125,21 +125,29 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 			}
 			write(2, lst->val[0], ft_strlen(lst->val[0]));
 			write (2, " :command not found\n", 20);
-			exit(0);
+			exit(127);
 		}
 	}
 	else
 	{
 		write(2, lst->val[0], ft_strlen(lst->val[0]));
-		write (2, " :command not3found\n", 20);
+		write (2, " :command not found\n", 20);
 		exit(0);
 	}
 }
 
 void	ft_check_cmd(t_shell *mini, t_list *lst)
 {
+	DIR *dp;
+
 	if (lst->val[0][0] == '.')
 	{
+		dp = opendir(lst->val[0]);
+		puts("hana");
+		if (dp == 512)
+		{
+			printf("minishell: ./exec: is a directory\n");
+		}
 		if (access(lst->val[0], F_OK | X_OK) == 0)
 		{
 			execve(lst->val[0], &lst->val[0], mini->tab_save_env);
@@ -147,7 +155,7 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 		}
 		write (2, lst->val[0], ft_strlen(lst->val[0]));
 		write (2, " :no such file or directory\n", 29);
-		exit(127);
+		exit(0);
 	}
 	else if (lst->val[0][0] == '/')
 	{
@@ -158,7 +166,7 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 		}
 		write (2, lst->val[0], ft_strlen(lst->val[0]));
 		write (2, " :command not found \n", 22);
-		exit(0);
+		//exit(127);
 	}
 }	
 

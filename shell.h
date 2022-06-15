@@ -9,6 +9,7 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <errno.h>
 
 
 typedef struct s_shell {
@@ -16,9 +17,8 @@ typedef struct s_shell {
 	char **tab_save_exp;
 	char *save_pwd;
 	char *save_old_pwd;
-	char **save_all_namefiles;
-	int	*all_fd;
 	int	counter;
+	int num_ofall_cmd;
 }   t_shell;
 
 typedef struct t_list
@@ -86,7 +86,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
 
 // exit
 
-void    ft_exit(char *str, int fd);
+void    ft_exit(char **str, int fd);
 void    ft_env(t_shell *index, int fd);
 void    ft_unset(t_shell *index, char **str, int fd);
 void    ft_cd(char *path, t_shell *mini);
@@ -94,5 +94,6 @@ void	ft_pwd(int fd);
 int     tablen(char **tab);
 int	    ft_pipe(t_shell *mini, char *str);
 char 	**save_cmd(t_list *list);
-
+int fd_i(t_list *list);
+void    ft_exit_status(t_shell *mini, t_list *lst);
 #endif

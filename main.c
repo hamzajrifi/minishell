@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/13 18:04:45 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:00:25 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ int     finder_red(t_list *list)
     return 0;
 }
 
+// void	handler(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		printf("\n");
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 		status_exec_g = 130;
+// 	}
+// 	if (sig == SIGQUIT)
+// 	{
+// 		rl_redisplay();
+// 	}
+// }
+
 void    ft_mini(t_shell *mini, char *src)
 {
     t_list *lst;
@@ -52,7 +68,7 @@ void    ft_mini(t_shell *mini, char *src)
     lst = ft_parser(src, mini);
     
         i = 0;
-    // // head = lst;
+    // head = lst;
     
     //             printf("list [%d] = %s", i++, lst->val[0]);
     // while (lst)
@@ -72,7 +88,7 @@ void    ft_mini(t_shell *mini, char *src)
     //     printf("\n");
     //         lst = lst->next;
     // }
-    // // lst = head;
+    //lst = head;
     if (!lst)
         return;
     else if (finde_her(lst) == 1)
@@ -85,7 +101,8 @@ void    ft_mini(t_shell *mini, char *src)
         ft_redin(mini, lst, 1, 0);
     else
     {
-       ft_check_built(mini, lst, 1);
+        ft_exit_status(mini, lst);
+        ft_check_built(mini, lst, 1);
     }
 }
 
@@ -98,12 +115,16 @@ int main(int ac, char **av, char **env)
    (void)av;
     mini.tab_save_env = env;
     mini.tab_save_exp = NULL;
-    mini.save_all_namefiles = (char **)malloc(sizeof(char *) * 10);
-	// signal(SIGINT, checksignal);
+    mini.counter = 0;
+    mini.num_ofall_cmd = 0;
+    //signal(SIGINT, handler);
     while(1337)
     {
+        printf("errno = %d\n", errno);
         mini.counter = 0;
         src = readline("mimishell : ");
+        if (errno == 13)
+            status_exec_g = 126;
         if (src == NULL)
 			exit(0);
 		ft_mini(&mini, src);

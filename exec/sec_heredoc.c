@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/13 19:31:17 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:50:28 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,26 +112,31 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num, 
 	sec_tab = save_cmd(list);
 	int io = 0;
 	int lp = 1;
-	while (sec_tab[io])
+	if (sec_tab[0])
 	{
-		list->val[lp] = sec_tab[io];
-		io++;
-		lp++;
+		while (sec_tab[io])
+		{
+			list->val[lp] = sec_tab[io];
+			io++;
+			lp++;
+		}
+		list->val[lp]  = NULL;
+		list->v_type[0] = 1;
+		list->v_type[1] = 2;
 	}
-	list->val[lp]  = NULL;
-	list->v_type[0] = 1;
-	list->v_type[1] = 2;
+	ft_exit_status(mini, list);
 	if (fork() == 0)
 	{
 		if (out == 1 &&  num == 1)
 		{
-			//puts("hana");
 			dup2(fd, 0);
-			dup2(fd_out, 1);
+			if (mini->counter == mini->num_ofall_cmd)
+				dup2(1, 1);
+			else
+				dup2(fd_out, 1);
 		}
 		else
 		{
-			puts("yaaa latiiiife");
 			if (fd_in != 0)
 				dup2(fd_in, 0);
 			else
@@ -141,7 +146,6 @@ void    exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num, 
 		ft_check_built(mini, list, 1);
 		exit(0);
 	}
-	puts("hana");
 	wait(NULL);
 }
 
@@ -173,12 +177,16 @@ void    exec_her(t_list *list, t_shell *mini, int out, int num, int fd_out, int 
 		list->v_type[0] = 1;
 		list->v_type[1] = 2;
 	}
+	ft_exit_status(mini, list);
 	if (fork() == 0)
 	{
 		if (out == 1 &&  num == 1)
 		{
 			dup2(fd, 0);
-			dup2(fd_out, 1);
+			if (mini->counter == mini->num_ofall_cmd)
+				dup2(1, 1);
+			else
+				dup2(fd_out, 1);
 		}
 		else
 		{
@@ -203,7 +211,6 @@ void    heredoc(t_shell *mini, t_list *list, int num, int fd_out)
     int i = 0;
     char *find;
 	
-    out = open_all_files(list, 1);
     if (list->v_type[0] != 1 && list->v_type[0] == 3)
 		tab = save_dele(list);
 	else
@@ -212,7 +219,7 @@ void    heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC , 0644);
     while (1)
 	{
-		find = readline(">");
+		find = readline("> ");
 		if (find == NULL)
 			break ;
 		if (strcmp(find, tab[i]) == 0 && tab[i])
@@ -222,13 +229,11 @@ void    heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 			if (size == 0)
 				break;
 			else
-			{
-				puts("hana");
 				fd = open("/tmp/test", O_RDWR | O_TRUNC , 0644);
-			}
 		}
 		ft_putendl_fd(find, fd);
 	}
+    out = open_all_files(list, 1);
     if (list->v_type[0] == 1 && out != -1)
         exec_first_cmd_in_her(list, mini, fd_out, num , out, fd);
     else if (out != -1)

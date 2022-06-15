@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/09 13:01:13 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:49:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*check_var(lexer_t *lexer)
 
 	str = NULL;
 	lexer_advance(lexer);
-	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '|' || lexer->c == '=')
+	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '"' || lexer->c == '|' || lexer->c == '=')
 		return (ft_strdup("$"));
     else if (lexer->c == '?')
     {
@@ -124,7 +124,7 @@ char	*check_var(lexer_t *lexer)
         	free(tmp);
         	lexer_advance(lexer);
 		}
-		if (ft_getenv(lexer->mini, str))
+		if (str && ft_getenv(lexer->mini, str))
 			return (ft_getenv(lexer->mini, str));
 		else 
 			return (ft_strdup(""));

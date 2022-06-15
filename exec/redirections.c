@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/13 19:49:45 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:57:19 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int     open_all_files(t_list *list, int a)
 {
     int fd;
     int fd_in;
+    char *str;
 
     fd = 1;
     while (list && list->v_type[0] != 11)
@@ -35,10 +36,23 @@ int     open_all_files(t_list *list, int a)
                 return fd;
             }
         }
+        if (list->v_type[0] == 3)
+        {
+            while (1337)
+            {
+                printf("val  = %s\n", list->val[1]);
+                str = readline("> ");
+                if (str == NULL)
+                    break;
+                if (ft_strcmp(str, list->val[1]) == 0)
+                    break;
+            }
+        }
         list = list->next;
     }
     return fd;
 }
+
 
 char  **cmd(t_list *list)
 {
@@ -51,7 +65,7 @@ char  **cmd(t_list *list)
 	head = list;
 	while (list && list->v_type[0] != 11)
 	{
-		if (list->v_type[0] == 6 || list->v_type[0] == 4 || list->v_type[0] == 8)
+		if (list->v_type[0] == 6 || list->v_type[0] == 4 || list->v_type[0] == 8 || list->v_type[0] == 3)
 		{
             while (list->val[k])
             {
@@ -70,7 +84,7 @@ char  **cmd(t_list *list)
 	list = head;
 	while (list && list->v_type[0] != 11)
 	{
-		if (list->v_type[0] == 6 || list->v_type[0] == 4 || list->v_type[0] == 8)
+		if (list->v_type[0] == 6 || list->v_type[0] == 4 || list->v_type[0] == 8 || list->v_type[0] == 3)
 		{
             while (list->val[k])
             {
@@ -89,15 +103,16 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 {
     int fd;
     int id;
+    int in;
     char **tab;
     int io = 0;
     int ij = 0;
 
     fd = open_all_files(lst, 0);
+    in = fd_i(lst);
     if (fd != -1)
     {
         tab = cmd(lst);
-        printf("%s\n", tab[0]);
         if (tab[0])
         {
             if (lst->v_type[0] == 1)
@@ -109,17 +124,23 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
                 ij++;
             }
             lst->val[ij]  = NULL;
+            printf("tab = [%s]\n", lst->val[0]);
+            printf("tab = %s\n", lst->val[1]);
+            printf("tab = %s\n", lst->val[2]);
             if (tab[0])
             {
                 lst->v_type[0] = 1;
                 lst->v_type[1] = 2;
             }
         }
+        ft_exit_status(mini, lst);
         id = fork();
         if (id == 0 && lst->v_type[0] == 1)
         {
             if (fd != 1)
                 dup2(fd, STDOUT_FILENO);
+            if (in != 0)
+                dup2(in, 0);
             else
                 dup2(tem_fd, 0);
             ft_check_built(mini, lst, fd);
@@ -130,7 +151,7 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
         close(fd);
         wait(NULL);
     }
-    unlink("/tmp/test");
+    //unlink("/tmp/test");
 }
 
 void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
@@ -158,7 +179,6 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
                     if (fd_in < 0)
                     {
                         fd_in = 0;
-                        //perror(NULL);
                         break;
                     }
                     k++;
@@ -198,7 +218,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
         {
             if (fd_out != -1)
             {
-                //lst = head;
+                ft_exit_status(mini, lst);
                 if (fork() == 0)
                 {
                     dup2(fd_in, 0);
@@ -246,6 +266,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
             lst->v_type[0] = 1;
             lst->v_type[1] = 2;
         }
+        ft_exit_status(mini, lst);
         if (fd_in != 0)
         {
             if (fd_out != -1)

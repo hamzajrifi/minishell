@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:15:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/31 17:12:32 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:05:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,10 @@ void    ft_cd(char *path, t_shell *mini)
 	if (!path)
 	{
 		if (go_home(mini) == 0)
+		{
 			printf("minishell: cd: HOME not set\n");
+			status_exec_g = 1;
+		}
 		else
 		{
 			search_path_in_env(mini, 1);
@@ -169,7 +172,10 @@ void    ft_cd(char *path, t_shell *mini)
 	else if (strcmp(path, "-") == 0)
 	{
 		if (d == 0)
+		{
 			printf("cd: OLDPWD not set\n");
+			status_exec_g = 1;
+		}
 		else
 		{
 			printf("%s\n", mini->save_old_pwd);

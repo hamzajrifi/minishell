@@ -31,7 +31,8 @@ C_FILES =	main.c\
 			exec/sec_heredoc.c\
 			mini.c\
 			ft_error.c\
-			get/get_next_line.c
+			get/get_next_line.c\
+			exec/exit_status.c
 
 OBJ = $(C_FILES:.c=.o)
 # main.o\

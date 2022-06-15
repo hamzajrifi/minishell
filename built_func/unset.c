@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 15:52:09 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:37:00 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void    ft_unset(t_shell *index, char **str, int fd)
 	{
 		if (finder(str[k]) == 2)
 		{
-			ft_putstr_fd("export: not a valid identifier: ", fd);
+			ft_putstr_fd("unset: not a valid identifier: ", fd);
 			ft_putendl_fd(str[k], fd);
 			k++;
 			status_exec_g = 1;
