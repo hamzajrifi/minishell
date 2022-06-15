@@ -45,7 +45,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ)
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
+			$(CC)  -o minishell main.c -lreadline $(NAME) 
 
 clean :	
 		rm -f *.o functions/*.o

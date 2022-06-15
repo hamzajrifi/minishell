@@ -48,7 +48,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	return (lendst + len_s);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_h_strjoin(char *s1, char *s2)
 {
 	char	*ptr;
 	int		len;
@@ -65,10 +65,12 @@ char	*ft_strjoin(const char *s1, const char *s2)
     if (s1)
 	    ft_strlcat(ptr, (char *)s1, len + 1);
 	ft_strlcat(ptr, (char *)s2, len + len1 + 1);
+	//if (s1)
+		// free(s1);
 	return (ptr);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(char *s1)
 {
 	char	*ptr;
 	int		i;
@@ -101,6 +103,7 @@ char **ft_realloc_char(char **str)
 	while (str[i])
 	{
 		tab[i] = ft_strdup(str[i]);
+		// free(str[i]);
 		i++;
 	}
 	tab[i + 1] = NULL;
@@ -122,5 +125,6 @@ int *ft_realloc_int(int *tab, char **str)
 		new_tab[i] = tab[i];
 		i++;
 	}
+	// free(tab);
 	return (new_tab);
 }
