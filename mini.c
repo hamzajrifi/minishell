@@ -159,14 +159,20 @@ void    check_backslash(lexer_t **lexer)
 
 char	*check_arg_dollar(lexer_t *lexer, char *str, char c)
 {
-	str = ft_h_strjoin(str, check_var(lexer));
+    char    *tmp;
 
+	str = ft_h_strjoin(str, check_var(lexer));
 	if (c == '"')
 		return (str);
-	if (lexer->c == '"')
+	if (lexer->c == '"' || lexer->c == '\'')
 	{
-		str = ft_h_strjoin(str, lexer_collect_string(lexer)->val);
-		lexer->c = '"';
+        c = lexer->c;
+        tmp = lexer_collect_string(lexer)->val;
+        if (!tmp)
+            return (NULL);
+		str = ft_h_strjoin(str, tmp);
+        free(tmp);
+		lexer->c = c;
 	}
     else if (lexer->c == '/')
     {
@@ -192,10 +198,10 @@ token_t *lexer_collect_string(lexer_t *lexer)
     }
     while(lexer->c && lexer->c != c)
     {
-        if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' 
-			&& lexer->src[lexer->i + 1] != '\'' 
-			&& lexer->src[lexer->i + 1] != '"' && c != '\'')
-			str = check_arg_dollar(lexer, str, c);
+        if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' && lexer->src[lexer->i + 1] != '\'' && lexer->src[lexer->i + 1] != '"' && c != '\'')
+		{
+            str = check_arg_dollar(lexer, str, c);
+        }	
         else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
             return (init_token(t_error, NULL));
 		else
@@ -232,10 +238,12 @@ token_t *lexer_collect_arg(lexer_t *lexer)
     
     while(lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|' && lexer->c != '>' && lexer->c != '<')
     {
-		if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\'
-			&& lexer->src[lexer->i + 1] != '\'' 
-			&& lexer->src[lexer->i + 1] != '"')
-			str = check_arg_dollar(lexer, str, 0);
+		if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' && lexer->src[lexer->i + 1] != '\''  && lexer->src[lexer->i + 1] != '"')
+		{
+            str = check_arg_dollar(lexer, str, 0);
+            if (!str)
+                return (init_token(t_error, NULL));
+        }	
         else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
             return (init_token(t_error, NULL));
         else
