@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:08:20 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/08 20:16:09 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:56:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    ft_echo(t_shell *mini, char **str, int fd)
     a = 1;
     while (str[i])
     {
-        if (ft_strcmp(str[i], "-n") == 0)
+        if (ft_strcmp(str[1], "-n") == 0)
             i++;
         if (str[i])
         {

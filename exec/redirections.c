@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/15 21:20:06 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:58:17 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,14 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 {
     int fd;
     int id;
-    int in;
+    int in = 0;
     char **tab;
     int io = 0;
     int ij = 0;
 
     fd = open_all_files(lst, 0);
     in = fd_i(lst);
+    printf("in = %d\n", in);
     if (fd != -1)
     {
         tab = cmd(lst);
@@ -124,24 +125,24 @@ void    ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
                 ij++;
             }
             lst->val[ij]  = NULL;
-            printf("tab = [%s]\n", lst->val[0]);
-            printf("tab = %s\n", lst->val[1]);
-            printf("tab = %s\n", lst->val[2]);
             if (tab[0])
             {
                 lst->v_type[0] = 1;
                 lst->v_type[1] = 2;
             }
         }
+        // printf("vl %s\n", lst->val[0]);
+        // printf("vl %s\n", lst->val[1]);
+        // printf("vl %s\n", lst->val[2]);
+        // printf("vl %s\n", lst->val[3]);
         ft_exit_status(mini, lst);
         id = fork();
         if (id == 0 && lst->v_type[0] == 1)
         {
-            puts("hana");
-            if (fd != 1)
-                dup2(fd, STDOUT_FILENO);
             if (in != 0)
                 dup2(in, 0);
+            if (fd != 1)
+                dup2(fd, STDOUT_FILENO);
             else
                 dup2(tem_fd, 0);
             ft_check_built(mini, lst, fd);

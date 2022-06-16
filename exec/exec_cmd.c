@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/15 13:10:32 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:02:54 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void    ft_check_built(t_shell *mini, t_list *lst, int fd)
         else if (strcmp(lst->val[0], "exit") == 0)
         {
             if (lst->val[1] != NULL && lst->v_type[1] != 0)
-                ft_exit(lst->val, fd);
+                ft_exit(lst->val, fd, 0);
             else
-                ft_exit(NULL, fd);
+                ft_exit(NULL, fd, 0);
         }
         else if (strcmp(lst->val[0], "unset") == 0)
         {
@@ -120,11 +120,14 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 				temp[i] = ft_strjoin(temp[i], "/");
 				str = ft_strjoin(temp[i], lst->val[0]);
 				if (access(str, F_OK) == 0)
+				{
 					execve(str, &lst->val[0], mini->tab_save_env);
+					//exit(0);
+				}
 				i++;
 			}
 			write(2, lst->val[0], ft_strlen(lst->val[0]));
-			write (2, " :command not found\n", 20);
+			write (2, " :command not2found\n", 20);
 			exit(127);
 		}
 	}
@@ -143,8 +146,7 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 	if (lst->val[0][0] == '.')
 	{
 		dp = opendir(lst->val[0]);
-		puts("hana");
-		if (dp == 512)
+		if ((int)dp == 512)
 		{
 			printf("minishell: ./exec: is a directory\n");
 		}

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/15 13:07:45 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 12:03:12 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void    ft_exit_status(t_shell *mini, t_list *lst)
                 }
                 i++;
 			}
-            if (i != -1)
+            if (i != -1 && ft_strcmp(lst->val[0], "exit") != 0)
 			    status_exec_g = 127;
         }
 	}

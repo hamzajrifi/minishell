@@ -6,12 +6,13 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/14 15:50:28 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:12:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../header/utiles_functions.h"
+#include "../header/minishell.h"
 
 char **save_cmd(t_list *list)
 {
@@ -95,7 +96,11 @@ int fd_i(t_list *list)
 	while (list && list->v_type[0] != 11)
 	{
 		if (list->v_type[0] == 8)
+		{
+			printf("val = %s\n", list->val[0]);
+			puts ("hanaaaaaaadjksbcdsjbcdjshbcsdjhbdhsc");
 			fd = open(list->val[1], O_RDWR, 0644);
+		}
 		list = list->next;
 	}
 	return fd;
@@ -104,7 +109,7 @@ int fd_i(t_list *list)
 void    exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num, int out, int fd)
 {
     char **sec_tab;
-	int fd_in;
+	int fd_in = 0;
 
 	fd_in = fd_i(list);
 	close(fd);

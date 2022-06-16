@@ -90,7 +90,7 @@ void    ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
 
 // exit
 
-void    ft_exit(char **str, int fd);
+void    ft_exit(char **str, int fd, int num);
 void    ft_env(t_shell *index, int fd);
 void    ft_unset(t_shell *index, char **str, int fd);
 void    ft_cd(char *path, t_shell *mini);
