@@ -70,18 +70,20 @@ void    ft_mini(t_shell *mini, char *src)
 //         i = 0;
     // head = lst;
         // head = lst;
-    // while (lst)
-    // {
-    //     i = 1;
-    //     printf("%s -- %d" , lst->val[0],  lst->v_type[0]);
-    //     while (lst->val[i])
-    //     {
-    //         printf("%s -- %d" , lst->val[i], lst->v_type[i]);
-    //         i++;
-    //     }
-    //     printf("\n");
-    //         lst = lst->next;
-    // }
+    while (lst)
+    {
+        i = 0;
+        while (lst->val[i])
+        {
+            printf("%s -- %d" , lst->val[i], lst->v_type[i]);
+            free(lst->val[i]);
+            i++;
+        }
+        // free(lst->v_type);
+        printf("\n");
+            lst = lst->next;
+    }
+    free(lst);
     
 //     // // head = lst;
 // >>>>>>> aa56db1cb89061811f73e84e704e5c791f795549
@@ -106,21 +108,22 @@ void    ft_mini(t_shell *mini, char *src)
     // }
 
     //lst = head;
-    if (!lst)
-        return;
-    else if (finde_her(lst) == 1)
-        pipes(mini, lst);
-    else if (finder_red(lst) == 2)
-       ft_redirection(mini, lst, 0, 1);
-    else if (finder_red(lst) == 4)
-        heredoc(mini, lst, 0, 1);
-    else if (finder_red(lst) == 3)
-        ft_redin(mini, lst, 1, 0);
-    else
-    {
-        ft_exit_status(mini, lst);
-        ft_check_built(mini, lst, 1);
-    }
+    // if (!lst)
+    //     return;
+    // else if (finde_her(lst) == 1)
+    //     pipes(mini, lst);
+    // else if (finder_red(lst) == 2)
+    //    ft_redirection(mini, lst, 0, 1);
+    // else if (finder_red(lst) == 4)
+    //     heredoc(mini, lst, 0, 1);
+    // else if (finder_red(lst) == 3)
+    //     ft_redin(mini, lst, 1, 0);
+    // else
+    // {
+    //     ft_exit_status(mini, lst);
+    //     ft_check_built(mini, lst, 1);
+    // }
+    system("leaks minishell");
 }
 
 int main(int ac, char **av, char **env)

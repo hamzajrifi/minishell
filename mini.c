@@ -40,9 +40,13 @@ void    lexer_skip_whitespace(lexer_t *lexer)
 }
 
 
-token_t *lexer_get_next_token(lexer_t *lexer)
+token_t *lexer_get_next_token(lexer_t *lexer, token_t *token)
 {
-   
+    if (token)
+    {
+        free(token);
+       
+    }
     while (lexer->c && lexer->i < ft_strlen(lexer->src))
     {
         if (lexer->c == ' ')
@@ -79,11 +83,12 @@ token_t *init_token(int t_type, char *value)
     
     token = malloc(sizeof(token_t));
     token->type = t_type;
-   // if (value)
-   // {
-        token->val = value;
-        // free(value);
-    //}
+   if (value)
+   {
+        token->val = ft_strdup(value);
+        if (value)
+            free(value);
+    }
      
     return (token);
 }
@@ -279,7 +284,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
 char *lexer_get_current_char_as_string(lexer_t *lexer)
 {
     char    *str;
-    
+
     str = malloc(sizeof(char) * 2);
     str[0] = lexer->c;
     str[1] = '\0'; 

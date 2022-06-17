@@ -53,16 +53,16 @@ t_list  *ft_check_parser(token_t **token, lexer_t *lexer, t_list *lst)
     int     i;
 
     i = 1;
-    *token = lexer_get_next_token(lexer);
+    *token = lexer_get_next_token(lexer, *token);
     while (*token && (*token)->type == t_args)
     {
         lst->val =  ft_realloc_char(lst->val); /// return str 
         lst->v_type =  ft_realloc_int(lst->v_type, lst->val); /// return str 
         lst->val[i] = ft_strdup((*token)->val);
         lst->v_type[i++] = (*token)->type;
-        *token = lexer_get_next_token(lexer);
+		free((*token)->val);
+        *token = lexer_get_next_token(lexer, *token);
     }
-
     if (i > 1 && lst->v_type[0] == 3)
         lst->v_type[1] = t_end;
     else if (i > 1 && lst->v_type[0] == t_output)
@@ -96,11 +96,11 @@ t_list  *ft_parser(char *src, t_shell *mini)
 	t_list  *lst;
 	t_list  *head;
 
+	token = NULL;
 	if (is_string_empty(src))
 		return (NULL);
 	lexer = init_lexer(src, mini);
-	token = lexer_get_next_token(lexer);
-	
+	token = lexer_get_next_token(lexer, token);
 	lst = NULL;
 	if (token)
 		lst = add_node_in_lst(token->val, token->type, lst);
@@ -117,7 +117,7 @@ t_list  *ft_parser(char *src, t_shell *mini)
 				return (print_error("minishell: syntax error 4"));
 			if (token->type > t_output && token->type <= t_error )
 			{
-				token = lexer_get_next_token(lexer);
+				token = lexer_get_next_token(lexer, token);
 				if (!(lst = add_node_in_lst(token->val, token->type, head)) || token->type == t_error)
 					return (print_error("minishell: syntax error 5"));
 			}
@@ -125,6 +125,7 @@ t_list  *ft_parser(char *src, t_shell *mini)
 				lst = lst->next;
 		}
 	}
-	
+	if (token)
+		free(token);
 	return (head);
 }
