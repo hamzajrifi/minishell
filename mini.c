@@ -40,9 +40,13 @@ void    lexer_skip_whitespace(lexer_t *lexer)
 }
 
 
-token_t *lexer_get_next_token(lexer_t *lexer)
+token_t *lexer_get_next_token(lexer_t *lexer, token_t *token)
 {
-   
+    if (token)
+    {
+        free(token);
+       
+    }
     while (lexer->c && lexer->i < ft_strlen(lexer->src))
     {
         if (lexer->c == ' ')
@@ -79,11 +83,12 @@ token_t *init_token(int t_type, char *value)
     
     token = malloc(sizeof(token_t));
     token->type = t_type;
-   // if (value)
-   // {
-        token->val = value;
-        // free(value);
-    //}
+   if (value)
+   {
+        token->val = ft_strdup(value);
+        if (value)
+            free(value);
+    }
      
     return (token);
 }
@@ -146,6 +151,13 @@ int    check_lexer_c(char c)
     return (0);
 }
 
+int is_all_num(char c)
+{
+    if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '*' || c == '?')
+        return (1);
+    return (0);
+}
+
 void    check_backslash(lexer_t **lexer)
 {
     char    c;
@@ -198,7 +210,8 @@ token_t *lexer_collect_string(lexer_t *lexer)
     }
     while(lexer->c && lexer->c != c)
     {
-        if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' && lexer->src[lexer->i + 1] != '\'' && lexer->src[lexer->i + 1] != '"' && c != '\'')
+        // if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' && lexer->src[lexer->i + 1] != '\'' && lexer->src[lexer->i + 1] != '"' && c != '\'')
+		if (lexer->c == '$' && is_all_num(lexer->src[lexer->i + 1]))
 		{
             str = check_arg_dollar(lexer, str, c);
         }	
@@ -238,7 +251,8 @@ token_t *lexer_collect_arg(lexer_t *lexer)
     
     while(lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|' && lexer->c != '>' && lexer->c != '<')
     {
-		if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' && lexer->src[lexer->i + 1] != '\''  && lexer->src[lexer->i + 1] != '"')
+		// if (lexer->c == '$' && lexer->src[lexer->i + 1] != '\\' && lexer->src[lexer->i + 1] != '\''  && lexer->src[lexer->i + 1] != '"')
+		if (lexer->c == '$' && is_all_num(lexer->src[lexer->i + 1]))
 		{
             str = check_arg_dollar(lexer, str, 0);
             if (!str)
@@ -270,7 +284,7 @@ token_t *lexer_collect_arg(lexer_t *lexer)
 char *lexer_get_current_char_as_string(lexer_t *lexer)
 {
     char    *str;
-    
+
     str = malloc(sizeof(char) * 2);
     str[0] = lexer->c;
     str[1] = '\0'; 

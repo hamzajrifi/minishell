@@ -57,7 +57,7 @@ void    ft_mini(t_shell *mini, char *src);
 lexer_t *init_lexer(char *src,t_shell *mini);
 void    lexer_advance(lexer_t *lexer);
 void    lixer_skip_whitespace(lexer_t *lexer);
-token_t *lexer_get_next_token(lexer_t *lexer);
+token_t *lexer_get_next_token(lexer_t *lexer, token_t *token);
 token_t *lexer_collect_string(lexer_t *lexer);
 token_t *lexer_collect_arg(lexer_t *lexer);
 char	*check_var(lexer_t *lexer);

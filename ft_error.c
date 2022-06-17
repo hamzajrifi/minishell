@@ -14,7 +14,7 @@
 
 int	ft_error(lexer_t *lexer)
 {
-	int i;
+	unsigned int i;
 
 	i = lexer->i + 1;
 	if ((lexer->c == '|' && lexer->src[i] == '|') || lexer->c == '&')
