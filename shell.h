@@ -1,6 +1,7 @@
 #ifndef  SHELL_H
 #define SHELL_H
 #include <stdio.h>
+#include <signal.h>
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
@@ -17,12 +18,19 @@
 #define TEST_HACK4 ft_strcmp(list->val[0], "more") == 0   
 
 typedef struct s_shell {
-	char **tab_save_env;
-	char **tab_save_exp;
-	char *save_pwd;
-	char *save_old_pwd;
-	int	counter;
-	int num_ofall_cmd;
+	char 	**tab_save_env;
+	char 	**tab_save_exp;
+	char 	*save_pwd;
+	char 	*save_old_pwd;
+	int		counter;
+	int		num_ofall_cmd;
+	int		built;
+	int		temp_fd;
+	int		num_cmd;
+	int		*save;
+	int		id;
+	int		cnt;
+	int		fs;
 }   t_shell;
 
 typedef struct t_list
@@ -49,11 +57,23 @@ void	*ft_calloc(size_t n, size_t c);
 char	*get_next_line(int fd);
 char	*ft_strstr(char *str, char *to_find, int size);
 char	*ft_strstr2(char *str, char *to_find, int size);
-int	ft_isdigit(int c);
-int find(char *str);
-int	ft_strcmp(char *s1, char *s2);
-int	ft_isdigit(int c);
-
+int		ft_isdigit(int c);
+int 	find(char *str);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_isdigit(int c);
+void	change_pwd(t_shell *mini);
+int		search_path_in_env(t_shell *mini, int a);
+int		go_home(t_shell *mini);
+void	unset_home(t_shell *mini);
+void	norme(t_shell *index);
+int	norme2(t_shell *index, char *str, char **temp, char **sec_temp);
+void	oldpwd_not_set(t_shell *mini);
+int	loop(t_shell *mini);
+void	ft_13(t_shell *index, char *str, char **save, char **temp);
+void	norme4(t_shell *index, char **temp, char *str, char **save);
+void	unset_exp(t_shell *index, char *str);
+void	ft_execve(char **temp, t_shell *mini, t_list *lst);
+void	ft_err(char *str);
 
 int check_herd(t_shell *mini, t_list *list);
 void    pipes(t_shell *mini, t_list *list);

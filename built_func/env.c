@@ -6,15 +6,15 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 15:13:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/21 15:14:59 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 11:52:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-void    ft_env(t_shell *index, int fd)
+void	ft_env(t_shell *index, int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (index->tab_save_env[i])

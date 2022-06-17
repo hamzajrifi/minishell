@@ -13,6 +13,8 @@ C_FILES =	main.c\
 			exec/redirections.c\
 			exec/pipes.c\
 			built_func/cd.c\
+			built_func/cd_utils.c\
+			built_func/sec_utils_exp.c\
 			built_func/echo.c\
 			built_func/env.c\
 			built_func/exit.c\
@@ -46,7 +48,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ)
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g
+			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
 
 clean :	
 		rm -f *.o functions/*.o

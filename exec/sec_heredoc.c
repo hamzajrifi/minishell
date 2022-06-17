@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/16 15:12:13 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:13:27 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,7 @@ int fd_i(t_list *list)
 	while (list && list->v_type[0] != 11)
 	{
 		if (list->v_type[0] == 8)
-		{
-			printf("val = %s\n", list->val[0]);
-			puts ("hanaaaaaaadjksbcdsjbcdjshbcsdjhbdhsc");
 			fd = open(list->val[1], O_RDWR, 0644);
-		}
 		list = list->next;
 	}
 	return fd;

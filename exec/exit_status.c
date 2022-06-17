@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/16 12:03:12 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:21:42 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ void    ft_exit_status(t_shell *mini, t_list *lst)
 				size = ft_strlen(temp[i]);
 				temp[i] = ft_strjoin(temp[i], "/");
 				str = ft_strjoin(temp[i], lst->val[0]);
+				free(temp[i]);
 				if (access(str, F_OK) == 0)
                 {
 					status_exec_g = 0;
                     i = -1;
                     break;
                 }
+				free(str);
                 i++;
 			}
+			free(temp);
             if (i != -1 && ft_strcmp(lst->val[0], "exit") != 0)
 			    status_exec_g = 127;
         }
@@ -94,6 +97,7 @@ char	*check_path_if_exi2(t_shell *mini)
 		temp = ft_substr(mini->tab_save_env[i], 0, len(mini->tab_save_env[i]));
 		if (strcmp(temp, "PATH") == 0)
 			return (ft_strchr(mini->tab_save_env[i],'='));
+		free(temp);
 		i++;
 	}
 	if (mini->tab_save_exp && mini->tab_save_exp[0] != NULL)
@@ -102,6 +106,7 @@ char	*check_path_if_exi2(t_shell *mini)
 		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
 		if (strcmp(temp, "PATH") == 0)
 			return (ft_strchr(mini->tab_save_exp[i],'='));
+		free(temp);
 		i++;
 	}
 	return NULL;

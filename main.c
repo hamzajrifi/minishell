@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/16 14:49:09 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:12:52 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void    ft_mini(t_shell *mini, char *src)
     //         lst = lst->next;
     // }
 
-    //lst = head;
+    // lst = head;
     if (!lst)
         return;
     else if (finde_her(lst) == 1)
@@ -134,6 +134,9 @@ int main(int ac, char **av, char **env)
     mini.tab_save_exp = NULL;
     mini.counter = 0;
     mini.num_ofall_cmd = 0;
+    mini.num_cmd = 0;
+    mini.cnt = 0;
+    mini.fs = 0;
     //signal(SIGINT, handler);
     while(1337)
     {
