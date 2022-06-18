@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 23:35:37 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/18 23:58:28 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,11 @@ void	utils_red(t_list **lst, t_shell *mini)
 	{
 		if ((*lst)->v_type[0] == 1)
 			ij = 1;
-		while ((*lst)->val[ij])
-			ij++;
+		if ((*lst)->v_type[0] == 1)
+		{
+			while ((*lst)->val[ij])
+				ij++;
+		}
 		while (tab[io])
 		{
 			(*lst)->val[ij] = tab[io];
