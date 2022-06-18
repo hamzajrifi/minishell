@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/15 22:46:27 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:59:44 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*check_var(lexer_t *lexer)
     else if (lexer->c == '?')
     {
 		lexer_advance(lexer);
-        return (ft_itoa(status_exec_g));
+        return (ft_itoa(g_status_exec));
     }
     else if ((lexer->c >= '0' && lexer->c <= '9') || lexer->c == '*')
     {

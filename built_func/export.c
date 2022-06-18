@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:32:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 13:13:49 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:59:18 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ int	invalide_identifier(char *str, int fd)
 	{
 		ft_putstr_fd("export: not an identifier: ", fd);
 		ft_putendl_fd(str, fd);
-		status_exec_g = 127;
+		g_status_exec = 127;
 		return (1);
 	}
 	else if (str[0] == '-')
 	{
 		ft_putstr_fd("export: invalid option: ", fd);
 		ft_putendl_fd(str, fd);
-		status_exec_g = 127;
+		g_status_exec = 127;
 		return (1);
 	}
 	else if (finder(str) == 1 || str[0] == '+'
@@ -115,7 +115,7 @@ int	invalide_identifier(char *str, int fd)
 	{
 		ft_putstr_fd("export: not a 5valid identifier: ", fd);
 		ft_putendl_fd(str, fd);
-		status_exec_g = 127;
+		g_status_exec = 127;
 		return (1);
 	}
 	return (0);

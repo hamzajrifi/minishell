@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:15:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 17:10:25 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:55:17 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	chdi(t_shell *mini, char *path)
 	if (a != 0)
 	{
 		perror(NULL);
-		status_exec_g = 1;
+		g_status_exec = 1;
 	}
 	mini->built++;
 	change_pwd(mini);

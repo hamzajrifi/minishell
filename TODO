@@ -4,6 +4,6 @@ ft_getenv
 
 1): herdoc inside pipes
 
+echo "a b c d f"
 
-
-allocate all_fd 10case*
+red and herdoc same cmd

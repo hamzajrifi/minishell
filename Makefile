@@ -31,11 +31,16 @@ C_FILES =	main.c\
 			utils/ft_itoa.c\
 			utils/ft_calloc.c\
 			exec/ft_getenv.c\
-			exec/sec_heredoc.c\
+			exec/heredoc.c\
+			exec/utils_pipes.c\
 			mini.c\
 			ft_error.c\
 			get/get_next_line.c\
-			exec/exit_status.c
+			exec/exit_status.c\
+			exec/heredoc_utils.c\
+			exec/sec_herdoc_utils.c\
+			exec/sec_redirection_utils.c\
+			exec/redirection_utils.c
 
 OBJ = $(C_FILES:.c=.o)
 # main.o\
@@ -48,11 +53,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ)
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-<<<<<<< HEAD
 			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
-=======
-			$(CC)  -o minishell main.c -lreadline $(NAME)
->>>>>>> e2cb4795bfc8a709b566da8d333f9a0a453e23ff
 
 clean :	
 		rm -f *.o functions/*.o

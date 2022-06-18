@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 13:22:14 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/18 12:42:26 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_print(t_shell *index, int fd)
 			i++;
 		}
 	}
-	status_exec_g = 0;
+	g_status_exec = 0;
 }
 
 int	len(char *str)
@@ -87,15 +87,7 @@ int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 	a = len(string);
 	checker = len(add_str);
 	if (a != 0 && checker != 0)
-	{
-		temp = ft_split(string, '=');
-		sec_temp = ft_split(add_str, '=');
-		if (strcmp(temp[0], sec_temp[0]) == 0)
-		{
-			index->tab_save_exp[i] = add_str;
-			return (3);
-		}
-	}
+		return (no(index, add_str, string, i));
 	else if (a != 0 && checker == 0)
 	{
 		temp = ft_split(string, '=');
@@ -103,14 +95,7 @@ int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 			return (4);
 	}
 	else if (a == 0 && checker != 0)
-	{
-		sec_temp = ft_split(add_str, '=');
-		if (strcmp(sec_temp[0], string) == 0)
-		{
-			index->tab_save_exp[i] = add_str;
-			return (5);
-		}
-	}
+		return (no1(index, add_str, string, i));
 	else
 	{
 		if (strcmp(add_str, string) == 0)

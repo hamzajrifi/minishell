@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 13:17:44 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:57:55 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_unset(t_shell *index, char **str, int fd)
 			ft_putstr_fd("unset: not a valid identifier: ", fd);
 			ft_putendl_fd(str[k], fd);
 			k++;
-			status_exec_g = 1;
+			g_status_exec = 1;
 		}
 		else if (invalide_identifier(str[k], fd) == 1)
 			k++;

@@ -6,20 +6,21 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/16 23:21:42 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:54:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+
 void	ft_check_cmd2(t_shell *mini, t_list *lst);
 char	*check_path_if_exi2(t_shell *mini);
+void	normi(char **temp, t_shell *mini, t_list *lst);
 
-void    ft_exit_status(t_shell *mini, t_list *lst)
+void	ft_exit_status(t_shell *mini, t_list *lst)
 {
-	char **temp = NULL;
-	char *str = NULL;
-	int i;
-	int size;
+	char	**temp;
+	char	*str;
+	int		i;
 
 	i = 0;
 	if (lst->val[0][0] == '.' || lst->val[0][0] == '/')
@@ -37,58 +38,66 @@ void    ft_exit_status(t_shell *mini, t_list *lst)
 				temp[i] = str;
 				temp[i + 1] = NULL;
 			}
-			while (temp[i])
-			{
-				size = ft_strlen(temp[i]);
-				temp[i] = ft_strjoin(temp[i], "/");
-				str = ft_strjoin(temp[i], lst->val[0]);
-				free(temp[i]);
-				if (access(str, F_OK) == 0)
-                {
-					status_exec_g = 0;
-                    i = -1;
-                    break;
-                }
-				free(str);
-                i++;
-			}
-			free(temp);
-            if (i != -1 && ft_strcmp(lst->val[0], "exit") != 0)
-			    status_exec_g = 127;
-        }
+			normi(temp, mini, lst);
+		}
 	}
 	else
-        status_exec_g = 127;
+		g_status_exec = 127;
 }
 
 void	ft_check_cmd2(t_shell *mini, t_list *lst)
 {
-	DIR *dp;
+	DIR	*dp;
 
 	dp = opendir(lst->val[0]);
 	if ((int)dp == 512)
-		status_exec_g = 126;
+		g_status_exec = 126;
 	if (lst->val[0][0] == '.')
 	{
-		if (access(lst->val[0], F_OK | X_OK ) == 0)
-            status_exec_g = 0;
-        else
-            status_exec_g = 127;
-    }
+		if (access(lst->val[0], F_OK | X_OK) == 0)
+			g_status_exec = 0;
+		else
+			g_status_exec = 127;
+	}
 	else if (lst->val[0][0] == '/')
 	{
 		if (access(lst->val[0], F_OK) == 0)
-            status_exec_g = 0;
-        else
-            status_exec_g = 127;
+			g_status_exec = 0;
+		else
+			g_status_exec = 127;
 	}
 }	
 
+void	normi(char **temp, t_shell *mini, t_list *lst)
+{
+	int		i;
+	int		size;
+	char	*str;
 
+	i = 0;
+	while (temp[i])
+	{
+		size = ft_strlen(temp[i]);
+		temp[i] = ft_strjoin(temp[i], "/");
+		str = ft_strjoin(temp[i], lst->val[0]);
+		free(temp[i]);
+		if (access(str, F_OK) == 0)
+		{
+			g_status_exec = 0;
+			i = -1;
+			break ;
+		}
+		free(str);
+		i++;
+	}
+	free(temp);
+	if (i != -1 && ft_strcmp(lst->val[0], "exit") != 0)
+		g_status_exec = 127;
+}
 
 char	*check_path_if_exi2(t_shell *mini)
 {
-	int i;
+	int		i;
 	char	*temp;
 
 	i = 0;
@@ -96,7 +105,7 @@ char	*check_path_if_exi2(t_shell *mini)
 	{
 		temp = ft_substr(mini->tab_save_env[i], 0, len(mini->tab_save_env[i]));
 		if (strcmp(temp, "PATH") == 0)
-			return (ft_strchr(mini->tab_save_env[i],'='));
+			return (ft_strchr(mini->tab_save_env[i], '='));
 		free(temp);
 		i++;
 	}
@@ -105,9 +114,9 @@ char	*check_path_if_exi2(t_shell *mini)
 		i = 0;
 		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
 		if (strcmp(temp, "PATH") == 0)
-			return (ft_strchr(mini->tab_save_exp[i],'='));
+			return (ft_strchr(mini->tab_save_exp[i], '='));
 		free(temp);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 19:32:14 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/18 14:09:52 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,6 @@ int	size_vl(char **str)
 	while (str[i])
 		i++;
 	return (i);
-}
-
-void	built_func(t_shell *mini, t_list *lst, int fd)
-{
-	if (strcmp(lst->val[0], "export") == 0)
-	{
-		if (lst && size_vl(lst->val) > 1)
-			ft_print_export(mini, lst->val, 1);
-		else
-			ft_print_export(mini, NULL, 1);
-	}
-	else if (strcmp(lst->val[0], "pwd") == 0)
-		ft_pwd(fd);
-	else if (strcmp(lst->val[0], "env") == 0)
-		ft_env(mini, fd);
-	else if (strcmp(lst->val[0], "exit") == 0)
-	{
-		if (lst->val[1] != NULL && lst->v_type[1] != 0)
-			ft_exit(lst->val, fd, 0);
-		else
-			ft_exit(NULL, fd, 0);
-	}
-	else if (strcmp(lst->val[0], "unset") == 0)
-	{
-		if (lst && lst->val[1] != NULL)
-			ft_unset(mini, lst->val, fd);
-	}
 }
 
 void	ft_check_built(t_shell *mini, t_list *lst, int fd)
@@ -99,9 +72,9 @@ void	ft_check_built(t_shell *mini, t_list *lst, int fd)
 				wait(&wstatus);
 				if (WIFEXITED(wstatus))
 				{
-					status_exec_g = WEXITSTATUS(wstatus);
-					if (status_exec_g == 1)
-						status_exec_g = 127;
+					g_status_exec = WEXITSTATUS(wstatus);
+					if (g_status_exec == 1)
+						g_status_exec = 127;
 				}
 			}
 		}
@@ -144,7 +117,6 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 			}
 			if (temp[0])
 				ft_execve(temp, mini, lst);
-			free(temp);
 			ft_err(lst->val[0]);
 		}
 	}
