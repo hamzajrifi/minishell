@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 19:11:15 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 20:24:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ void	ft_check_built(t_shell *mini, t_list *lst, int fd)
 			id = fork();
 			printf("pid = %d\n", id);
 			if (id == 0)
-			{
 				exec_cmd(mini, lst);
-			}
 			else
 			{
 				wait(&wstatus);

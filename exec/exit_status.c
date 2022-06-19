@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 20:54:57 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 19:56:10 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	ft_check_cmd2(t_shell *mini, t_list *lst)
 	DIR	*dp;
 
 	dp = opendir(lst->val[0]);
-	if ((int)dp == 512)
+	if ((int)dp != 0)
 		g_status_exec = 126;
-	if (lst->val[0][0] == '.')
+	else if (lst->val[0][0] == '.')
 	{
 		if (access(lst->val[0], F_OK | X_OK) == 0)
 			g_status_exec = 0;
