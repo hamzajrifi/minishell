@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 23:58:28 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:35:02 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../header/minishell.h"
 
 int	utils_files(t_list *list, int a, int fd, int fd_in)
 {
@@ -123,24 +124,19 @@ void	utils_red(t_list **lst, t_shell *mini)
 	if (tab[0])
 	{
 		if ((*lst)->v_type[0] == 1)
-			ij = 1;
-		if ((*lst)->v_type[0] == 1)
 		{
 			while ((*lst)->val[ij])
 				ij++;
 		}
 		while (tab[io])
 		{
+			(*lst)->val = ft_realloc_char((*lst)->val);
 			(*lst)->val[ij] = tab[io];
-			io++;
 			ij++;
+			io++;
 		}
 		(*lst)->val[ij] = NULL;
-		if (tab[0])
-		{
-			(*lst)->v_type[0] = 1;
-			(*lst)->v_type[1] = 2;
-		}
+		(*lst)->v_type[0] = 1;
+		(*lst)->v_type[1] = 2;
 	}
-	ft_exit_status(mini, *lst);
 }

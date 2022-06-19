@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 17:43:32 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 23:41:14 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 14:41:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	normm(t_list *list, t_shell *mini, int *fd, int i)
 		perror("pipe");
 	if (list && ft_strcmp(list->val[0], "exit") == 0 && list->val[1])
 		ft_exit(list->val, 1, 1);
-	else if (list->next && list->next->v_type[0] != 3 && i == 0
+	else if (list && list->next && list->next->v_type[0] != 3 && i == 0
 		&& (TEST_HACK1 || TEST_HACK2 || TEST_HACK3 || TEST_HACK4))
 		mini->cnt = 2;
 	else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)

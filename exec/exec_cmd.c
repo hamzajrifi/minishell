@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 14:09:52 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 19:11:15 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	size_vl(char **str)
 		i++;
 	return (i);
 }
+
+int	built_sec(t_shell *mini, t_list *list);
 
 void	ft_check_built(t_shell *mini, t_list *lst, int fd)
 {
@@ -53,11 +55,8 @@ void	ft_check_built(t_shell *mini, t_list *lst, int fd)
 		}
 		else if (strcmp(lst->val[0], "cd") == 0)
 		{
-			if (lst->val && lst->val[1])
-			{
-				printf("lst = %s\n", lst->val[1]);
+			if (lst->val[1] != NULL)
 				ft_cd(lst->val[1], mini);
-			}
 			else
 				ft_cd(NULL, mini);
 		}
@@ -65,8 +64,12 @@ void	ft_check_built(t_shell *mini, t_list *lst, int fd)
 			ft_echo(mini, lst->val, fd);
 		else
 		{
-			if (fork() == 0)
+			id = fork();
+			printf("pid = %d\n", id);
+			if (id == 0)
+			{
 				exec_cmd(mini, lst);
+			}
 			else
 			{
 				wait(&wstatus);

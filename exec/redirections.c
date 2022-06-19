@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 23:37:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:10:27 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../header/minishell.h"
 
 void	normm3(t_shell *mini, t_list *list, int fd_in, int fd_out);
 void	normee4(t_shell *mini, t_list *list);
@@ -32,10 +33,12 @@ void	change_in2(t_list **lst)
 			i++;
 		while (tab[j])
 		{
+			(*lst)->val = ft_realloc_char((*lst)->val);
 			(*lst)->val[i] = tab[j];
 			i++;
 			j++;
 		}
+		(*lst)->val[i] = malloc(sizeof(char *));
 		(*lst)->val[i] = NULL;
 		(*lst)->v_type[0] = 1;
 		(*lst)->v_type[1] = 2;

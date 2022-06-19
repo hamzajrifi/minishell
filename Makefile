@@ -1,14 +1,13 @@
 NAME = mini.a
 
-CC = gcc
+CC = gcc 
 
-FLAG = -Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror 
 
 HDR = 	header/minishell.h \
 		header/utiles_functions.h
 
-C_FILES =	main.c\
-			functions/utiles_functions.c\
+C_FILES =	functions/utiles_functions.c\
 			exec/exec_cmd.c\
 			exec/redirections.c\
 			exec/pipes.c\
@@ -50,10 +49,10 @@ OBJ = $(C_FILES:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(HDR) $(OBJ)
+$(NAME) : $(HDR) $(OBJ) main.c
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC)  -o minishell main.c -lreadline $(NAME) -fsanitize=address -g3
+			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I  /Users/otmallah/.brew/opt/readline/include -lreadline $(NAME) main.c  -o minishell
 
 clean :	
 		rm -f *.o functions/*.o

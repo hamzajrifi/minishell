@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:37:09 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 23:43:34 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:33:42 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 	fd = open_all_files(lst, 0);
 	in = fd_i(lst);
 	utils_red(&lst, mini);
+	ft_exit_status(mini, lst);
 	if (fd != -1)
 	{
 		id = fork();

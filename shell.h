@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 23:45:42 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 19:02:49 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #define	TEST_HACK4	ft_strcmp(list->val[0], "more") == 0   
 
 unsigned int	g_status_exec;
+int id;
 
 typedef struct s_shell {
 	char	**tab_save_env;
@@ -48,6 +49,12 @@ typedef struct s_shell {
 	int		num_of_fd;
 	char	**tab_of_norm;
 }	t_shell;
+
+typedef struct s_global
+{
+	int	global_id;
+}	t_global;
+
 
 typedef struct t_list
 {

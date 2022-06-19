@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:15:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 20:55:17 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/19 14:53:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	home(t_shell *mini)
 {
 	if (go_home(mini) == 0)
 	{
-		puts("hana");
 		if (search_path_in_env(mini, 1) == 0)
 			chdir("/Users/otmallah");
 	}
-	puts("ji");
 	change_pwd(mini);
 	mini->built++;
 }
