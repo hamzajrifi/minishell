@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:47:47 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 20:57:34 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:39:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	ft_print_export(t_shell *index, char **str, int fd)
 			else
 			{
 				if (str[i] != NULL)
-				{
 					save_count = add_str_tab_exp(index, str[i]);
-				}
 				i++;
 			}
 		}
@@ -47,6 +45,7 @@ void	norme(t_shell *index)
 	char	*temp;
 
 	i = 0;
+	temp = NULL;
 	while (index->tab_save_env[i + 1] != NULL)
 	{
 		if (ft_strcmp(index->tab_save_env[i], index->tab_save_env[i + 1]) > 0)
@@ -63,10 +62,9 @@ void	norme(t_shell *index)
 int	check_duplicate(t_shell *index, char *str)
 {
 	int		i;
-	int		a;
 	int		k;
-	char	**temp;
-	char	**sec_temp;
+	char	**temp = NULL;
+	char	**sec_temp = NULL;
 
 	i = 0;
 	k = 0;

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 12:42:26 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:42:20 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ft_realloc(t_shell *index, char *str, int save)
 	char	**temp;
 	int		a;
 
-	a = 0;
-	temp = (char **)malloc(sizeof(char *) * (save + 1));
+	temp = NULL;
+	temp = (char **)calloc(sizeof(char *) , (save + 1));
 	a = 0;
 	while (index->tab_save_exp[a])
 	{
@@ -27,7 +27,7 @@ void	ft_realloc(t_shell *index, char *str, int save)
 	}
 	temp[a] = NULL;
 	free(index->tab_save_exp);
-	index->tab_save_exp = (char **)malloc(sizeof(char *) * (save + 2));
+	index->tab_save_exp = (char **)calloc(sizeof(char *) , (save + 2));
 	a = 0;
 	while (temp[a])
 	{
@@ -50,7 +50,7 @@ void	ft_print(t_shell *index, int fd)
 		ft_putendl_fd(index->tab_save_env[i], fd);
 		i++;
 	}
-	if (index->tab_save_exp)
+	if (index->tab_save_exp && index->tab_save_exp[0])
 	{
 		i = 0;
 		while (index->tab_save_exp[i])
@@ -58,6 +58,7 @@ void	ft_print(t_shell *index, int fd)
 			ft_putstr_fd("decalre -x ", fd);
 			ft_putendl_fd(index->tab_save_exp[i], fd);
 			i++;
+			exit(0);
 		}
 	}
 	g_status_exec = 0;

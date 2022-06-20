@@ -6,12 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 18:35:02 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 22:26:29 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-#include "../header/minishell.h"
+#include "../sec_parsing/header/minishell.h"
 
 int	utils_files(t_list *list, int a, int fd, int fd_in)
 {
@@ -117,23 +117,25 @@ void	utils_red(t_list **lst, t_shell *mini)
 	char	**tab;
 	int		ij;
 	int		io;
+	int		k;
 
 	ij = 0;
 	io = 0;
+	k = 0;
 	tab = cmd(*lst);
 	if (tab[0])
 	{
 		if ((*lst)->v_type[0] == 1)
 		{
+			k = 1;
 			while ((*lst)->val[ij])
 				ij++;
 		}
 		while (tab[io])
 		{
-			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[ij] = tab[io];
-			ij++;
-			io++;
+			if (k == 1)
+				(*lst)->val = ft_realloc_char((*lst)->val);
+			(*lst)->val[ij++] = tab[io++];
 		}
 		(*lst)->val[ij] = NULL;
 		(*lst)->v_type[0] = 1;

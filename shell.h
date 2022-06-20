@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 20:24:13 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:33:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ unsigned int	g_status_exec;
 int id;
 
 typedef struct s_shell {
-	char	**tab_save_env;
 	char	**tab_save_exp;
+	char	**tab_save_env;
 	char	*save_pwd;
 	char	*save_old_pwd;
 	int		counter;
@@ -52,7 +52,9 @@ typedef struct s_shell {
 
 typedef struct s_global
 {
-	int	global_id;
+	int	global_fd_out;
+	int	global_fd_in;
+	int	global_fd;
 }	t_global;
 
 
@@ -64,6 +66,14 @@ typedef struct t_list
 	struct t_list	*prev;
 }	t_list;
 
+
+char	*utils_path_if_exi(t_shell *mini);
+char	*ft_getenv_utils(t_shell *m, char *str);
+int		size_vl(char **str);
+void	cmm(t_list *lst, t_shell *mini);
+void	cmm_exit(t_list *lst, int fd);
+void	cmm_cd(t_list *lst, t_shell *mini);
+void	built_sec(t_shell *mini, t_list *lst, int fd);
 int		utils_redin(t_list *lst);
 void	change_in(t_list **lst);
 int		utils_re(t_list *lst, int fd_in, int k);
@@ -74,7 +84,7 @@ int		utils_files(t_list *list, int a, int fd, int fd_in);
 void	ex(t_shell *mini, t_list *list, int *save, int fs);
 int		size_tab(char **tab);
 void	ft_nor(t_shell *mini, int fd, int fd_out);
-int	ft_index(t_list *list);
+int		ft_index(t_list *list);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(char *src);
 char	**ft_split(char *s, char l);
@@ -82,16 +92,13 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *str, int c);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *s,	int fd);
-//char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_itoa(int n);
 void	*ft_calloc(size_t n, size_t c);
-//char	*get_next_line(int fd);
 char	*ft_strstr(char *str, char *to_find, int size);
 char	*ft_strstr2(char *str, char *to_find, int size);
 int		ft_isdigit(int c);
 int		find(char *str);
 int		ft_strcmp(char *s1, char *s2);
-//int		ft_isdigit(int c);
 void	change_pwd(t_shell *mini);
 int		search_path_in_env(t_shell *mini, int a);
 int		go_home(t_shell *mini);

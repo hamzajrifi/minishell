@@ -6,31 +6,11 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:52:40 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 19:58:25 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:19:08 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-
-char	*ft_getenv_utils(t_shell *m, char *str)
-{
-	char	*temp;
-	int		j;
-
-	j = 0;
-	while (m->tab_save_exp[j])
-	{
-		temp = ft_substr(m->tab_save_exp[j], 0, len(m->tab_save_exp[j]));
-		if (strcmp(temp, str) == 0)
-		{
-			free(temp);
-			return (ft_strchr(m->tab_save_exp[j], '='));
-		}
-		free(temp);
-		j++;
-	}
-	return (NULL);
-}
 
 char	*ft_getenv(t_shell *m, char *str)
 {
@@ -105,28 +85,6 @@ char	*utils_path_if_exi(t_shell *mini)
 	return (NULL);
 }
 
-char	*check_path_if_exi(t_shell *mini)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	while (mini->tab_save_env[i])
-	{
-		temp = ft_substr(mini->tab_save_env[i], 0, len(mini->tab_save_env[i]));
-		if (strcmp(temp, "PATH") == 0)
-		{
-			free(temp);
-			return (ft_strchr(mini->tab_save_env[i], '='));
-		}
-		free(temp);
-		i++;
-	}
-	if (mini->tab_save_exp && mini->tab_save_exp[0] != NULL)
-		return (utils_path_if_exi(mini));
-	return (NULL);
-}
-
 void	ft_err(char *str)
 {
 	write(2, str, ft_strlen(str));
@@ -149,7 +107,6 @@ void	ft_execve(char **temp, t_shell *mini, t_list *lst)
 		free(temp[i]);
 		if (access(str, F_OK) == 0)
 		{
-			free(str);
 			execve(str, &lst->val[0], mini->tab_save_env);
 			exit(0);
 		}

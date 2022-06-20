@@ -5,17 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/10 11:57:56 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 20:23:58 by otmallah         ###   ########.fr       */
+/*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
+/*   Updated: 2022/06/20 23:24:29 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/minishell.h"
+#include "sec_parsing/header/minishell.h"
 
-void    checksignal(int nbr)
+void	handler(int sig)
 {
-    if (nbr == SIGINT)
-        exit(1);
+    if ((sig == SIGINT || sig == SIGQUIT) && id != 0 )
+    {
+        if (sig == SIGQUIT)
+            printf("Quit: 3\n");
+        kill(id, sig);
+        g_status_exec = 130;
+    }
+    else if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_status_exec = 1;
+	}
+    else if (sig == SIGQUIT)
+    {
+        write(1, "\r", 1);
+        rl_on_new_line();
+        rl_redisplay();
+    }
+    id = 0;
 }
 
 int finde_her(t_list *lis)
@@ -44,38 +64,13 @@ int     finder_red(t_list *list)
     return 0;
 }
 
-void	handler(int sig)
-{
-    if ((sig == SIGINT || sig == SIGQUIT) && id != 0)
-    {
-        kill(id, sig);
-        g_status_exec = 130;
-    }
-    if (sig == SIGINT && id == 0)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_status_exec = 1;
-	}
-}
-
-void    handler2(int sig)
-{
-    if (sig == SIGQUIT && id == 0)
-    {
-        write(1, "\r", 1);
-        rl_on_new_line();
-        rl_redisplay();
-    }
-}
-
 void    ft_mini(t_shell *mini, char *src)
 {
     t_list *lst;
+    t_list *head;
 
     lst = ft_parser(src, mini);
+    head = lst;
     if (!lst)
         return;
     else if (finde_her(lst) == 1)
@@ -88,9 +83,11 @@ void    ft_mini(t_shell *mini, char *src)
         ft_redin(mini, lst, 1, 0);
     else
     {
-        ft_check_built(mini, lst, 1);
         ft_exit_status(mini, lst);
+        ft_check_built(mini, lst, 1);
     }
+    ft_free_list(head);
+    // system("leaks minishell");
 }
 
 int main(int ac, char **av, char **env)
@@ -107,23 +104,16 @@ int main(int ac, char **av, char **env)
     mini.num_cmd = 0;
     mini.cnt = 0;
     mini.fs = 0;
-    mini.built = 0;
-    //global.global_id = 0;
     signal(SIGINT, handler);
-    signal(SIGQUIT, handler2);   
     while(1337)
     {
         mini.counter = 0;
-        mini.cnt = 0;
         src = readline("mimishell : ");
         if (errno == 13)
             g_status_exec = 126;
         if (src == NULL)
         {
-            rl_on_new_line();
-            rl_redisplay();
-            printf("exit\n");
-            g_status_exec = 0;
+            printf(" exit\n");
 			exit(0);
         }
         ft_mini(&mini, src);

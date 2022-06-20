@@ -6,12 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 14:46:04 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 22:27:43 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-#include "../header/utiles_functions.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 int	fd_i(t_list *list)
 {
@@ -46,7 +46,6 @@ void	exec_her(t_list *list, t_shell *mini, int num, int fd_out)
 	fd_in = fd_i(list);
 	fd = open("/tmp/test", O_RDWR, 0644);
 	norm_exec_her(mini, &list);
-	ft_exit_status(mini, list);
 	if (fork() == 0)
 	{
 		if (out == 1 && num == 1)

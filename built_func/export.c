@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:32:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 20:59:18 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:40:26 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	norme2(t_shell *index, char *str, char **temp, char **sec_temp)
 	int		a;
 
 	i = 0;
+	a = 0;
 	while (index->tab_save_env[i])
 	{
 		temp = ft_split(index->tab_save_env[i], '=');
@@ -84,8 +85,9 @@ int	add_str_tab_exp(t_shell *index, char *str)
 		if (count == 0)
 		{
 			index->tab_save_exp = (char **)malloc(sizeof(char *) * 2);
-			index->tab_save_exp[count] = str;
-			index->tab_save_exp[count + 1] = NULL;
+			index->tab_save_exp[0] = str;
+			printf("l = %s\n", index->tab_save_exp[count]);
+			index->tab_save_exp[1] = NULL;
 		}
 		else
 			ft_realloc(index, str, count);

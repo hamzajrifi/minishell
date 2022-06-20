@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 20:22:12 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:30:39 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	pipes(t_shell *mini, t_list *list)
 	int		i;
 
 	mini->fs = 0;
+	mini->num_cmd = 0;
 	mini->num_cmd = num_of_cmd(list);
 	mini->num_ofall_cmd = mini->num_cmd;
 	mini->save = malloc(sizeof(int) * mini->num_cmd);
