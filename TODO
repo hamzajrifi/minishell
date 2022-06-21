@@ -7,3 +7,11 @@ ft_getenv
 echo "a b c d f"
 
 red and herdoc same cmd
+
+=================================
+"" => cmd not fond
+echo $USER$var\$USER$USER\$USERtest$USER
+.. | cmd not fond and exit => 127
+export ""  et unset ""\n
+export "test=ici"=coucou => echo $test
+export var="cat Makefile | grep >" ; echo $var

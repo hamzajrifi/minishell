@@ -57,7 +57,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ) main.c
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I  /Users/otmallah/.brew/opt/readline/include -lreadline $(NAME) main.c  -o minishell -fsanitize=address -g3
+			$(CC)  -o minishell main.c -lreadline $(NAME) 
 clean :	
 		rm -f *.o sec_parsing/functions/*.o
 		rm -f *.o sec_parsing/ft_free/*.o

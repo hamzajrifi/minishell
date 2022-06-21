@@ -17,7 +17,6 @@ void	cmm(t_list *lst, t_shell *mini)
 	int	id;
 	int	wstatus;
 
-	puts("hana");
 	id = fork();
 	if (id == 0)
 		exec_cmd(mini, lst);

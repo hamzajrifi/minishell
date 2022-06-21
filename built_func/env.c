@@ -29,7 +29,6 @@ void	ft_env(t_shell *index, int fd)
 		{
 			if (len(index->tab_save_exp[i]) != 0)
 			{
-				puts("hana");
 				ft_putendl_fd(index->tab_save_exp[i], fd);
 			}
 			i++;
