@@ -78,11 +78,10 @@ char	*ft_lexer_collect_string_second_1(t_lexer *lexer, char *str, char c)
 	{
 		if (c != '\'' && lexer->c == '$' && is_allnum(lexer->src[lexer->i + 1]))
 			str = check_arg_dollar(lexer, str, c);
-		else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
-			return (NULL);
 		else
 		{
-			check_backslash(&lexer);
+			if (c == '"')
+				check_backslash(&lexer);
 			tmp = lexer_get_current_char_as_string(lexer);
 			str = ft_h_strjoin(str, tmp);
 			free(tmp);

@@ -36,11 +36,17 @@ char	*lexer_collect_arg_second(t_lexer *lexer, t_token *token, char *str)
 {
 	char	*tmp;
 
-	check_backslash(&lexer);
-	tmp = lexer_get_current_char_as_string(lexer);
-	str = ft_h_strjoin(str, tmp);
-	free(tmp);
-	lexer_advance(lexer);
+	if (lexer->c == '$' && (lexer->src[lexer->i + 1] == '"'
+		|| lexer->src[lexer->i + 1] == '\''))
+		lexer_advance(lexer);
+	else
+	{
+		check_backslash(&lexer);
+		tmp = lexer_get_current_char_as_string(lexer);
+		str = ft_h_strjoin(str, tmp);
+		free(tmp);
+		lexer_advance(lexer);
+	}
 	if (lexer->c == '"' || lexer->c == '\'')
 	{
 		token = lexer_collect_string(lexer);
@@ -67,8 +73,10 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 			if (!str)
 				return (init_token(t_error, NULL));
 		}	
-		else if (lexer->c == '$' && lexer->src[lexer->i + 1] == '\\')
+		else if (lexer->c == '\\' && lexer->src[lexer->i + 1] == '\0')
 			return (init_token(t_error, NULL));
+		else if (lexer->c == '\\')
+			lexer_advance(lexer);
 		else
 		{
 			str = lexer_collect_arg_second(lexer, token, str);

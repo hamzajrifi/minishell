@@ -74,11 +74,6 @@ char	*check_var(t_lexer *lexer)
 		lexer_advance(lexer);
 		return (ft_strdup(""));
 	}
-	else if (lexer->c == '$')
-	{
-		lexer_advance(lexer);
-		return (ft_itoa(getpid()));
-	}
 	else
 		return (check_var_second(lexer, str));
 	return (str);
