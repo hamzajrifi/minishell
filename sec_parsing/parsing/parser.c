@@ -37,24 +37,6 @@ t_list *lst, t_list *head)
 	return (lst);
 }
 
-t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst)
-{
-	int		i;
-
-	printf("parse error %s\n", str);
-	if (lexer)
-		free(lexer);
-	if (token)
-	{
-		if (token->val)
-			free(token->val);
-		free(token);
-	}
-	if (lst)
-		ft_free_list(lst);
-	return (NULL);
-}
-
 int	is_string_empty(char *str)
 {
 	int	i;

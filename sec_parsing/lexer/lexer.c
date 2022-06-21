@@ -37,7 +37,7 @@ char	*lexer_collect_arg_second(t_lexer *lexer, t_token *token, char *str)
 	char	*tmp;
 
 	if (lexer->c == '$' && (lexer->src[lexer->i + 1] == '"'
-		|| lexer->src[lexer->i + 1] == '\''))
+			|| lexer->src[lexer->i + 1] == '\''))
 		lexer_advance(lexer);
 	else
 	{

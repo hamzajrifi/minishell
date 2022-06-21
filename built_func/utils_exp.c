@@ -18,7 +18,7 @@ void	ft_realloc(t_shell *index, char *str, int save)
 	int		a;
 
 	temp = NULL;
-	temp = (char **)calloc(sizeof(char *) , (save + 1));
+	temp = (char **)calloc(sizeof(char *), (save + 1));
 	a = 0;
 	while (index->tab_save_exp[a])
 	{

@@ -65,3 +65,22 @@ int	ft_error(t_lexer *lexer)
 	}
 	return (ft_check_error(lexer, i));
 }
+
+t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst)
+{
+	int		i;
+
+	g_status_exec = 127;
+	printf("parse error %s\n", str);
+	if (lexer)
+		free(lexer);
+	if (token)
+	{
+		if (token->val)
+			free(token->val);
+		free(token);
+	}
+	if (lst)
+		ft_free_list(lst);
+	return (NULL);
+}

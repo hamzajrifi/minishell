@@ -24,13 +24,13 @@
 # include <dirent.h>
 # include <errno.h>
 
-#define	TEST_HACK1	ft_strcmp(list->val[0], "cat") == 0
-#define	TEST_HACK2	ft_strcmp(list->val[0], "wc") == 0
-#define	TEST_HACK3	ft_strcmp(list->val[0], "grep") == 0 
-#define	TEST_HACK4	ft_strcmp(list->val[0], "more") == 0   
+# define TEST_HACK1	ft_strcmp(list->val[0], "cat") == 0
+# define TEST_HACK2	ft_strcmp(list->val[0], "wc") == 0
+# define TEST_HACK3	ft_strcmp(list->val[0], "grep") == 0
+# define TEST_HACK4	ft_strcmp(list->val[0], "more") == 0
 
 unsigned int	g_status_exec;
-int id;
+int				id;
 
 typedef struct s_shell {
 	char	**tab_save_exp;
@@ -57,7 +57,6 @@ typedef struct s_global
 	int	global_fd;
 }	t_global;
 
-
 typedef struct t_list
 {
 	char			**val;
@@ -65,7 +64,6 @@ typedef struct t_list
 	struct t_list	*next;
 	struct t_list	*prev;
 }	t_list;
-
 
 char	*utils_path_if_exi(t_shell *mini);
 char	*ft_getenv_utils(t_shell *m, char *str);
@@ -126,7 +124,6 @@ char	**save_dele(t_list *list);
 void	norme_first_cmd(t_list **list, t_shell *mini);
 char	**save_cmd(t_list *list);
 void	norm_exec_her(t_shell *mini, t_list **list);
-
 
 int		check_herd(t_shell *mini, t_list *list);
 void	pipes(t_shell *mini, t_list *list);
