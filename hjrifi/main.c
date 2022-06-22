@@ -68,24 +68,38 @@ void	ft_mini(t_shell *mini, char *src)
 {
 	t_list	*lst;
 	t_list	*head;
+	int		i;
 
 	lst = ft_parser(src, mini);
-	head = lst;
-	if (!lst)
-		return ;
-	else if (finde_her(lst) == 1)
-		pipes(mini, lst);
-	else if (finder_red(lst) == 2)
-		ft_redirection(mini, lst, 0, 1);
-	else if (finder_red(lst) == 4)
-		heredoc(mini, lst, 0, 1);
-	else if (finder_red(lst) == 3)
-		ft_redin(mini, lst, 1, 0);
-	else
+	// printf("outsid\n");
+	while (lst)
 	{
-		ft_exit_status(mini, lst);
-		ft_check_built(mini, lst, 1);
+		i = -1;
+		while (lst->val && lst->val[++i])
+			printf(" val = %s -- type = %d == ", lst->val[i], lst->v_type[i]);
+		//int j = 0;
+		//while (lst->tab && lst->tab[j])
+		//	printf("tab wild = %s", lst->tab[j++]);
+		printf("\n");
+		lst = lst->next;
 	}
+	
+	head = lst;
+	// if (!lst)
+	// 	return ;
+	// else if (finde_her(lst) == 1)
+	// 	pipes(mini, lst);
+	// else if (finder_red(lst) == 2)
+	// 	ft_redirection(mini, lst, 0, 1);
+	// else if (finder_red(lst) == 4)
+	// 	heredoc(mini, lst, 0, 1);
+	// else if (finder_red(lst) == 3)
+	// 	ft_redin(mini, lst, 1, 0);
+	// else
+	// {
+	// 	ft_exit_status(mini, lst);
+	// 	ft_check_built(mini, lst, 1);
+	// }
 	//system("leaks minishell");
 	//ft_free_list(head);
 }

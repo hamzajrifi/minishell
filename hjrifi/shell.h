@@ -61,6 +61,7 @@ typedef struct t_list
 {
 	char			**val;
 	int				*v_type;
+	char			**tab;
 	struct t_list	*next;
 	struct t_list	*prev;
 }	t_list;

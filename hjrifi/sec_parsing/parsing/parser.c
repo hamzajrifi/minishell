@@ -17,7 +17,7 @@ int	check_type_value(char *str, int type)
 	int i;
 
 	i = 0;
-	while (str[i])
+	while (i > 10)
 	{
 		if (str[i++] == '*')
 			return (t_wildcard);
@@ -25,19 +25,40 @@ int	check_type_value(char *str, int type)
 	return (type);
 }
 
-t_list	*ft_check_parser(t_token **token, t_lexer *lexer,
-t_list *lst, t_list *head)
+t_list *lexer_wildcard(t_lexer *lexer, t_token *token, t_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while(token->tab && token->tab[i])
+		i++;
+	lst->tab = malloc(sizeof(char *) * i + 1);
+	i = 0;
+	while (token->tab[i])
+	{
+		lst->tab[i] = ft_strdup(token->tab[i]);
+		free(token->tab[i]);
+		i++;
+	}
+	lst->tab[i] = NULL;
+	return (lst);
+}
+
+t_list	*ft_check_parser(t_token **token, t_lexer *lexer, t_list *lst)
 {
 	int	i;
 
 	i = 1;
 	*token = lexer_get_next_token(lexer, *token);
-	while (*token && (*token)->e_type == t_args)
+	while (*token && ((*token)->e_type == t_args || (*token)->e_type == t_wildcard))
 	{
 		lst->val = ft_realloc_char(lst->val);
 		lst->v_type = ft_realloc_int(lst->v_type, lst->val);
+		if (*token && (*token)->e_type == t_wildcard)
+			lst = lexer_wildcard(lexer, *token, lst);
 		lst->val[i] = ft_strdup((*token)->val);
-		lst->v_type[i] = check_type_value((*token)->val[i++],(*token)->e_type);
+		lst->v_type[i] = check_type_value(&(*token)->val[i], (*token)->e_type);
+		i++;
 		free((*token)->val);
 		*token = lexer_get_next_token(lexer, *token);
 	}
@@ -67,7 +88,7 @@ t_list *lst, t_list *head)
 {
 	while (token && token->e_type != t_error)
 	{
-		lst = ft_check_parser(&token, lexer, lst, head);
+		lst = ft_check_parser(&token, lexer, lst);
 		if (!lst)
 			return (print_error(" 003", lexer, token, head));
 		if (token && lst)
