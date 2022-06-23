@@ -17,7 +17,7 @@ int	check_type_value(char *str, int type)
 	int i;
 
 	i = 0;
-	while (i > 10)
+	while (str[i])
 	{
 		if (str[i++] == '*')
 			return (t_wildcard);
@@ -25,39 +25,19 @@ int	check_type_value(char *str, int type)
 	return (type);
 }
 
-t_list *lexer_wildcard(t_lexer *lexer, t_token *token, t_list *lst)
-{
-	int	i;
-
-	i = 0;
-	while(token->tab && token->tab[i])
-		i++;
-	lst->tab = malloc(sizeof(char *) * i + 1);
-	i = 0;
-	while (token->tab[i])
-	{
-		lst->tab[i] = ft_strdup(token->tab[i]);
-		free(token->tab[i]);
-		i++;
-	}
-	lst->tab[i] = NULL;
-	return (lst);
-}
-
-t_list	*ft_check_parser(t_token **token, t_lexer *lexer, t_list *lst)
+t_list	*ft_check_parser(t_token **token, t_lexer *lexer,
+t_list *lst, t_list *head)
 {
 	int	i;
 
 	i = 1;
 	*token = lexer_get_next_token(lexer, *token);
-	while (*token && ((*token)->e_type == t_args || (*token)->e_type == t_wildcard))
+	while (*token && (*token)->e_type == t_args)
 	{
 		lst->val = ft_realloc_char(lst->val);
 		lst->v_type = ft_realloc_int(lst->v_type, lst->val);
-		if (*token && (*token)->e_type == t_wildcard)
-			lst = lexer_wildcard(lexer, *token, lst);
 		lst->val[i] = ft_strdup((*token)->val);
-		lst->v_type[i] = check_type_value(&(*token)->val[i], (*token)->e_type);
+		lst->v_type[i] = check_type_value((*token)->val, (*token)->e_type);
 		i++;
 		free((*token)->val);
 		*token = lexer_get_next_token(lexer, *token);
@@ -88,7 +68,7 @@ t_list *lst, t_list *head)
 {
 	while (token && token->e_type != t_error)
 	{
-		lst = ft_check_parser(&token, lexer, lst);
+		lst = ft_check_parser(&token, lexer, lst, head);
 		if (!lst)
 			return (print_error(" 003", lexer, token, head));
 		if (token && lst)
@@ -110,6 +90,63 @@ t_list *lst, t_list *head)
 	return (head);
 }
 
+char	*delet_parenthese(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		n;
+
+	n = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '(' && str[i] != ')')
+			n++;
+		i++;
+	}
+	tmp = malloc(sizeof(char) * n + 1);
+	i = 0;
+	n = 0;
+	while (str[i])
+	{
+		if(str[i] != '(' && str[i] != ')')
+			tmp[n++] = str[i];
+		i++;
+	}
+	free(str);
+	return (tmp);
+}
+
+int	check_parenthese(char *str)
+{
+	int		i;
+	int		n;
+	char	tab[ft_strlen(str)];
+
+	i = 0;
+	n = 0;
+	tab[0] = '\0';
+	while(str[i] && n >= 0)
+	{
+		if(str[i] == '(' && str[i + 1] == ')')
+			return (1);
+		else if(str[i] == '(')
+			tab[n++] = '(';
+		else if (str[i] == ')')
+		{
+			if (!tab[--n])
+				return (1);
+			else if (tab[n] == '(')
+				tab[n] = '\0';
+		}
+		i++;
+	}
+	if (n != 0 || (!str[i] && tab[n] == '('))
+		return (1);
+	str = delet_parenthese(str);
+	return (0);
+}
+
 t_list	*ft_parser(char *src, t_shell *mini)
 {
 	t_lexer	*lexer;
@@ -121,6 +158,9 @@ t_list	*ft_parser(char *src, t_shell *mini)
 	lst = NULL;
 	if (is_string_empty(src))
 		return (NULL);
+	if (check_parenthese(src))
+		return (print_error(" 0000", lexer, token, lst));
+	printf("str = %s\n", src);
 	lexer = init_lexer(src, mini);
 	token = lexer_get_next_token(lexer, token);
 	if (token)

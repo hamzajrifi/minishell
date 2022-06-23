@@ -68,22 +68,18 @@ void	ft_mini(t_shell *mini, char *src)
 {
 	t_list	*lst;
 	t_list	*head;
-	int		i;
 
 	lst = ft_parser(src, mini);
+
 	// printf("outsid\n");
 	while (lst)
 	{
-		i = -1;
+		int i = -1;
 		while (lst->val && lst->val[++i])
 			printf(" val = %s -- type = %d == ", lst->val[i], lst->v_type[i]);
-		//int j = 0;
-		//while (lst->tab && lst->tab[j])
-		//	printf("tab wild = %s", lst->tab[j++]);
 		printf("\n");
 		lst = lst->next;
 	}
-	
 	head = lst;
 	// if (!lst)
 	// 	return ;
