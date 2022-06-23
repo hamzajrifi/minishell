@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 23:33:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:58:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@
 # include <dirent.h>
 # include <errno.h>
 
-# define TEST_HACK1	ft_strcmp(list->val[0], "cat") == 0
-# define TEST_HACK2	ft_strcmp(list->val[0], "wc") == 0
-# define TEST_HACK3	ft_strcmp(list->val[0], "grep") == 0
-# define TEST_HACK4	ft_strcmp(list->val[0], "more") == 0
-
 unsigned int	g_status_exec;
 int				id;
+int				cheecker;
+int				g_fd;
 
 typedef struct s_shell {
 	char	**tab_save_exp;
@@ -65,6 +62,9 @@ typedef struct t_list
 	struct t_list	*prev;
 }	t_list;
 
+
+void	handler(int sig);
+void	ft_free(char **tab);
 char	*utils_path_if_exi(t_shell *mini);
 char	*ft_getenv_utils(t_shell *m, char *str);
 int		size_vl(char **str);
@@ -73,7 +73,7 @@ void	cmm_exit(t_list *lst, int fd);
 void	cmm_cd(t_list *lst, t_shell *mini);
 void	built_sec(t_shell *mini, t_list *lst, int fd);
 int		utils_redin(t_list *lst);
-void	change_in(t_list **lst);
+void	change_in(t_list **lst, t_shell *mini);
 int		utils_re(t_list *lst, int fd_in, int k);
 char	**cmd_utils(t_list *list, char **tab);
 char	**cmd(t_list *list);

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/20 23:24:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:52:58 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@ void	handler(int sig)
 	if ((sig == SIGINT || sig == SIGQUIT) && id != 0)
 	{
 		if (sig == SIGQUIT)
-			printf("Quit: 3\n");
+			write (1, "Quit: 3\n", 9);
 		kill(id, sig);
-		g_status_exec = 130;
+	}
+	else if (cheecker != 0)
+	{
+		g_status_exec = 1;
+		close(0);
 	}
 	else if (sig == SIGINT)
 	{
-		printf("\n");
+		write (1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_status_exec = 1;
 	}
@@ -35,6 +39,7 @@ void	handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	cheecker = 0;
 	id = 0;
 }
 
@@ -104,10 +109,13 @@ int	main(int ac, char **av, char **env)
 	mini.num_cmd = 0;
 	mini.cnt = 0;
 	mini.fs = 0;
+	mini.built = 0;
 	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
 	while (1337)
 	{
 		mini.counter = 0;
+		g_fd = dup(0);
 		src = readline("mimishell : ");
 		if (errno == 13)
 			g_status_exec = 126;

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:08:20 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 13:53:12 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:52:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void	ft_echo(t_shell *mini, char **str, int fd)
 	}
 	else
 		ft_putstr_fd("\n", fd);
+}
+
+void	old(t_shell *mini, int a)
+{
+	char	buff[256];
+
+	if (a > 0)
+		free(mini->save_old_pwd);
+	mini->save_old_pwd = strdup(mini->save_pwd);
+	free(mini->save_pwd);
+	if (getcwd(buff, sizeof(buff)) != NULL)
+		mini->save_pwd = strdup(getcwd(buff, sizeof(buff)));
 }

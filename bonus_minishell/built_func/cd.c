@@ -6,18 +6,48 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:15:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 14:53:56 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:52:21 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
+void	chdi(t_shell *mini, char *path);
+void	old(t_shell *mini, int a);
+
+char	**go_home2(t_shell *mini)
+{
+	int		i;
+	int		k;
+	int		j;
+	char	**temp;
+
+	j = 0;
+	i = 0;
+	while (mini->tab_save_env[i])
+	{
+		temp = ft_split(mini->tab_save_env[i], '=');
+		if (strcmp(temp[0], "HOME") == 0)
+			return (temp);
+		ft_free(temp);
+		j = 0;
+		i++;
+	}
+	return (0);
+}
+
 void	home(t_shell *mini)
 {
-	if (go_home(mini) == 0)
+	char	**str;
+	int		i;
+
+	i = 0;
+	str = go_home2(mini);
+	system("leaks minishell");
+	if (str[1] != NULL)
 	{
-		if (search_path_in_env(mini, 1) == 0)
-			chdir("/Users/otmallah");
+		chdir(str[1]);
+		ft_free(str);
 	}
 	change_pwd(mini);
 	mini->built++;
@@ -31,20 +61,6 @@ void	sec_home(t_shell *mini, char *path)
 	mini->built++;
 }
 
-void	chdi(t_shell *mini, char *path)
-{
-	int	a;
-
-	a = chdir(path);
-	if (a != 0)
-	{
-		perror(NULL);
-		g_status_exec = 1;
-	}
-	mini->built++;
-	change_pwd(mini);
-}
-
 void	hh(t_shell *mini)
 {
 	if (search_path_in_env(mini, 1) == 0)
@@ -54,18 +70,15 @@ void	hh(t_shell *mini)
 
 void	ft_cd(char *path, t_shell *mini)
 {
-	int			a;
-	char		buff[256];
+	static int			a;
+	char				buff[256];
 
+	a = 0;
 	if (mini->built == 0)
 		mini->save_pwd = strdup(getcwd(buff, sizeof(buff)));
-	else
-	{
-		mini->save_old_pwd = strdup(mini->save_pwd);
-		if (getcwd(buff, sizeof(buff)) != NULL)
-			mini->save_pwd = strdup(getcwd(buff, sizeof(buff)));
-	}
-	if (!path)
+	else if (ft_strcmp(mini->save_pwd, getcwd(buff, sizeof(buff))) != 0)
+		old(mini, a);
+	if (path == NULL)
 		unset_home(mini);
 	else if (strcmp(path, "~") == 0)
 		home(mini);
@@ -77,4 +90,5 @@ void	ft_cd(char *path, t_shell *mini)
 		hh(mini);
 	else if (path)
 		chdi(mini, path);
+	a++;
 }

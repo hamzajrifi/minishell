@@ -6,10 +6,11 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/20 23:24:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:44:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell.h"
 #include "sec_parsing/header/minishell.h"
 
 void	handler(int sig)
@@ -17,15 +18,14 @@ void	handler(int sig)
 	if ((sig == SIGINT || sig == SIGQUIT) && id != 0)
 	{
 		if (sig == SIGQUIT)
-			printf("Quit: 3\n");
+			write(1, "Quit: 3\n", 9);
 		kill(id, sig);
 		g_status_exec = 130;
 	}
 	else if (sig == SIGINT)
 	{
-		printf("\n");
+		write (1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
 		rl_redisplay();
 		g_status_exec = 1;
 	}
@@ -47,6 +47,19 @@ int	finde_her(t_list *lis)
 		lis = lis->next;
 	}
 	return (0);
+}
+
+int	ft_findwild(t_list *list)
+{
+	while (list && list->v_type[0] != 11)
+	{
+		if (list->val[1])
+		{
+			if (list->v_type[1] == 15)
+				return (1);
+		}
+		list = list->next;
+	}
 }
 
 int	finder_red(t_list *list)
@@ -82,21 +95,23 @@ void	ft_mini(t_shell *mini, char *src)
 	//	lst = lst->next;
 	//}
 	head = lst;
-	// if (!lst)
-	// 	return ;
-	// else if (finde_her(lst) == 1)
-	// 	pipes(mini, lst);
-	// else if (finder_red(lst) == 2)
-	// 	ft_redirection(mini, lst, 0, 1);
-	// else if (finder_red(lst) == 4)
-	// 	heredoc(mini, lst, 0, 1);
-	// else if (finder_red(lst) == 3)
-	// 	ft_redin(mini, lst, 1, 0);
-	// else
-	// {
-	// 	ft_exit_status(mini, lst);
-	// 	ft_check_built(mini, lst, 1);
-	// }
+	if (!lst)
+		return ;
+	if (ft_findwild(lst) == 1)
+		
+	else if (finde_her(lst) == 1)
+		pipes(mini, lst);
+	else if (finder_red(lst) == 2)
+		ft_redirection(mini, lst, 0, 1);
+	else if (finder_red(lst) == 4)
+		heredoc(mini, lst, 0, 1);
+	else if (finder_red(lst) == 3)
+		ft_redin(mini, lst, 1, 0);
+	else
+	{
+		ft_exit_status(mini, lst);
+		ft_check_built(mini, lst, 1);
+	}
 	ft_free_list(head);
 }
 

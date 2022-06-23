@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 22:28:12 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:21:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,21 @@ void	change_in2(t_list **lst)
 		while (tab[j])
 		{
 			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[i] = tab[j];
-			i++;
-			j++;
+			(*lst)->val[i++] = strdup(tab[j++]);
+			free(tab[j - 1]);
 		}
-		(*lst)->val[i] = malloc(sizeof(char *));
 		(*lst)->val[i] = NULL;
 		(*lst)->v_type[0] = 1;
 		(*lst)->v_type[1] = 2;
 	}
+	free(tab);
 }
 
 void	utils_r(t_shell *mini, t_list *lst, t_global *globale, int num)
 {
 	ft_exit_status(mini, lst);
-	mini->id = fork();
-	if (mini->id == 0)
+	id = fork();
+	if (id == 0)
 	{
 		dup2(globale->global_fd_in, 0);
 		if (globale->global_fd_out != 1)
@@ -65,7 +64,7 @@ void	utils_r(t_shell *mini, t_list *lst, t_global *globale, int num)
 	if (globale->global_fd_out != 1)
 		close(globale->global_fd_out);
 	wait(NULL);
-	kill(9, mini->id);
+	kill(9, id);
 }
 
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
@@ -108,7 +107,7 @@ void	normee4(t_shell *mini, t_list *list)
 	fd_in = utils_redin(list);
 	list = head;
 	mini->tab_of_norm = cmd(list);
-	change_in(&list);
+	change_in(&list, mini);
 	if (fd_in != 0 && mini->tab_of_norm[0])
 		normm3(mini, list, fd_in, fd_out);
 }
@@ -119,8 +118,8 @@ void	normm3(t_shell *mini, t_list *list, int fd_in, int fd_out)
 	{
 		if (fd_out != -1)
 		{
-			mini->id = fork();
-			if (mini->id == 0)
+			id = fork();
+			if (id == 0)
 			{
 				dup2(fd_in, 0);
 				dup2(fd_out, 1);
@@ -131,7 +130,7 @@ void	normm3(t_shell *mini, t_list *list, int fd_in, int fd_out)
 			if (fd_out != 1)
 				close(fd_out);
 			wait(NULL);
-			kill(9, mini->id);
+			kill(9, id);
 		}
 	}
 }

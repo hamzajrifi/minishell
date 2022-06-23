@@ -21,6 +21,7 @@ C_FILES =	exec/exec_cmd.c\
 			built_func/pwd.c\
 			built_func/unset.c\
 			built_func/utils_exp.c\
+			built_func/sec_sec_exp.c\
 			utils/ft_split.c\
 			utils/ft_strjoin.c\
 			utils/ft_substr.c\
@@ -35,6 +36,7 @@ C_FILES =	exec/exec_cmd.c\
 			exec/heredoc_utils.c\
 			exec/sec_herdoc_utils.c\
 			exec/sec_redirection_utils.c\
+			exec/norme.c\
 			exec/redirection_utils.c\
 			sec_parsing/functions/utiles_functions.c\
 			sec_parsing/functions/ft_error.c\

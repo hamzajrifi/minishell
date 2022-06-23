@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:37:09 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 21:59:16 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:31:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	norrrr(int fd, int in, int tem_fd)
 void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 {
 	int		fd;
-	int		id;
 	int		in;
 
+	cheecker = 1;
 	fd = open_all_files(lst, 0);
 	in = fd_i(lst);
 	utils_red(&lst, mini);
@@ -68,24 +68,30 @@ int	utils_redin(t_list *lst)
 	return (fd_in);
 }
 
-void	change_in(t_list **lst)
+void	change_in(t_list **lst, t_shell *mini)
 {
 	int		i;
-	char	**tab;
+	char	*temp;
 
 	i = 0;
-	tab = cmd(*lst);
-	if (tab[0])
+	if (mini->tab_of_norm[i])
 	{
-		while (tab[i])
+		while ((*lst)->val[i])
+			free((*lst)->val[i++]);
+		free((*lst)->val);
+		(*lst)->val = malloc(sizeof(char *) * (size_vl(mini->tab_of_norm) + 1));
+		i = 0;
+		while (mini->tab_of_norm[i])
 		{
-			(*lst)->val[i] = tab[i];
+			(*lst)->val[i] = strdup(mini->tab_of_norm[i]);
+			free(mini->tab_of_norm[i]);
 			i++;
 		}
 		(*lst)->val[i] = NULL;
 		(*lst)->v_type[0] = 1;
 		(*lst)->v_type[1] = 2;
 	}
+	free(mini->tab_of_norm);
 }
 
 int	utils_re(t_list *lst, int fd_in, int k)

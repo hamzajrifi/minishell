@@ -6,12 +6,14 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 22:27:43 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:29:00 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../sec_parsing/header/utiles_functions.h"
+
+void	true_while(t_shell *mini, char **tab, int size);
 
 int	fd_i(t_list *list)
 {
@@ -64,31 +66,14 @@ void	exec_her(t_list *list, t_shell *mini, int num, int fd_out)
 	wait(NULL);
 }
 
-void	true_while(t_shell *mini, char **tab, int size)
+int	utils_true_while(void)
 {
-	char	*find;
-	int		fd;
-	int		i;
+	int	fd;
 
-	i = 0;
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	while (1)
-	{
-		find = readline("> ");
-		if (find == NULL)
-			break ;
-		if (strcmp(find, tab[i]) == 0 && tab[i])
-		{
-			size--;
-			i++;
-			if (size == 0)
-				break ;
-			else
-				fd = open("/tmp/test", O_RDWR | O_TRUNC, 0644);
-		}
-		if (size != 0)
-			ft_putendl_fd(find, fd);
-	}
+	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
+	return (fd);
 }
 
 void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)
@@ -102,7 +87,9 @@ void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 	else
 		tab = save_dele(list->next);
 	size = size_tab(tab);
+	cheecker = 1;
 	true_while(mini, tab, size);
+	cheecker = 0;
 	out = open_all_files(list, 2);
 	if (list->v_type[0] == 1 && out != -1)
 		exec_first_cmd_in_her(list, mini, fd_out, num);

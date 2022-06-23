@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 17:45:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 23:19:54 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 03:08:47 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	cmm_exit(t_list *lst, int fd)
 
 void	cmm_cd(t_list *lst, t_shell *mini)
 {
-	if (lst->val[1] != NULL)
+	if (lst->val[1])
 		ft_cd(lst->val[1], mini);
 	else
 		ft_cd(NULL, mini);

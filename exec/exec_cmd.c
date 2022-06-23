@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 23:18:37 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 04:44:36 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,14 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 	char	**temp;
 	char	*str;
 
+	str = check_path_if_exi(mini);
 	if (lst->val[0][0] == '.' || lst->val[0][0] == '/')
 		ft_check_cmd(mini, lst);
-	else if (check_path_if_exi(mini) != NULL)
+	else if (str != NULL)
 	{
-		str = check_path_if_exi(mini);
 		if (str != NULL)
 		{
-			if (find(str) == 1)
-				temp = ft_split(str, ':');
-			else
-			{
-				temp = (char **)malloc(sizeof(char *) * 2);
-				temp[0] = str;
-				temp[1] = NULL;
-			}
+			temp = ft_split(str, ':');
 			if (temp[0])
 				ft_execve(temp, mini, lst);
 			ft_err(lst->val[0]);

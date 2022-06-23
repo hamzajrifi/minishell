@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:47:47 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 23:39:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/22 23:40:55 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	check_duplicate(t_shell *index, char *str)
 {
 	int		i;
 	int		k;
-	char	**temp = NULL;
-	char	**sec_temp = NULL;
+	char	**temp;
+	char	**sec_temp;
 
 	i = 0;
 	k = 0;
@@ -88,7 +88,7 @@ void	oldpwd_not_set(t_shell *mini)
 {
 	if (mini->built == 0)
 	{
-		write (2, "cd: OLDPWD not set\n", 20);
+		printf("cd: OLDPWD not set\n");
 		g_status_exec = 1;
 	}
 	else
@@ -103,11 +103,11 @@ void	unset_home(t_shell *mini)
 {
 	if (go_home(mini) == 0)
 	{
-		write (2, "minishell: cd: HOME not set\n", 29);
+		write(2, "minishell: cd: HOME not set\n", 29);
 		g_status_exec = 1;
 	}
 	else
-	{
+	{	
 		search_path_in_env(mini, 1);
 		change_pwd(mini);
 		mini->built++;

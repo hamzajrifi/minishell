@@ -6,12 +6,14 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 22:26:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:09:16 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../sec_parsing/header/minishell.h"
+
+void	sec_utils_red(t_list **lst, char **tab, int ij, int k);
 
 int	utils_files(t_list *list, int a, int fd, int fd_in)
 {
@@ -73,7 +75,7 @@ char	**cmd_utils(t_list *list, char **tab)
 		{
 			while (list->val[k])
 			{
-				tab[i++] = list->val[k];
+				tab[i++] = strdup(list->val[k]);
 				k++;
 			}
 			k = 2;
@@ -116,11 +118,9 @@ void	utils_red(t_list **lst, t_shell *mini)
 {
 	char	**tab;
 	int		ij;
-	int		io;
 	int		k;
 
 	ij = 0;
-	io = 0;
 	k = 0;
 	tab = cmd(*lst);
 	if (tab[0])
@@ -131,14 +131,14 @@ void	utils_red(t_list **lst, t_shell *mini)
 			while ((*lst)->val[ij])
 				ij++;
 		}
-		while (tab[io])
+		if (k != 1)
 		{
-			if (k == 1)
-				(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[ij++] = tab[io++];
+			while ((*lst)->val[ij])
+				free((*lst)->val[ij++]);
+			free((*lst)->val);
+			(*lst)->val = malloc(sizeof(char *) * (size_vl(tab) + 1));
+			ij = 0;
 		}
-		(*lst)->val[ij] = NULL;
-		(*lst)->v_type[0] = 1;
-		(*lst)->v_type[1] = 2;
+		sec_utils_red(lst, tab, ij, k);
 	}
 }

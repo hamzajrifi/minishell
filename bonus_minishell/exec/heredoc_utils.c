@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:57:49 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 22:27:55 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:27:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num)
 
 	out = open_all_files(list, 2);
 	fd_in = fd_i(list);
-	close(fd);
 	fd = open("/tmp/test", O_RDWR, 0644);
 	norme_first_cmd(&list, mini);
 	if (fork() == 0)
@@ -55,7 +54,7 @@ char	**save_dele(t_list *list)
 	while (list && list->v_type[0] == 3)
 	{
 		tab = ft_realloc_char(tab);
-		tab[i] = list->val[1];
+		tab[i] = ft_strdup(list->val[1]);
 		list = list->next;
 		i++;
 	}
@@ -79,7 +78,7 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 		while (sec_tab[io])
 		{
 			(*list)->val = ft_realloc_char((*list)->val);
-			(*list)->val[lp] = sec_tab[io];
+			(*list)->val[lp] = strdup(sec_tab[io]);
 			io++;
 			lp++;
 		}

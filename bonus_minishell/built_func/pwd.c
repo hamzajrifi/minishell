@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:01:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/18 12:36:24 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:02:50 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int	loop(t_shell *mini)
 		if (strcmp(temp[0], "HOME") == 0)
 		{
 			chdir(temp[1]);
+			ft_free(temp);
 			return (1);
 		}
+		ft_free(temp);
 		i++;
 	}
 	return (0);
@@ -55,7 +57,9 @@ int	no(t_shell *index, char *add_str, char *string, int i)
 	sec_temp = ft_split(add_str, '=');
 	if (strcmp(temp[0], sec_temp[0]) == 0)
 	{
-		index->tab_save_exp[i] = add_str;
+		index->tab_save_exp[i] = strdup(add_str);
+		ft_free(temp);
+		ft_free(sec_temp);
 		return (3);
 	}
 	return (0);
@@ -68,8 +72,10 @@ int	no1(t_shell *index, char *add_str, char *string, int i)
 	sec_temp = ft_split(add_str, '=');
 	if (strcmp(sec_temp[0], string) == 0)
 	{
-		index->tab_save_exp[i] = add_str;
+		index->tab_save_exp[i] = strdup(add_str);
+		ft_free(sec_temp);
 		return (5);
 	}
+	ft_free(sec_temp);
 	return (0);
 }

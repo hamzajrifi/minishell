@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:52:40 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/20 23:19:08 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 03:11:22 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 char	*ft_getenv(t_shell *m, char *str)
 {
@@ -102,15 +103,16 @@ void	ft_execve(char **temp, t_shell *mini, t_list *lst)
 	while (temp[i])
 	{
 		size = ft_strlen(temp[i]);
-		temp[i] = ft_strjoin(temp[i], "/");
-		str = ft_strjoin(temp[i], lst->val[0]);
-		free(temp[i]);
+		temp[i] = ft_h_strjoin(temp[i], "/");
+		str = ft_h_strjoin(temp[i], lst->val[0]);
 		if (access(str, F_OK) == 0)
 		{
+			free(temp);
 			execve(str, &lst->val[0], mini->tab_save_env);
 			exit(0);
 		}
 		free(str);
 		i++;
 	}
+	free(temp);
 }
