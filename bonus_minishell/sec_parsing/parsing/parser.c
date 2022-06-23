@@ -114,7 +114,6 @@ char	*delet_parenthese(char *str)
 		i++;
 	}
 	tmp[n] = '\0';
-	// free(str);
 	return (tmp);
 }
 
@@ -150,7 +149,6 @@ char	*check_parenthese(char *str)
 	if (n != 0 || (!str[i] && tab[n] == '('))
 		return (NULL);
 	str = delet_parenthese(str);
-	printf("str here = %s\n", str);
 	return (str);
 }
 
@@ -179,5 +177,6 @@ t_list	*ft_parser(char *src, t_shell *mini)
 	if (!lst)
 		return (NULL);
 	free(lexer);
+	free(src);
 	return (head);
 }

@@ -70,16 +70,17 @@ void	ft_mini(t_shell *mini, char *src)
 	t_list	*head;
 
 	lst = ft_parser(src, mini);
+	system("leaks minishell");
 
 	// printf("outsid\n");
-	while (lst)
-	{
-		int i = -1;
-		while (lst->val && lst->val[++i])
-			printf(" val = %s -- type = %d == ", lst->val[i], lst->v_type[i]);
-		printf("\n");
-		lst = lst->next;
-	}
+	//while (lst)
+	//{
+	//	int i = -1;
+	//	while (lst->val && lst->val[++i])
+	//		printf(" val = %s -- type = %d == ", lst->val[i], lst->v_type[i]);
+	//	printf("\n");
+	//	lst = lst->next;
+	//}
 	head = lst;
 	// if (!lst)
 	// 	return ;
@@ -96,8 +97,7 @@ void	ft_mini(t_shell *mini, char *src)
 	// 	ft_exit_status(mini, lst);
 	// 	ft_check_built(mini, lst, 1);
 	// }
-	//system("leaks minishell");
-	//ft_free_list(head);
+	ft_free_list(head);
 }
 
 int	main(int ac, char **av, char **env)
