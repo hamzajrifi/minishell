@@ -44,7 +44,8 @@ C_FILES =	exec/exec_cmd.c\
 			sec_parsing/lexer/mini.c\
 			sec_parsing/lexer/lexer_action.c\
 			sec_parsing/lexer/lexer.c\
-			sec_parsing/lexer/token.c
+			sec_parsing/lexer/token.c\
+			sec_parsing/parsing/parenthesis.c
 
 OBJ = $(C_FILES:.c=.o)
 # main.o\

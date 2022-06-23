@@ -69,5 +69,7 @@ int		ft_free_token_and_string(t_token *token, char *str, int n);
 t_list	*add_node_in_lst(char *str, int v_type, t_list *lst);
 int		ft_error(t_lexer *lexer);
 t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst);
+char	*free_string(char *str);
+char	*check_parenthesis(char *str);
 
 #endif

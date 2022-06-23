@@ -47,3 +47,9 @@ void	ft_free_list(t_list *lst)
 			lst = lst->next;
 	}
 }
+
+char	*free_string(char *str)
+{
+	free(str);
+	return (NULL);
+}

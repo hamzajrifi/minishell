@@ -12,8 +12,6 @@
 
 #include "../header/minishell.h"
 
-
-
 t_token	*init_token(int t_type, char *value)
 {
 	t_token	*token;
@@ -45,9 +43,21 @@ t_token	*lexer_get_next_token_second(t_lexer *lexer, t_token *token)
 	else if (lexer->c == '<')
 		return (lexer_advance_with_token(lexer, init_token
 				(t_output, lexer_get_current_char_as_string(lexer))));
+	else if (lexer->c == '\'' || lexer->c == '"')
+		return (lexer_collect_string(lexer));
+	else if (lexer->c == '|')
+		return (lexer_advance_with_token(lexer, init_token
+				(t_pip, lexer_get_current_char_as_string(lexer))));
 	else if (lexer->c)
 		return (lexer_collect_arg(lexer));
 	return (NULL);
+}
+
+t_token	*advance_double_token(t_lexer *lexer, t_token *token)
+{
+	lexer_advance(lexer);
+	lexer_advance(lexer);
+	return (token);
 }
 
 t_token	*lexer_get_next_token(t_lexer *lexer, t_token *token)
@@ -61,28 +71,14 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_token *token)
 		if (ft_error(lexer))
 			return (init_token(t_error, NULL));
 		else if (lexer->c == '|' && lexer->src[lexer->i + 1] == '|')
-		{
-			lexer_advance(lexer);
-			lexer_advance(lexer);
-			return (init_token(t_or, ft_strdup("||")));
-		}
+			return (advance_double_token(lexer, init_token
+					(t_or, ft_strdup("||"))));
 		else if (lexer->c == '&' && lexer->src[lexer->i + 1] == '&')
-		{
-			lexer_advance(lexer);
-			lexer_advance(lexer);
-			return (init_token(t_or, ft_strdup("&&")));
-		}
-		else if (lexer->c == '\'' || lexer->c == '"')
-			return (lexer_collect_string(lexer));
-		else if (lexer->c == '|')
-			return (lexer_advance_with_token(lexer, init_token
-					(t_pip, lexer_get_current_char_as_string(lexer))));
+			return (advance_double_token(lexer, init_token
+					(t_and, ft_strdup("&&"))));
 		else if (lexer->c == '<' && lexer->src[lexer->i + 1] == '<')
-		{
-			lexer_advance(lexer);
-			return (lexer_advance_with_token
-				(lexer, init_token(t_heredoc, ft_strdup("<<"))));
-		}
+			return (advance_double_token(lexer, init_token
+					(t_heredoc, ft_strdup("<<"))));
 		else
 			return (lexer_get_next_token_second(lexer, token));
 	}

@@ -14,7 +14,7 @@
 
 int	check_type_value(char *str, int type)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -90,68 +90,6 @@ t_list *lst, t_list *head)
 	return (head);
 }
 
-char	*delet_parenthese(char *str)
-{
-	char	*tmp;
-	int		i;
-	int		n;
-
-	n = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '(' && str[i] != ')')
-			n++;
-		i++;
-	}
-	tmp = malloc(sizeof(char) * n + 1);
-	i = 0;
-	n = 0;
-	while (str[i])
-	{
-		if(str[i] != '(' && str[i] != ')')
-			tmp[n++] = str[i];
-		i++;
-	}
-	tmp[n] = '\0';
-	return (tmp);
-}
-
-char	*check_parenthese(char *str)
-{
-	int		i;
-	int		n;
-	char	tab[ft_strlen(str)];
-
-	i = 0;
-	n = 0;
-	tab[0] = '\0';
-	while(str[i] && n >= 0)
-	{
-		if(str[i] == '(' && str[i + 1] == ')')
-			return (NULL);
-		else if(str[i] == '(')
-			tab[n++] = '(';
-		else if (str[i] == ')')
-		{
-			i++;
-			while (str[i] == ' ')
-				i++;
-			if (!tab[--n] || (str[i] &&(str[i] != '&' && str[i] != '|' && str[i] != '>' && str[i] != '<' && str[i] != ' ' && str[i] != ')')))
-				return (NULL);
-			else if (tab[n] == '(')
-				tab[n] = '\0';
-			if (str[i] == ')' && tab[--n] == '(')
-				tab[n] = '\0';
-		}
-		i++;
-	}
-	if (n != 0 || (!str[i] && tab[n] == '('))
-		return (NULL);
-	str = delet_parenthese(str);
-	return (str);
-}
-
 t_list	*ft_parser(char *src, t_shell *mini)
 {
 	t_lexer	*lexer;
@@ -163,7 +101,7 @@ t_list	*ft_parser(char *src, t_shell *mini)
 	lst = NULL;
 	if (is_string_empty(src))
 		return (NULL);
-	src = check_parenthese(src);
+	src = check_parenthesis(src);
 	if (!src)
 		return (print_error(" 0000", lexer, token, lst));
 	lexer = init_lexer(src, mini);
