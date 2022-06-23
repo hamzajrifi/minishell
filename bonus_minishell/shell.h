@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:58:49 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:30:58 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,17 @@ typedef struct t_list
 	struct t_list	*prev;
 }	t_list;
 
+typedef struct s_wild
+{
+	char	*get_next;
+	char	*str1;
+	char	*str2;
+	char	**tab_wild;
+	int		size;
+	int		out_file;
+	int		in_file;
+	int		size_j;
+}	t_wild;
 
 void	handler(int sig);
 void	ft_free(char **tab);
@@ -145,13 +156,22 @@ int		invalide_identifier(char *str, int fd);
 void	heredoc(t_shell *mini, t_list *list, int num, int fd_out);
 int		open_all_files(t_list *list, int a);
 void	red_in(t_shell *mini, char *str);
-//int		ft_and_bonus(t_shell *mini, char *str);
-//void	ft_or_bonus(t_shell *mini, char *str);
 int		search_path_in_env(t_shell *mini, int a);
-//int		find_both(char *str);
-//void	ft_both(t_shell *mini, char *str);
-//void	ft_wildcars(t_shell *mini, char *str);
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
+void	change(t_list **list, t_wild *wild);
+int		sec_utils_wild(t_wild *wild, int i, int count, char **tab);
+void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd);
+void	utils_mult_wild(t_list **list, t_wild *wild, char *tab, int fd);
+void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd);
+void	one_wild(t_list **list, t_wild *wild, int fd);
+void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd);
+void	exec_wild(t_shell *mini, t_list **list);
+void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list);
+void	ft_wildcards(t_list **list, t_shell *mini);
+char	*get_next_line(int fd);
+char	*ft_strstr(char *str, char *to_find, int size);
+char	*ft_strstr3(char *str, char *to_find, int size);
+char	*ft_strstr2(char *str, char *to_find, int size);
 
 // exit
 

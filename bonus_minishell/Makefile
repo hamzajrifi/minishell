@@ -21,6 +21,7 @@ C_FILES =	exec/exec_cmd.c\
 			built_func/pwd.c\
 			built_func/unset.c\
 			built_func/utils_exp.c\
+			built_func/sec_sec_exp.c\
 			utils/ft_split.c\
 			utils/ft_strjoin.c\
 			utils/ft_substr.c\
@@ -35,7 +36,11 @@ C_FILES =	exec/exec_cmd.c\
 			exec/heredoc_utils.c\
 			exec/sec_herdoc_utils.c\
 			exec/sec_redirection_utils.c\
+			exec/norme.c\
 			exec/redirection_utils.c\
+			exec_bonus/wildcards.c\
+			exec_bonus/utils_wildcards.c\
+			get/get_next_line.c\
 			sec_parsing/functions/utiles_functions.c\
 			sec_parsing/functions/ft_error.c\
 			sec_parsing/parsing/parser.c\
@@ -45,7 +50,8 @@ C_FILES =	exec/exec_cmd.c\
 			sec_parsing/lexer/lexer_action.c\
 			sec_parsing/lexer/lexer.c\
 			sec_parsing/lexer/token.c\
-			sec_parsing/parsing/parenthesis.c
+			sec_parsing/parsing/parenthesis.c\
+			ft_strstr.c
 
 OBJ = $(C_FILES:.c=.o)
 # main.o\
@@ -58,7 +64,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ) main.c
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I /Users/otmallah/.brew/opt/readline/include -lreadline $(NAME) main.c -o minishell 
+			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I /Users/otmallah/.brew/opt/readline/include -lreadline $(NAME) main.c -o minishell -fsanitize=address -g
 clean :	
 		rm -f *.o sec_parsing/functions/*.o
 		rm -f *.o sec_parsing/ft_free/*.o
@@ -67,6 +73,7 @@ clean :
 		rm -f *.o utils/*.o
 		rm -f *.o sec_parsing/parsing/*.o
 		rm -f *.o sec_parsing/lexer/*.o
+		rm -f *.o exec_bonus/*.o
 		rm -f $(NAME)
 fclean : clean
 		rm -f minishell

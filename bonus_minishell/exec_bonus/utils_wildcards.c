@@ -6,11 +6,11 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:25:31 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 16:27:57 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:37:55 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wildcards.h"
+#include "../shell.h"
 
 void	change(t_list **list, t_wild *wild)
 {
@@ -20,7 +20,7 @@ void	change(t_list **list, t_wild *wild)
 
 	i = 0;
 	j = 0;
-	temp = ft_strdup((*list)->val[0]);
+	temp = strdup((*list)->val[0]);
 	ft_free((*list)->val);
 	(*list)->val = malloc(sizeof(char *) * (size_vl(wild->tab_wild) + 2));
 	while (wild->tab_wild[i])
@@ -29,7 +29,7 @@ void	change(t_list **list, t_wild *wild)
 			(*list)->val[j] = temp;
 		else
 		{
-			(*list)->val[j] = ft_strdup(wild->tab_wild[i]);
+			(*list)->val[j] = strdup(wild->tab_wild[i]);
 			i++;
 		}
 		j++;
@@ -88,7 +88,8 @@ void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd)
 		i = 0;
 		if (count == size)
 		{
-			wild->tab_wild[wild->size_j] = ft_strdup(wild->get_next);
+			wild->tab_wild[wild->size_j] = strdup(wild->get_next);
+			printf("lst = %s\n", wild->tab_wild[wild->size_j]);
 			wild->size_j++;
 		}
 		count = 0;

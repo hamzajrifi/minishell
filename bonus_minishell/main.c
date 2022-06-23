@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/23 22:44:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:33:10 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	ft_findwild(t_list *list)
 		}
 		list = list->next;
 	}
+	return (0);
 }
 
 int	finder_red(t_list *list)
@@ -83,7 +84,6 @@ void	ft_mini(t_shell *mini, char *src)
 	t_list	*head;
 
 	lst = ft_parser(src, mini);
-	system("leaks minishell");
 
 	// printf("outsid\n");
 	//while (lst)
@@ -98,7 +98,10 @@ void	ft_mini(t_shell *mini, char *src)
 	if (!lst)
 		return ;
 	if (ft_findwild(lst) == 1)
-		
+	{
+		puts("3210");
+		ft_wildcards(&lst, mini);
+	}
 	else if (finde_her(lst) == 1)
 		pipes(mini, lst);
 	else if (finder_red(lst) == 2)

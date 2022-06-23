@@ -6,18 +6,18 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 01:09:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 16:42:52 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:35:00 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wildcards.h"
+#include "../shell.h"
 
 void	one_wild(t_list **list, t_wild *wild, int fd)
 {
 	wild->get_next = get_next_line(fd);
 	while (wild->get_next)
 	{
-		wild->tab_wild[wild->size_j] = strdup(wild->get_next);
+		wild->tab_wild[wild->size_j] = wild->get_next;
 		wild->size_j++;
 		wild->get_next = get_next_line(fd);
 	}
