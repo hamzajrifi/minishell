@@ -114,8 +114,7 @@ char	*delet_parenthese(char *str)
 		i++;
 	}
 	tmp[n] = '\0';
-	free(str);
-	str = tmp;
+	// free(str);
 	return (tmp);
 }
 
@@ -136,9 +135,14 @@ char	*check_parenthese(char *str)
 			tab[n++] = '(';
 		else if (str[i] == ')')
 		{
-			if (!tab[--n])
+			i++;
+			while (str[i] == ' ')
+				i++;
+			if (!tab[--n] || (str[i] &&(str[i] != '&' && str[i] != '|' && str[i] != '>' && str[i] != '<' && str[i] != ' ' && str[i] != ')')))
 				return (NULL);
 			else if (tab[n] == '(')
+				tab[n] = '\0';
+			if (str[i] == ')' && tab[--n] == '(')
 				tab[n] = '\0';
 		}
 		i++;
