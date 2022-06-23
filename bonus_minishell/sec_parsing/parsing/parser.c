@@ -113,11 +113,13 @@ char	*delet_parenthese(char *str)
 			tmp[n++] = str[i];
 		i++;
 	}
+	tmp[n] = '\0';
 	free(str);
+	str = tmp;
 	return (tmp);
 }
 
-int	check_parenthese(char *str)
+char	*check_parenthese(char *str)
 {
 	int		i;
 	int		n;
@@ -129,22 +131,23 @@ int	check_parenthese(char *str)
 	while(str[i] && n >= 0)
 	{
 		if(str[i] == '(' && str[i + 1] == ')')
-			return (1);
+			return (NULL);
 		else if(str[i] == '(')
 			tab[n++] = '(';
 		else if (str[i] == ')')
 		{
 			if (!tab[--n])
-				return (1);
+				return (NULL);
 			else if (tab[n] == '(')
 				tab[n] = '\0';
 		}
 		i++;
 	}
 	if (n != 0 || (!str[i] && tab[n] == '('))
-		return (1);
+		return (NULL);
 	str = delet_parenthese(str);
-	return (0);
+	printf("str here = %s\n", str);
+	return (str);
 }
 
 t_list	*ft_parser(char *src, t_shell *mini)
@@ -158,9 +161,9 @@ t_list	*ft_parser(char *src, t_shell *mini)
 	lst = NULL;
 	if (is_string_empty(src))
 		return (NULL);
-	if (check_parenthese(src))
+	src = check_parenthese(src);
+	if (!src)
 		return (print_error(" 0000", lexer, token, lst));
-	printf("str = %s\n", src);
 	lexer = init_lexer(src, mini);
 	token = lexer_get_next_token(lexer, token);
 	if (token)
