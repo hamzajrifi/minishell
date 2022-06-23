@@ -28,7 +28,7 @@ int	ft_check_error(t_lexer *lexer, int i)
 	{
 		while (lexer->src[i] == ' ')
 			i++;
-		if (!lexer->src[i] || (lexer->src[i] == '|'
+		if (!lexer->src[i] || lexer->src[i] == '&' || (lexer->src[i] == '|'
 				|| ((lexer->src[i] == '>' || lexer->src[i] == '<')
 					&& (lexer->src[i + 1] == '>' || lexer->src[i + 1] == '<'))
 				|| (lexer->i + 1 != i && (lexer->src[i] == '<'
@@ -39,9 +39,20 @@ int	ft_check_error(t_lexer *lexer, int i)
 	}
 	else if (lexer->c == '|')
 	{
+		if (lexer->src[i] == '|')
+			i++;
 		while (lexer->src[i] == ' ')
 			i++;
-		if (!lexer->src[i] || lexer->src[i] == '|')
+		if (!lexer->src[i] || lexer->src[i] == '|' || lexer->src[i] == '&')
+			return (1);
+	}
+	else if (lexer->c == '&')
+	{
+		if (lexer->src[i] == '&')
+			i++;
+		while (lexer->src[i] == ' ')
+			i++;
+		if (!lexer->src[i] || lexer->src[i] == '|' || lexer->src[i] == '&')
 			return (1);
 	}
 	return (0);
@@ -52,14 +63,14 @@ int	ft_error(t_lexer *lexer)
 	unsigned int	i;
 
 	i = lexer->i + 1;
-	if ((lexer->c == '|' && lexer->src[i] == '|') || lexer->c == '&')
+	if ((lexer->c == '|' && lexer->src[i] == '|' && lexer->src[i + 1] == '|') || (lexer->c == '&' && lexer->src[i] != '&'))
 		return (1);
 	else if ((lexer->src[i] == '>' && lexer->c == '>')
 		|| (lexer->src[i] == '<' && lexer->c == '<'))
 	{
 		while (lexer->src[i + 1] == ' ')
 			i++;
-		if (!lexer->src[i + 1] || lexer->src[i + 1] == '|')
+		if (!lexer->src[i + 1] || lexer->src[i + 1] == '|' || lexer->src[i + 1] == '&')
 			return (1);
 		i = lexer->i + 1;
 	}

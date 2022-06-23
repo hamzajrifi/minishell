@@ -12,6 +12,8 @@
 
 #include "../header/minishell.h"
 
+
+
 t_token	*init_token(int t_type, char *value)
 {
 	t_token	*token;
@@ -56,8 +58,20 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_token *token)
 	{
 		if (lexer->c == ' ')
 			lexer_skip_whitespace(lexer);
-		// if (ft_error(lexer))
-			// return (init_token(t_error, NULL));
+		if (ft_error(lexer))
+			return (init_token(t_error, NULL));
+		else if (lexer->c == '|' && lexer->src[lexer->i + 1] == '|')
+		{
+			lexer_advance(lexer);
+			lexer_advance(lexer);
+			return (init_token(t_or, ft_strdup("||")));
+		}
+		else if (lexer->c == '&' && lexer->src[lexer->i + 1] == '&')
+		{
+			lexer_advance(lexer);
+			lexer_advance(lexer);
+			return (init_token(t_or, ft_strdup("&&")));
+		}
 		else if (lexer->c == '\'' || lexer->c == '"')
 			return (lexer_collect_string(lexer));
 		else if (lexer->c == '|')
