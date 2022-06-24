@@ -72,6 +72,9 @@ clean :
 		rm -f *.o bonus_minishell/sec_parsing/parsing/*.o
 		rm -f *.o bonus_minishell/sec_parsing/lexer/*.o
 		rm -f *.o bonus_minishell/get/*.o
+		rm -f *.o bonus_minishell/ft_and_or/*.o
+		rm -f *.o bonus_minishell/exec_bonus/*.o
+		rm -f *.o bonus_minishell/*.o
 		rm -f $(NAME)
 		rm -f $(BONUS_NAME)
 fclean : clean
@@ -116,6 +119,11 @@ BNS_FILES = bonus_minishell/exec/exec_cmd.c\
 			bonus_minishell/exec/sec_redirection_utils.c\
 			bonus_minishell/exec/norme.c\
 			bonus_minishell/exec/redirection_utils.c\
+			bonus_minishell/exec_bonus/wildcards.c\
+			bonus_minishell/exec_bonus/utils_wildcards.c\
+			bonus_minishell/exec_bonus/ft_and_or.c\
+			bonus_minishell/exec_bonus/sec_utils_wild.c\
+			bonus_minishell/get/get_next_line.c\
 			bonus_minishell/sec_parsing/functions/utiles_functions.c\
 			bonus_minishell/sec_parsing/functions/ft_error.c\
 			bonus_minishell/sec_parsing/parsing/parser.c\
@@ -124,7 +132,11 @@ BNS_FILES = bonus_minishell/exec/exec_cmd.c\
 			bonus_minishell/sec_parsing/lexer/mini.c\
 			bonus_minishell/sec_parsing/lexer/lexer_action.c\
 			bonus_minishell/sec_parsing/lexer/lexer.c\
-			bonus_minishell/sec_parsing/lexer/token.c
+			bonus_minishell/sec_parsing/lexer/token.c\
+			bonus_minishell/sec_parsing/parsing/parenthesis.c\
+			bonus_minishell/sec_parsing/functions/check_string_cmd.c\
+			bonus_minishell/ft_strstr.c
+
 
 BNS_OBJ = $(BNS_FILES:.c=.o)
 
