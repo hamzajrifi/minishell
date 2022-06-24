@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:04:51 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:32:16 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	ft_realloc(t_shell *index, char *str, int save)
 {
@@ -25,7 +26,6 @@ void	ft_realloc(t_shell *index, char *str, int save)
 		a++;
 	}
 	temp[a] = NULL;
-	ft_free(index->tab_save_exp);
 	index->tab_save_exp = (char **)malloc(sizeof(char *) * (save + 2));
 	a = 0;
 	while (temp[a])
@@ -33,7 +33,7 @@ void	ft_realloc(t_shell *index, char *str, int save)
 		index->tab_save_exp[a] = temp[a];
 		a++;
 	}
-	index->tab_save_exp[a] = strdup(str);
+	index->tab_save_exp[a] = ft_strdup(str);
 	index->tab_save_exp[a + 1] = NULL;
 }
 
@@ -58,7 +58,7 @@ void	ft_print(t_shell *index, int fd)
 			i++;
 		}
 	}
-	g_status_exec = 0;
+	g_id.g_status_exec = 0;
 }
 
 int	len(char *str)

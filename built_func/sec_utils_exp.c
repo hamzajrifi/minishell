@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:47:47 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:30:27 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:55:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	oldpwd_not_set(t_shell *mini)
 	if (mini->built == 0)
 	{
 		write(2, "cd: OLDPWD not set\n", 20);
-		g_status_exec = 1;
+		g_id.g_status_exec = 1;
 	}
 	else
 	{
@@ -104,7 +104,7 @@ void	unset_home(t_shell *mini)
 	if (go_home(mini) == 0)
 	{
 		write(2, "minishell: cd: HOME not set\n", 29);
-		g_status_exec = 1;
+		g_id.g_status_exec = 1;
 	}
 	else
 	{	

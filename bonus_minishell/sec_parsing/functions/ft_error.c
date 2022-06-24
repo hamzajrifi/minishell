@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:34:11 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/08 10:34:13 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/24 05:35:32 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst)
 {
 	int		i;
 
-	g_status_exec = 127;
+	g_id.g_status_exec = 127;
 	printf("parse error %s\n", str);
 	if (lexer)
 		free(lexer);

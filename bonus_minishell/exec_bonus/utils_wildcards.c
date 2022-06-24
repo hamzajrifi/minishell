@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:25:31 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 00:10:33 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:50:54 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	change(t_list **list, t_wild *wild)
 {
@@ -29,7 +30,7 @@ void	change(t_list **list, t_wild *wild)
 			(*list)->val[j] = temp;
 		else
 		{
-			(*list)->val[j] = strdup(wild->tab_wild[i]);
+			(*list)->val[j] = ft_strdup(wild->tab_wild[i]);
 			i++;
 		}
 		j++;
@@ -88,7 +89,7 @@ void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd)
 		i = 0;
 		if (count == size)
 		{
-			wild->tab_wild[wild->size_j] = strdup(wild->get_next);
+			wild->tab_wild[wild->size_j] = ft_strdup(wild->get_next);
 			wild->size_j++;
 		}
 		count = 0;
@@ -110,7 +111,7 @@ void	utils_mult_wild(t_list **list, t_wild *wild, char *tab, int fd)
 			wild->str1 = ft_strstr(wild->get_next, tab, wild->size);
 		if (wild->str1 != NULL)
 		{
-			wild->tab_wild[wild->size_j] = strdup(wild->get_next);
+			wild->tab_wild[wild->size_j] = ft_strdup(wild->get_next);
 			wild->size_j++;
 		}
 		wild->get_next = get_next_line(fd);

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:21:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:28:37 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	change_in2(t_list **lst)
 		while (tab[j])
 		{
 			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[i++] = strdup(tab[j++]);
+			(*lst)->val[i++] = ft_strdup(tab[j++]);
 			free(tab[j - 1]);
 		}
 		(*lst)->val[i] = NULL;
@@ -47,8 +47,8 @@ void	change_in2(t_list **lst)
 void	utils_r(t_shell *mini, t_list *lst, t_global *globale, int num)
 {
 	ft_exit_status(mini, lst);
-	id = fork();
-	if (id == 0)
+	g_id.id = fork();
+	if (g_id.id == 0)
 	{
 		dup2(globale->global_fd_in, 0);
 		if (globale->global_fd_out != 1)
@@ -64,7 +64,7 @@ void	utils_r(t_shell *mini, t_list *lst, t_global *globale, int num)
 	if (globale->global_fd_out != 1)
 		close(globale->global_fd_out);
 	wait(NULL);
-	kill(9, id);
+	kill(9, g_id.id);
 }
 
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
@@ -118,8 +118,8 @@ void	normm3(t_shell *mini, t_list *list, int fd_in, int fd_out)
 	{
 		if (fd_out != -1)
 		{
-			id = fork();
-			if (id == 0)
+			g_id.id = fork();
+			if (g_id.id == 0)
 			{
 				dup2(fd_in, 0);
 				dup2(fd_out, 1);
@@ -130,7 +130,7 @@ void	normm3(t_shell *mini, t_list *list, int fd_in, int fd_out)
 			if (fd_out != 1)
 				close(fd_out);
 			wait(NULL);
-			kill(9, id);
+			kill(9, g_id.id);
 		}
 	}
 }

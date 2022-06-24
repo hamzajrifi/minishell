@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:57:49 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:32:43 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:57:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num)
 	fd_in = fd_i(list);
 	fd = open("/tmp/test", O_RDWR, 0644);
 	norme_first_cmd(&list, mini);
-	if (fork() == 0)
+	g_id.id = fork();
+	if (g_id.id == 0)
 	{
 		if (out == 1 && num == 1)
 			ft_nor(mini, fd, fd_out);

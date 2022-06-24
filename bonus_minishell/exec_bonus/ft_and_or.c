@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:13:02 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 02:17:46 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:34:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	ft_and(t_list *list, t_shell *mini)
 {
-	int id;
-	int wstatus;
+	int	id;
 
 	while (list && list->v_type[0] != 12)
 	{
@@ -27,8 +26,8 @@ void	ft_and(t_list *list, t_shell *mini)
 			exit(0);
 		}
 		wait(NULL);
-		if (failer == 2)
-			break;
+		if (g_id.failer == 2)
+			break ;
 		if (list->next)
 			list = list->next->next;
 		else
@@ -38,8 +37,7 @@ void	ft_and(t_list *list, t_shell *mini)
 
 void	ft_or(t_list *list, t_shell *mini)
 {
-	int id;
-	int wstatus;
+	int	id;
 
 	while (list && list->v_type[0] != 13)
 	{
@@ -51,8 +49,8 @@ void	ft_or(t_list *list, t_shell *mini)
 			exit(0);
 		}
 		wait(NULL);
-		if (failer != 2)
-			break;
+		if (g_id.failer != 2)
+			break ;
 		if (list->next)
 			list = list->next->next;
 		else
@@ -60,37 +58,40 @@ void	ft_or(t_list *list, t_shell *mini)
 	}
 }
 
+void	exec_bonus(t_shell *mini, t_list *list)
+{
+	int	id;
+
+	id = fork();
+	if (id == 0)
+	{
+		ft_check_built(mini, list, 1);
+		exit(EXIT_SUCCESS);
+	}
+	wait(NULL);
+}
+
+void	counter_list(t_list **list)
+{
+	if ((*list)->next)
+		*list = (*list)->next->next;
+	else
+		*list = (*list)->next;
+}
+
 void	exec_both_and_or(t_list *list, t_shell *mini)
 {
-	int id;
-	int wstatus;
-
 	while (list)
 	{
 		ft_exit_status(mini, list);
-		id = fork();
-		if (id == 0)
-		{
-			ft_check_built(mini, list, 1);
-			exit(EXIT_SUCCESS);
-		}
-		wait(NULL);
+		exec_bonus(mini, list);
 		if (list->next && list->next->v_type[0] == 12)
 		{
 			while (list && list->next && list->next->v_type[0] == 12)
 				list = list->next->next;
-			if (list->next)	
-				list = list->next->next;
-			else 
-				list = list->next;
+			counter_list(&list);
 		}
 		else
-		{
-			if (list->next)
-				list = list->next->next;
-			else
-				list = list->next;
-		}
+			counter_list(&list);
 	}
-	
 }

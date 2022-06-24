@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:32:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:02:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:31:53 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 int	finder(char *str)
 {
@@ -61,7 +62,7 @@ int	utils_norm(t_shell *index, char **temp, int i, char *str)
 	sec_temp = ft_split(str, '=');
 	if (ft_strcmp(temp[0], sec_temp[0]) == 0)
 	{
-		index->tab_save_env[i] = strdup(str);
+		index->tab_save_env[i] = ft_strdup(str);
 		ft_free(temp);
 		ft_free(sec_temp);
 		return (2);

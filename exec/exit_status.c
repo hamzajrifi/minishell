@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:31:22 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:57:15 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_exit_status(t_shell *mini, t_list *lst)
 		normi(temp, mini, lst);
 	}
 	else
-		g_status_exec = 127;
+		g_id.g_status_exec = 127;
 }
 
 void	ft_check_cmd2(t_shell *mini, t_list *lst)
@@ -42,20 +42,20 @@ void	ft_check_cmd2(t_shell *mini, t_list *lst)
 
 	dp = opendir(lst->val[0]);
 	if ((int)dp != 0)
-		g_status_exec = 126;
+		g_id.g_status_exec = 126;
 	else if (lst->val[0][0] == '.')
 	{
 		if (access(lst->val[0], F_OK | X_OK) == 0)
-			g_status_exec = 0;
+			g_id.g_status_exec = 0;
 		else
-			g_status_exec = 127;
+			g_id.g_status_exec = 127;
 	}
 	else if (lst->val[0][0] == '/')
 	{
 		if (access(lst->val[0], F_OK) == 0)
-			g_status_exec = 0;
+			g_id.g_status_exec = 0;
 		else
-			g_status_exec = 127;
+			g_id.g_status_exec = 127;
 	}
 }	
 
@@ -75,7 +75,7 @@ void	normi(char **temp, t_shell *mini, t_list *lst)
 			while (temp[i])
 				free(temp[i++]);
 			free(str);
-			g_status_exec = 0;
+			g_id.g_status_exec = 0;
 			i = -1;
 			break ;
 		}
@@ -84,7 +84,7 @@ void	normi(char **temp, t_shell *mini, t_list *lst)
 	}
 	free(temp);
 	if (i != -1 && ft_strcmp(lst->val[0], "exit") != 0)
-		g_status_exec = 127;
+		g_id.g_status_exec = 127;
 }
 
 char	*utils_check_path_if_exi2(t_shell *mini)

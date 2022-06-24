@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 01:12:27 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:43:20 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,16 @@
 # include <dirent.h>
 # include <errno.h>
 
-unsigned int	g_status_exec;
-int				id;
-int				cheecker;
-int				g_fd;
-int				failer;
+typedef struct s_ids
+{
+	unsigned int	g_status_exec;
+	int				id;
+	int				cheecker;
+	int				g_fd;
+	int				failer;
+}	t_ids;
+
+t_ids	g_id;
 
 typedef struct s_shell {
 	char	**tab_save_exp;
@@ -75,6 +80,8 @@ typedef struct s_wild
 	int		size_j;
 }	t_wild;
 
+void	err_wild(char *str);
+void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd);
 void	exec_both_and_or(t_list *list, t_shell *mini);
 void	ft_or(t_list *list, t_shell *mini);
 void	ft_and(t_list *list, t_shell *mini);
@@ -176,9 +183,6 @@ char	*get_next_line(int fd);
 char	*ft_strstr(char *str, char *to_find, int size);
 char	*ft_strstr3(char *str, char *to_find, int size);
 char	*ft_strstr2(char *str, char *to_find, int size);
-
-// exit
-
 void	ft_exit(char **str, int fd, int num);
 void	ft_env(t_shell *index, int fd);
 void	ft_unset(t_shell *index, char **str, int fd);
@@ -189,4 +193,8 @@ int		ft_pipe(t_shell *mini, char *str);
 char	**save_cmd(t_list *list);
 int		fd_i(t_list *list);
 void	ft_exit_status(t_shell *mini, t_list *lst);
+int		find_both_and_or(t_list *list);
+int		ft_findwild(t_list *list);
+int		finde_her(t_list *lis);
+void	ft_mini_second(t_shell *mini, t_list *lst);
 #endif

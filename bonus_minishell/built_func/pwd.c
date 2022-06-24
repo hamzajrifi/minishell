@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:01:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 02:55:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:31:42 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	ft_pwd(int fd)
 {
@@ -28,7 +29,7 @@ int	loop(t_shell *mini)
 	while (mini->tab_save_exp[i])
 	{
 		temp = ft_split(mini->tab_save_exp[i], '=');
-		if (strcmp(temp[0], "HOME") == 0)
+		if (ft_strcmp(temp[0], "HOME") == 0)
 		{
 			chdir(temp[1]);
 			ft_free(temp);
@@ -45,7 +46,8 @@ void	ft_13(t_shell *index, char *str, char **save, char **temp)
 	norme4(index, temp, str, save);
 	if (index->tab_save_exp)
 		unset_exp(index, str);
-	g_status_exec = 0;
+	g_id.g_status_exec = 0;
+	free(temp);
 }
 
 int	no(t_shell *index, char *add_str, char *string, int i)
@@ -55,13 +57,16 @@ int	no(t_shell *index, char *add_str, char *string, int i)
 
 	temp = ft_split(string, '=');
 	sec_temp = ft_split(add_str, '=');
-	if (strcmp(temp[0], sec_temp[0]) == 0)
+	if (ft_strcmp(temp[0], sec_temp[0]) == 0)
 	{
-		index->tab_save_exp[i] = strdup(add_str);
+		free(index->tab_save_exp[i]);
+		index->tab_save_exp[i] = ft_strdup(add_str);
 		ft_free(temp);
 		ft_free(sec_temp);
 		return (3);
 	}
+	ft_free(temp);
+	ft_free(sec_temp);
 	return (0);
 }
 
@@ -70,9 +75,9 @@ int	no1(t_shell *index, char *add_str, char *string, int i)
 	char	**sec_temp;
 
 	sec_temp = ft_split(add_str, '=');
-	if (strcmp(sec_temp[0], string) == 0)
+	if (ft_strcmp(sec_temp[0], string) == 0)
 	{
-		index->tab_save_exp[i] = strdup(add_str);
+		index->tab_save_exp[i] = ft_strdup(add_str);
 		ft_free(sec_temp);
 		return (5);
 	}

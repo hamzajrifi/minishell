@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:08:20 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 21:52:13 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:31:39 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	ft_echo(t_shell *mini, char **str, int fd)
 {
@@ -31,7 +32,7 @@ void	ft_echo(t_shell *mini, char **str, int fd)
 	}
 	if (str[1])
 	{
-		if (strcmp(str[1], "-n") != 0)
+		if (ft_strcmp(str[1], "-n") != 0)
 			ft_putstr_fd("\n", fd);
 	}
 	else
@@ -44,8 +45,8 @@ void	old(t_shell *mini, int a)
 
 	if (a > 0)
 		free(mini->save_old_pwd);
-	mini->save_old_pwd = strdup(mini->save_pwd);
+	mini->save_old_pwd = ft_strdup(mini->save_pwd);
 	free(mini->save_pwd);
 	if (getcwd(buff, sizeof(buff)) != NULL)
-		mini->save_pwd = strdup(getcwd(buff, sizeof(buff)));
+		mini->save_pwd = ft_strdup(getcwd(buff, sizeof(buff)));
 }

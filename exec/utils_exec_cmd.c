@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 17:45:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:34:48 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:54:26 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ void	cmm(t_list *lst, t_shell *mini)
 {
 	int	wstatus;
 
-	id = fork();
-	if (id == 0)
+	g_id.id = fork();
+	if (g_id.id == 0)
 		exec_cmd(mini, lst);
 	else
 	{
 		wait(&wstatus);
 		if (WIFEXITED(wstatus))
 		{
-			g_status_exec = WEXITSTATUS(wstatus);
-			if (g_status_exec == 1)
-				g_status_exec = 127;
+			g_id.g_status_exec = WEXITSTATUS(wstatus);
+			if (g_id.g_status_exec == 1)
+				g_id.g_status_exec = 127;
 		}
 	}
 }

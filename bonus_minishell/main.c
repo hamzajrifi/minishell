@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 01:12:40 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:40:21 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 
 void	handler(int sig)
 {
-	if ((sig == SIGINT || sig == SIGQUIT) && id != 0)
+	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0)
 	{
 		if (sig == SIGQUIT)
-			write(1, "Quit: 3\n", 9);
-		kill(id, sig);
-		g_status_exec = 130;
+			write (1, "Quit: 3\n", 9);
+		kill(g_id.id, sig);
 	}
+	else if (g_id.cheecker != 0)
+		close(0);
 	else if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
-		g_status_exec = 1;
+		g_id.g_status_exec = 1;
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -35,71 +37,8 @@ void	handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	id = 0;
-}
-
-int	finde_her(t_list *lis)
-{
-	while (lis)
-	{
-		if (lis->v_type[0] == 11)
-			return (1);
-		lis = lis->next;
-	}
-	return (0);
-}
-
-int	ft_findwild(t_list *list)
-{
-	while (list && list->v_type[0] != 11)
-	{
-		if (list->val[1])
-		{
-			if (list->v_type[1] == 15)
-				return (1);
-		}
-		if (list->v_type[0] == 13)
-			return (2);
-		if (list->v_type[0] == 12)
-			return (3);
-		list = list->next;
-	}
-	return (0);
-}
-
-int	find_both_and_or(t_list *list)
-{
-	int a;
-	int b;
-
-	a = 0;
-	b = 0;
-	while (list && list->v_type[0] != 11)
-	{
-		if (list->v_type[0] == 13)
-			a = 1;
-		if (list->v_type[0] == 12)
-			b = 1;
-		list = list->next;
-	}
-	if (a + b == 2)
-		return (1);
-	return (0);
-}
-
-int	finder_red(t_list *list)
-{
-	while (list)
-	{
-		if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
-			return (2);
-		else if (list && list->v_type[0] == 8)
-			return (3);
-		else if (list && list->v_type[0] == 3)
-			return (4);
-		list = list->next;
-	}
-	return (0);
+	g_id.cheecker = 0;
+	g_id.id = 0;
 }
 
 void	ft_mini(t_shell *mini, char *src)
@@ -121,18 +60,21 @@ void	ft_mini(t_shell *mini, char *src)
 		ft_or(lst, mini);
 	else if (finde_her(lst) == 1)
 		pipes(mini, lst);
-	else if (finder_red(lst) == 2)
-		ft_redirection(mini, lst, 0, 1);
-	else if (finder_red(lst) == 4)
-		heredoc(mini, lst, 0, 1);
-	else if (finder_red(lst) == 3)
-		ft_redin(mini, lst, 1, 0);
 	else
-	{
-		ft_exit_status(mini, lst);
-		ft_check_built(mini, lst, 1);
-	}
+		ft_mini_second(mini, lst);
 	ft_free_list(head);
+}
+
+void	initialiation_mini(t_shell *mini, char **env)
+{
+	mini->tab_save_env = env;
+	mini->tab_save_exp = NULL;
+	mini->counter = 0;
+	mini->num_ofall_cmd = 0;
+	mini->num_cmd = 0;
+	mini->cnt = 0;
+	mini->fs = 0;
+	mini->built = 0;
 }
 
 int	main(int ac, char **av, char **env)
@@ -142,20 +84,16 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	mini.tab_save_env = env;
-	mini.tab_save_exp = NULL;
-	mini.counter = 0;
-	mini.num_ofall_cmd = 0;
-	mini.num_cmd = 0;
-	mini.cnt = 0;
-	mini.fs = 0;
 	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
+	initialiation_mini(&mini, env);
 	while (1337)
 	{
 		mini.counter = 0;
+		g_id.g_fd = dup(0);
 		src = readline("mimishell : ");
 		if (errno == 13)
-			g_status_exec = 126;
+			g_id.g_status_exec = 126;
 		if (src == NULL)
 		{
 			printf(" exit\n");

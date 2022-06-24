@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:37:22 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:29:07 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:55:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	utils_exit(char *str, int fd, int num, int k)
 		{
 			write(fd, "exit\n", 6);
 			ft_putendl_fd("minishell: exit: numeric argument required", fd);
-			g_status_exec = 255;
+			g_id.g_status_exec = 255;
 			if (num != 1)
 				exit(255);
 			k = 1;
@@ -37,7 +37,7 @@ int	print_err(int fd)
 {
 	ft_putendl_fd("exit", fd);
 	ft_putendl_fd("minishell: exit: too many arguments", fd);
-	g_status_exec = 1;
+	g_id.g_status_exec = 1;
 	return (-1);
 }
 
@@ -46,7 +46,7 @@ void	err(char *str, int num, int fd)
 	int	a;
 
 	a = atoi(str);
-	g_status_exec = a;
+	g_id.g_status_exec = a;
 	if (num != 1)
 	{
 		write (fd, "exit\n", 6);
@@ -74,7 +74,7 @@ void	ft_exit(char **str, int fd, int num)
 	if (i != -1 && num != 1)
 	{
 		printf("exit\n");
-		g_status_exec = 0;
+		g_id.g_status_exec = 0;
 		if (num != 1)
 			exit(0);
 	}

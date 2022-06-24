@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 01:09:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 23:40:20 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:51:21 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,10 @@ void	one_wild(t_list **list, t_wild *wild, int fd)
 	}
 }
 
-void	err_wild(char *str)
-{
-	write(2, str, ft_strlen(str));
-	write(2, ": minishell : no such file or directory\n", 41);
-}
-
 void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd)
 {
 	char	**tab;
 	int		k;
-	int		j;
 	int		size;
 
 	k = 1;

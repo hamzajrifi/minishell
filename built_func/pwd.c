@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:01:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:29:47 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:55:50 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_13(t_shell *index, char *str, char **save, char **temp)
 	norme4(index, temp, str, save);
 	if (index->tab_save_exp)
 		unset_exp(index, str);
-	g_status_exec = 0;
+	g_id.g_status_exec = 0;
 	free(temp);
 }
 

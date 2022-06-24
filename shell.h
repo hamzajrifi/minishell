@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:58:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:45:58 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@
 # include <dirent.h>
 # include <errno.h>
 
-unsigned int	g_status_exec;
-int				id;
-int				cheecker;
-int				g_fd;
+typedef struct s_ids
+{
+	unsigned int	g_status_exec;
+	int				id;
+	int				cheecker;
+	int				g_fd;
+	int				failer;
+}	t_ids;
+
+t_ids	g_id;
 
 typedef struct s_shell {
 	char	**tab_save_exp;
@@ -61,7 +67,6 @@ typedef struct t_list
 	struct t_list	*next;
 	struct t_list	*prev;
 }	t_list;
-
 
 void	handler(int sig);
 void	ft_free(char **tab);
@@ -145,12 +150,7 @@ int		invalide_identifier(char *str, int fd);
 void	heredoc(t_shell *mini, t_list *list, int num, int fd_out);
 int		open_all_files(t_list *list, int a);
 void	red_in(t_shell *mini, char *str);
-//int		ft_and_bonus(t_shell *mini, char *str);
-//void	ft_or_bonus(t_shell *mini, char *str);
 int		search_path_in_env(t_shell *mini, int a);
-//int		find_both(char *str);
-//void	ft_both(t_shell *mini, char *str);
-//void	ft_wildcars(t_shell *mini, char *str);
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
 
 // exit

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 00:53:28 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:30:26 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	simple_cmd(t_shell *mini, t_list *list, int i, int *fd)
 {
 	mini->counter = i + 1;
 	mini->id = fork();
-	id = mini->id;
+	g_id.id = mini->id;
 	if (mini->id == 0)
 	{
 		if (i == 0)

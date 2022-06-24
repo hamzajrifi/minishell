@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:29:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:34:00 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 	else
 		tab = save_dele(list->next);
 	size = size_tab(tab);
-	cheecker = 1;
+	g_id.cheecker = 1;
 	true_while(mini, tab, size);
-	cheecker = 0;
+	g_id.cheecker = 0;
 	out = open_all_files(list, 2);
 	if (list->v_type[0] == 1 && out != -1)
 		exec_first_cmd_in_her(list, mini, fd_out, num);

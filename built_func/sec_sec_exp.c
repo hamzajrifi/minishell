@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 19:56:19 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:30:01 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:56:42 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	invalide_identifier(char *str, int fd)
 	{
 		ft_putstr_fd("export: not an identifier: ", fd);
 		ft_putendl_fd(str, fd);
-		g_status_exec = 127;
+		g_id.g_status_exec = 127;
 		return (1);
 	}
 	else if (str[0] == '-')
 	{
 		ft_putstr_fd("export: invalid option: ", fd);
 		ft_putendl_fd(str, fd);
-		g_status_exec = 127;
+		g_id.g_status_exec = 127;
 		return (1);
 	}
 	else if (finder(str) == 1 || str[0] == '+'
@@ -37,7 +37,7 @@ int	invalide_identifier(char *str, int fd)
 	{
 		ft_putstr_fd("export: not a 5valid identifier: ", fd);
 		ft_putendl_fd(str, fd);
-		g_status_exec = 127;
+		g_id.g_status_exec = 127;
 		return (1);
 	}
 	return (0);
@@ -113,7 +113,7 @@ void	chdi(t_shell *mini, char *path)
 	if (a != 0)
 	{
 		perror(NULL);
-		g_status_exec = 1;
+		g_id.g_status_exec = 1;
 	}
 	mini->built++;
 	change_pwd(mini);

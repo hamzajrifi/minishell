@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:57:49 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:27:38 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:32:43 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 		while (sec_tab[io])
 		{
 			(*list)->val = ft_realloc_char((*list)->val);
-			(*list)->val[lp] = strdup(sec_tab[io]);
+			(*list)->val[lp] = ft_strdup(sec_tab[io]);
 			io++;
 			lp++;
 		}
@@ -87,6 +87,7 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 		(*list)->v_type[1] = 2;
 	}
 	ft_exit_status(mini, *list);
+	free(sec_tab);
 }
 
 char	**save_cmd(t_list *list)
@@ -142,4 +143,5 @@ void	norm_exec_her(t_shell *mini, t_list **list)
 		(*list)->v_type[1] = 2;
 	}
 	ft_exit_status(mini, *list);
+	free(sec_tab);
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:08:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:33:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 05:59:39 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void	true_while(t_shell *mini, char **tab, int size)
 			ft_putendl_fd(find, fd);
 		free(find);
 	}
-	dup(g_fd);
+	dup(g_id.g_fd);
 	ft_free(tab);
 }
