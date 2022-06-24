@@ -40,6 +40,7 @@ C_FILES =	exec/exec_cmd.c\
 			exec/redirection_utils.c\
 			exec_bonus/wildcards.c\
 			exec_bonus/utils_wildcards.c\
+			exec_bonus/ft_and_or.c\
 			get/get_next_line.c\
 			sec_parsing/functions/utiles_functions.c\
 			sec_parsing/functions/ft_error.c\

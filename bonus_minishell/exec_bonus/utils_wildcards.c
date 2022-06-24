@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:25:31 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 23:37:55 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 00:10:33 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd)
 		if (count == size)
 		{
 			wild->tab_wild[wild->size_j] = strdup(wild->get_next);
-			printf("lst = %s\n", wild->tab_wild[wild->size_j]);
 			wild->size_j++;
 		}
 		count = 0;
@@ -99,6 +98,8 @@ void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd)
 
 void	utils_mult_wild(t_list **list, t_wild *wild, char *tab, int fd)
 {
+	close(fd);
+	fd = open("/tmp/test1", O_RDWR, 0644);
 	wild->get_next = get_next_line(fd);
 	while (wild->get_next != NULL)
 	{

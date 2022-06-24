@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 01:09:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 23:35:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:40:20 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd)
 	fd = open("/tmp/test1", O_RDWR, 0644);
 	while (*list && (*list)->val[k])
 	{
+		size = wild->size_j;
 		tab = ft_split((*list)->val[k], '*');
 		if (!tab[0])
 			one_wild(list, wild, fd);

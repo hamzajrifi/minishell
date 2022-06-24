@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:04:51 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:03:59 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_realloc(t_shell *index, char *str, int save)
 		a++;
 	}
 	temp[a] = NULL;
-	ft_free(index->tab_save_exp);
 	index->tab_save_exp = (char **)malloc(sizeof(char *) * (save + 2));
 	a = 0;
 	while (temp[a])
@@ -80,11 +79,13 @@ int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 	int		checker;
 	char	**temp;
 	char	**sec_temp;
+	int		a;
 
+	a = len(string);
 	checker = len(add_str);
-	if (len(string) != 0 && checker != 0)
+	if (a != 0 && checker != 0)
 		return (no(index, add_str, string, i));
-	else if (len(string) != 0 && checker == 0)
+	else if (a != 0 && checker == 0)
 	{
 		temp = ft_split(string, '=');
 		if (ft_strcmp(temp[0], add_str) == 0)
@@ -94,7 +95,7 @@ int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 		}
 		ft_free(temp);
 	}
-	else if (len(string) == 0 && checker != 0)
+	else if (a == 0 && checker != 0)
 		return (no1(index, add_str, string, i));
 	else
 	{

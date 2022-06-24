@@ -103,7 +103,7 @@ t_list	*ft_parser(char *src, t_shell *mini)
 		return (NULL);
 	src = check_parenthesis(src);
 	if (!src)
-		return (print_error(" 0000", lexer, token, lst));
+		return (print_error(" 0000", lexer, NULL, lst));
 	lexer = init_lexer(src, mini);
 	token = lexer_get_next_token(lexer, token);
 	if (token)

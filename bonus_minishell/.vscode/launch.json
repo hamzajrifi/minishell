@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": true,
+      "externalConsole": false,
+      "cwd": "/Users/otmallah/Desktop/minishell/bonus_minishell/minishell.dSYM",
+      "program": "/Users/otmallah/Desktop/minishell/bonus_minishell/minishell.dSYM/build/Debug/outDebug",
+      "MIMode": "gdb"
+    }
+  ]
+}

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 11:43:54 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 23:27:34 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 00:10:09 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ char	*ft_strstr(char *str, char *to_find, int size)
 {
 	int	i;
 	int	k;
+	int j;
 
 	i = 0;
 	k = size;
-	if (*to_find == '\0')
-		return (str);
+	j = ft_strlen(str);
 	while (str[i])
 	{
-		if ((i + k) == size)
+		if ((i + size) == j)
 			break;
 		i++;
 	}
 	if (ft_strcmp((str + i), to_find) == 0)
-		return &str[i];
+	{
+		return (&str[i]);
+	}
 	return (0);
 }
 

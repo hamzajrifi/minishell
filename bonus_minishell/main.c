@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/23 23:33:10 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 01:12:40 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,32 @@ int	ft_findwild(t_list *list)
 			if (list->v_type[1] == 15)
 				return (1);
 		}
+		if (list->v_type[0] == 13)
+			return (2);
+		if (list->v_type[0] == 12)
+			return (3);
 		list = list->next;
 	}
+	return (0);
+}
+
+int	find_both_and_or(t_list *list)
+{
+	int a;
+	int b;
+
+	a = 0;
+	b = 0;
+	while (list && list->v_type[0] != 11)
+	{
+		if (list->v_type[0] == 13)
+			a = 1;
+		if (list->v_type[0] == 12)
+			b = 1;
+		list = list->next;
+	}
+	if (a + b == 2)
+		return (1);
 	return (0);
 }
 
@@ -84,24 +108,17 @@ void	ft_mini(t_shell *mini, char *src)
 	t_list	*head;
 
 	lst = ft_parser(src, mini);
-
-	// printf("outsid\n");
-	//while (lst)
-	//{
-	//	int i = -1;
-	//	while (lst->val && lst->val[++i])
-	//		printf(" val = %s -- type = %d == ", lst->val[i], lst->v_type[i]);
-	//	printf("\n");
-	//	lst = lst->next;
-	//}
 	head = lst;
 	if (!lst)
 		return ;
-	if (ft_findwild(lst) == 1)
-	{
-		puts("3210");
+	if (find_both_and_or(lst) == 1)
+		exec_both_and_or(lst, mini);
+	else if (ft_findwild(lst) == 1)
 		ft_wildcards(&lst, mini);
-	}
+	else if (ft_findwild(lst) == 2)
+		ft_and(lst, mini);
+	else if (ft_findwild(lst) == 3)
+		ft_or(lst, mini);
 	else if (finde_her(lst) == 1)
 		pipes(mini, lst);
 	else if (finder_red(lst) == 2)

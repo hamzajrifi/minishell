@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 23:30:58 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 01:12:27 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ unsigned int	g_status_exec;
 int				id;
 int				cheecker;
 int				g_fd;
+int				failer;
 
 typedef struct s_shell {
 	char	**tab_save_exp;
@@ -74,6 +75,9 @@ typedef struct s_wild
 	int		size_j;
 }	t_wild;
 
+void	exec_both_and_or(t_list *list, t_shell *mini);
+void	ft_or(t_list *list, t_shell *mini);
+void	ft_and(t_list *list, t_shell *mini);
 void	handler(int sig);
 void	ft_free(char **tab);
 char	*utils_path_if_exi(t_shell *mini);
