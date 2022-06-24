@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:13:02 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 02:07:46 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:17:46 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,12 @@ void	exec_both_and_or(t_list *list, t_shell *mini)
 		wait(NULL);
 		if (list->next && list->next->v_type[0] == 12)
 		{
-			puts("hana");
 			while (list && list->next && list->next->v_type[0] == 12)
 				list = list->next->next;
-			list = list->next;
-			printf("lst = %s\n")
+			if (list->next)	
+				list = list->next->next;
+			else 
+				list = list->next;
 		}
 		else
 		{

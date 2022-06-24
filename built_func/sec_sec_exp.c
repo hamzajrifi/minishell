@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 19:56:19 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 21:37:12 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 03:04:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 int	checker(char *str);
 int	ut2(t_shell *mini, int a);
@@ -57,7 +58,10 @@ int	add_str_tab_exp(t_shell *index, char *str)
 			index->tab_save_exp[1] = NULL;
 		}
 		else
-			ft_realloc(index, str, count);
+		{
+			index->tab_save_exp = ft_realloc_char(index->tab_save_exp);
+			index->tab_save_exp[count] = ft_strdup(str);
+		}
 		count++;
 	}
 	return (count);

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 01:58:51 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:29:48 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	ft_mini(t_shell *mini, char *src)
 		ft_exit_status(mini, lst);
 		ft_check_built(mini, lst, 1);
 	}
-	//system("leaks minishell");
 	ft_free_list(head);
 }
 

@@ -6,16 +6,16 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 02:03:59 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:53:44 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-void	ft_realloc(t_shell *index, char *str, int save)
+void ft_realloc(t_shell *index, char *str, int save)
 {
-	char	**temp;
-	int		a;
+	char **temp;
+	int a;
 
 	temp = (char **)malloc(sizeof(char *) * (save + 1));
 	a = 0;
@@ -36,9 +36,9 @@ void	ft_realloc(t_shell *index, char *str, int save)
 	index->tab_save_exp[a + 1] = NULL;
 }
 
-void	ft_print(t_shell *index, int fd)
+void ft_print(t_shell *index, int fd)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (index->tab_save_env[i])
@@ -60,9 +60,9 @@ void	ft_print(t_shell *index, int fd)
 	g_status_exec = 0;
 }
 
-int	len(char *str)
+int len(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -74,12 +74,12 @@ int	len(char *str)
 	return (0);
 }
 
-int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
+int duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 {
-	int		checker;
-	char	**temp;
-	char	**sec_temp;
-	int		a;
+	int checker;
+	char **temp;
+	char **sec_temp;
+	int a;
 
 	a = len(string);
 	checker = len(add_str);
@@ -105,9 +105,9 @@ int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 	return (0);
 }
 
-int	find_space(char *str)
+int find_space(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])

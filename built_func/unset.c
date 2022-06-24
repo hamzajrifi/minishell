@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:04:10 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 03:18:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,21 @@ void	norme3(t_shell *index, char **temp, char *str)
 		{
 			save = (char **)malloc(sizeof(char *));
 			save[0] = index->tab_save_exp[i];
+			free(index->tab_save_exp[i]);
 		}
 		else
 			save = ft_split(index->tab_save_exp[i], '=');
-		if (strcmp(save[0], str) != 0)
+		if (ft_strcmp(save[0], str) != 0)
 		{
 			temp[j++] = index->tab_save_exp[i];
+			free(index->tab_save_exp[i]);
 			i++;
 		}
 		else
 			i++;
 		ft_free(save);
 	}
+	free(index->tab_save_exp);
 	temp[j] = NULL;
 }
 
@@ -59,7 +62,7 @@ void	unset_exp(t_shell *index, char *str)
 	i = 0;
 	temp = (char **)malloc(sizeof(char *) * (tablen(index->tab_save_exp) + 1));
 	norme3(index, temp, str);
-	ft_free(index->tab_save_exp);
+	int j = 0;
 	index->tab_save_exp = (char **)malloc(sizeof(char *) * (tablen(temp) + 1));
 	i = 0;
 	while (temp[i])
@@ -68,7 +71,7 @@ void	unset_exp(t_shell *index, char *str)
 		i++;
 	}
 	index->tab_save_exp[i] = NULL;
-	ft_free(temp);
+	// ft_free(temp);
 }
 
 void	norme4(t_shell *index, char **temp, char *str, char **save)
