@@ -6,20 +6,22 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 01:09:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:51:21 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 08:26:49 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	one_wild(t_list **list, t_wild *wild, int fd)
 {
-	wild->get_next = get_next_line(fd);
-	while (wild->get_next)
+	wild->tab_wild[wild->size_j] = get_next_line(fd);
+	wild->tab_wild[wild->size_j + 1] = NULL;
+	while (wild->tab_wild[wild->size_j])
 	{
-		wild->tab_wild[wild->size_j] = wild->get_next;
 		wild->size_j++;
-		wild->get_next = get_next_line(fd);
+		wild->tab_wild = ft_realloc_char(wild->tab_wild);
+		wild->tab_wild[wild->size_j] = get_next_line(fd);
 	}
 }
 
@@ -34,7 +36,6 @@ void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd)
 	fd = open("/tmp/test1", O_RDWR, 0644);
 	while (*list && (*list)->val[k])
 	{
-		size = wild->size_j;
 		tab = ft_split((*list)->val[k], '*');
 		if (!tab[0])
 			one_wild(list, wild, fd);
@@ -45,6 +46,7 @@ void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd)
 		k++;
 		if (size == wild->size_j)
 			err_wild((*list)->val[k - 1]);
+		ft_free(tab);
 		size = wild->size_j;
 	}
 	wild->tab_wild[wild->size_j] = NULL;
@@ -79,6 +81,7 @@ void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list)
 		exec_wild(mini, list);
 	}
 	wait(NULL);
+	ft_free(wild->tab_wild);
 }
 
 void	ft_wildcards(t_list **list, t_shell *mini)
@@ -90,7 +93,7 @@ void	ft_wildcards(t_list **list, t_shell *mini)
 
 	wild.size = 0;
 	wild.size_j = 0;
-	wild.tab_wild = (char **)malloc(sizeof(char *) * 50);
+	wild.tab_wild = (char **)malloc(sizeof(char *) * 2);
 	exec = (char **)malloc(sizeof(char *) * 2);
 	exec[0] = "ls";
 	exec[1] = NULL;
@@ -107,4 +110,5 @@ void	ft_wildcards(t_list **list, t_shell *mini)
 	wait(NULL);
 	import_all_arg(mini, list, &wild, fd);
 	utils_exec_wild(&wild, mini, list);
+	free(exec);
 }

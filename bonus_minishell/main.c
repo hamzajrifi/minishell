@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 05:40:21 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 07:34:30 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_mini(t_shell *mini, char *src)
 		return ;
 	if (find_both_and_or(lst) == 1)
 		exec_both_and_or(lst, mini);
-	else if (ft_findwild(lst) == 1)
+	if (ft_findwild(lst) == 1)
 		ft_wildcards(&lst, mini);
 	else if (ft_findwild(lst) == 2)
 		ft_and(lst, mini);

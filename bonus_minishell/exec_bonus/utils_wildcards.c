@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:25:31 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:50:54 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 08:25:36 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	change(t_list **list, t_wild *wild)
 			(*list)->val[j] = temp;
 		else
 		{
-			(*list)->val[j] = ft_strdup(wild->tab_wild[i]);
+			(*list)->val[j] = strdup(wild->tab_wild[i]);
 			i++;
 		}
 		j++;
@@ -82,17 +82,17 @@ void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd)
 	while (wild->get_next != NULL)
 	{
 		while (tab[i])
-		{
-			count = sec_utils_wild(wild, i, count, tab);
-			i++;
-		}
+			count = sec_utils_wild(wild, i++, count, tab);
 		i = 0;
 		if (count == size)
 		{
-			wild->tab_wild[wild->size_j] = ft_strdup(wild->get_next);
+			wild->tab_wild[wild->size_j] = strdup(wild->get_next);
+			wild->tab_wild[wild->size_j + 1] = NULL;
 			wild->size_j++;
+			wild->tab_wild = ft_realloc_char(wild->tab_wild);
 		}
 		count = 0;
+		free(wild->get_next);
 		wild->get_next = get_next_line(fd);
 	}
 }
@@ -111,9 +111,12 @@ void	utils_mult_wild(t_list **list, t_wild *wild, char *tab, int fd)
 			wild->str1 = ft_strstr(wild->get_next, tab, wild->size);
 		if (wild->str1 != NULL)
 		{
-			wild->tab_wild[wild->size_j] = ft_strdup(wild->get_next);
+			wild->tab_wild[wild->size_j] = strdup(wild->get_next);
+			wild->tab_wild[wild->size_j + 1] = NULL;
 			wild->size_j++;
+			wild->tab_wild = ft_realloc_char(wild->tab_wild);
 		}
+		free(wild->get_next);
 		wild->get_next = get_next_line(fd);
 	}
 }
