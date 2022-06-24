@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:45:58 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:22:20 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct t_list
 	struct t_list	*prev;
 }	t_list;
 
+void	add_name2(int i, char *str);
 void	handler(int sig);
 void	ft_free(char **tab);
 char	*utils_path_if_exi(t_shell *mini);

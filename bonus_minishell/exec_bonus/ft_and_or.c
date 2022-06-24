@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:13:02 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 08:32:56 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:13:53 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_and(t_list *list, t_shell *mini)
 			list = list->next->next;
 		else
 			list = list->next;
+		g_id.failer = 0;
 	}
 }
 
@@ -55,6 +56,7 @@ void	ft_or(t_list *list, t_shell *mini)
 			list = list->next->next;
 		else
 			list = list->next;
+		g_id.failer = 0;
 	}
 }
 
@@ -87,7 +89,8 @@ void	exec_both_and_or(t_list *list, t_shell *mini)
 		exec_bonus(mini, list);
 		if (list->next && list->next->v_type[0] == 12)
 		{
-			while (list && list->next && list->next->v_type[0] == 12)
+			while (list && list->next && list->next->v_type[0] == 12
+				&& g_id.failer != 2)
 				list = list->next->next;
 			if (list->next)
 				list = list->next->next;

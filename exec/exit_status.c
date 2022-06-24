@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:57:15 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:22:55 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void	normi(char **temp, t_shell *mini, t_list *lst)
 		i++;
 	}
 	free(temp);
-	if (i != -1 && ft_strcmp(lst->val[0], "exit") != 0)
-		g_id.g_status_exec = 127;
+	add_name2(i, lst->val[0]);
 }
 
 char	*utils_check_path_if_exi2(t_shell *mini)

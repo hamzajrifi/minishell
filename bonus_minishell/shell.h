@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:43:20 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:20:34 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_wild
 	int		size_j;
 }	t_wild;
 
+void	add_name(int i, char *str);
 void	err_wild(char *str);
 void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd);
 void	exec_both_and_or(t_list *list, t_shell *mini);
