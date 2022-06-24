@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:21:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:33:53 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	change_in2(t_list **lst)
 		while (tab[j])
 		{
 			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[i++] = strdup(tab[j++]);
+			(*lst)->val[i++] = ft_strdup(tab[j++]);
 			free(tab[j - 1]);
 		}
 		(*lst)->val[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/21 23:49:20 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:31:22 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*utils_check_path_if_exi2(t_shell *mini)
 	while (mini->tab_save_exp[i])
 	{
 		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
-		if (strcmp(temp, "PATH") == 0)
+		if (ft_strcmp(temp, "PATH") == 0)
 		{
 			free(temp);
 			return (ft_strchr(mini->tab_save_exp[i], '='));
@@ -116,7 +116,7 @@ char	*check_path_if_exi2(t_shell *mini)
 	while (mini->tab_save_env[i])
 	{
 		temp = ft_substr(mini->tab_save_env[i], 0, len(mini->tab_save_env[i]));
-		if (strcmp(temp, "PATH") == 0)
+		if (ft_strcmp(temp, "PATH") == 0)
 		{
 			free(temp);
 			return (ft_strchr(mini->tab_save_env[i], '='));

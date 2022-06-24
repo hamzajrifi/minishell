@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:52:40 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 03:11:22 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:32:23 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_getenv(t_shell *m, char *str)
 	while (m->tab_save_env[j])
 	{
 		temp = ft_substr(m->tab_save_env[j], 0, len(m->tab_save_env[j]));
-		if (strcmp(temp, str) == 0)
+		if (ft_strcmp(temp, str) == 0)
 		{
 			free(temp);
 			return (ft_strchr(m->tab_save_env[j], '='));
@@ -75,7 +75,7 @@ char	*utils_path_if_exi(t_shell *mini)
 	while (mini->tab_save_exp[i])
 	{
 		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
-		if (strcmp(temp, "PATH") == 0)
+		if (ft_strcmp(temp, "PATH") == 0)
 		{
 			free(temp);
 			return (ft_strchr(mini->tab_save_exp[i], '='));

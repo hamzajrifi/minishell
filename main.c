@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 02:29:48 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:36:17 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	handler(int sig)
 		kill(id, sig);
 	}
 	else if (cheecker != 0)
-	{
-		g_status_exec = 1;
 		close(0);
-	}
 	else if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
@@ -94,6 +91,18 @@ void	ft_mini(t_shell *mini, char *src)
 	ft_free_list(head);
 }
 
+void	initialiation_mini(t_shell *mini, char **env)
+{
+	mini->tab_save_env = env;
+	mini->tab_save_exp = NULL;
+	mini->counter = 0;
+	mini->num_ofall_cmd = 0;
+	mini->num_cmd = 0;
+	mini->cnt = 0;
+	mini->fs = 0;
+	mini->built = 0;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*src;
@@ -101,16 +110,9 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	mini.tab_save_env = env;
-	mini.tab_save_exp = NULL;
-	mini.counter = 0;
-	mini.num_ofall_cmd = 0;
-	mini.num_cmd = 0;
-	mini.cnt = 0;
-	mini.fs = 0;
-	mini.built = 0;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, handler);
+	initialiation_mini(&mini, env);
 	while (1337)
 	{
 		mini.counter = 0;

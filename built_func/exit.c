@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:37:22 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 20:55:47 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:29:07 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	utils_exit(char *str, int fd, int num, int k)
 	{
 		if (ft_isdigit(str[i]) == 0)
 		{
-			write (fd, "exit\n", 6);
+			write(fd, "exit\n", 6);
 			ft_putendl_fd("minishell: exit: numeric argument required", fd);
 			g_status_exec = 255;
 			if (num != 1)

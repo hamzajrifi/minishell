@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:09:16 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:33:42 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**cmd_utils(t_list *list, char **tab)
 		{
 			while (list->val[k])
 			{
-				tab[i++] = strdup(list->val[k]);
+				tab[i++] = ft_strdup(list->val[k]);
 				k++;
 			}
 			k = 2;

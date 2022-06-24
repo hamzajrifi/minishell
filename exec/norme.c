@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:08:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 22:29:22 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:33:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	sec_utils_red(t_list **lst, char **tab, int ij, int k)
 		if (k == 1)
 		{
 			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[ij++] = strdup(tab[io++]);
+			(*lst)->val[ij++] = ft_strdup(tab[io++]);
 			free(tab[io - 1]);
 		}
 		else
 		{
-			(*lst)->val[ij++] = strdup(tab[io++]);
+			(*lst)->val[ij++] = ft_strdup(tab[io++]);
 			free(tab[io - 1]);
 		}
 	}

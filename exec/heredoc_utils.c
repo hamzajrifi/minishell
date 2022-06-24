@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:57:49 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 03:24:02 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:32:43 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 		while (sec_tab[io])
 		{
 			(*list)->val = ft_realloc_char((*list)->val);
-			(*list)->val[lp] = strdup(sec_tab[io]);
+			(*list)->val[lp] = ft_strdup(sec_tab[io]);
 			io++;
 			lp++;
 		}

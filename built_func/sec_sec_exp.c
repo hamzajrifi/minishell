@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 19:56:19 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 03:04:56 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:30:01 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	add_str_tab_exp(t_shell *index, char *str)
 		if (count == 0)
 		{
 			index->tab_save_exp = (char **)malloc(sizeof(char *) * 2);
-			index->tab_save_exp[0] = strdup(str);
+			index->tab_save_exp[0] = ft_strdup(str);
 			index->tab_save_exp[1] = NULL;
 		}
 		else
@@ -87,7 +87,7 @@ int	search_path_in_env(t_shell *mini, int a)
 	while (mini->tab_save_env[i])
 	{
 		str = ft_split(mini->tab_save_env[i], '=');
-		if (strcmp(str[0], "HOME") == 0)
+		if (ft_strcmp(str[0], "HOME") == 0)
 		{
 			if (a == 2)
 				ft_putstr_fd(str[1], 1);

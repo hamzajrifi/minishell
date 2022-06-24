@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 11:38:30 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 03:01:25 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:28:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ut(t_shell *mini)
 			temp = ft_strjoin("PWD=", getcwd(buff, sizeof(buff)));
 			free(str[0]);
 			str[0] = temp;
-			mini->tab_save_exp[i] = strdup(str[0]);
+			mini->tab_save_exp[i] = ft_strdup(str[0]);
 			ft_free(str);
 			break ;
 		}
@@ -72,7 +72,7 @@ void	utils_change_pwd(t_shell *mini, int n, char **str, int i)
 	str[0] = temp;
 	if (n > 0)
 		free(mini->tab_save_env[i]);
-	mini->tab_save_env[i] = strdup(str[0]);
+	mini->tab_save_env[i] = ft_strdup(str[0]);
 	ft_free(str);
 }
 

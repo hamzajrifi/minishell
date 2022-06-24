@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 03:18:35 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 04:21:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,14 @@ void	norme3(t_shell *index, char **temp, char *str)
 	{
 		if (len(index->tab_save_exp[i]) == 0)
 		{
-			save = (char **)malloc(sizeof(char *));
+			save = (char **)malloc(sizeof(char *) + 1);
 			save[0] = index->tab_save_exp[i];
-			free(index->tab_save_exp[i]);
+			save[1] = NULL;
 		}
 		else
 			save = ft_split(index->tab_save_exp[i], '=');
 		if (ft_strcmp(save[0], str) != 0)
-		{
-			temp[j++] = index->tab_save_exp[i];
-			free(index->tab_save_exp[i]);
-			i++;
-		}
+			temp[j++] = index->tab_save_exp[i++];
 		else
 			i++;
 		ft_free(save);
@@ -62,7 +58,6 @@ void	unset_exp(t_shell *index, char *str)
 	i = 0;
 	temp = (char **)malloc(sizeof(char *) * (tablen(index->tab_save_exp) + 1));
 	norme3(index, temp, str);
-	int j = 0;
 	index->tab_save_exp = (char **)malloc(sizeof(char *) * (tablen(temp) + 1));
 	i = 0;
 	while (temp[i])
@@ -71,21 +66,20 @@ void	unset_exp(t_shell *index, char *str)
 		i++;
 	}
 	index->tab_save_exp[i] = NULL;
-	// ft_free(temp);
 }
 
 void	norme4(t_shell *index, char **temp, char *str, char **save)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		j;
+	int		k;
 
 	i = 0;
 	j = 0;
 	while (index->tab_save_env[i])
 	{
 		save = ft_split(index->tab_save_env[i], '=');
-		if (strcmp(save[0], str) != 0)
+		if (ft_strcmp(save[0], str) != 0)
 			temp[j++] = index->tab_save_env[i++];
 		else
 			i++;
@@ -93,13 +87,10 @@ void	norme4(t_shell *index, char **temp, char *str, char **save)
 	}
 	temp[j] = NULL;
 	index->tab_save_env = (char **)malloc(sizeof(char *) * (tablen(temp) + 1));
-	i = 0;
-	while (temp[i])
-	{
+	i = -1;
+	while (temp[++i])
 		index->tab_save_env[i] = temp[i];
-		i++;
-	}
-	index->tab_save_env[i] = NULL;
+	index->tab_save_env[i - 1] = NULL;
 }
 
 void	ft_unset(t_shell *index, char **str, int fd)
