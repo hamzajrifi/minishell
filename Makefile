@@ -49,10 +49,6 @@ C_FILES =	exec/exec_cmd.c\
 			sec_parsing/lexer/token.c
 
 OBJ = $(C_FILES:.c=.o)
-# main.o\
-# 		functions/utiles_functions.o\
-# 		mini.o
-
 
 all : $(NAME)
 
@@ -68,7 +64,73 @@ clean :
 		rm -f *.o utils/*.o
 		rm -f *.o sec_parsing/parsing/*.o
 		rm -f *.o sec_parsing/lexer/*.o
+		rm -f *.o bonus_minishell/sec_parsing/functions/*.o
+		rm -f *.o bonus_minishell/sec_parsing/ft_free/*.o
+		rm -f *.o bonus_minishell/built_func/*.o
+		rm -f *.o bonus_minishell/exec/*.o
+		rm -f *.o bonus_minishell/utils/*.o
+		rm -f *.o bonus_minishell/sec_parsing/parsing/*.o
+		rm -f *.o bonus_minishell/sec_parsing/lexer/*.o
+		rm -f *.o bonus_minishell/get/*.o
 		rm -f $(NAME)
+		rm -f $(BONUS_NAME)
 fclean : clean
-		rm -f minishell
+		rm -f minishell minishell_bonus
 re : fclean all
+
+
+
+
+
+################################ BONUS ###########################################
+BONUS_NAME = bonus_mini.a
+
+BNS_FILES = bonus_minishell/exec/exec_cmd.c\
+			bonus_minishell/exec/redirections.c\
+			bonus_minishell/exec/pipes.c\
+			bonus_minishell/exec/utils_exec_cmd.c\
+			bonus_minishell/built_func/cd.c\
+			bonus_minishell/built_func/cd_utils.c\
+			bonus_minishell/built_func/sec_utils_exp.c\
+			bonus_minishell/built_func/echo.c\
+			bonus_minishell/built_func/env.c\
+			bonus_minishell/built_func/exit.c\
+			bonus_minishell/built_func/export.c\
+			bonus_minishell/built_func/pwd.c\
+			bonus_minishell/built_func/unset.c\
+			bonus_minishell/built_func/utils_exp.c\
+			bonus_minishell/built_func/sec_sec_exp.c\
+			bonus_minishell/utils/ft_split.c\
+			bonus_minishell/utils/ft_strjoin.c\
+			bonus_minishell/utils/ft_substr.c\
+			bonus_minishell/utils/all_func.c\
+			bonus_minishell/utils/ft_strcmp.c\
+			bonus_minishell/utils/ft_itoa.c\
+			bonus_minishell/utils/ft_calloc.c\
+			bonus_minishell/exec/ft_getenv.c\
+			bonus_minishell/exec/heredoc.c\
+			bonus_minishell/exec/utils_pipes.c\
+			bonus_minishell/exec/exit_status.c\
+			bonus_minishell/exec/heredoc_utils.c\
+			bonus_minishell/exec/sec_herdoc_utils.c\
+			bonus_minishell/exec/sec_redirection_utils.c\
+			bonus_minishell/exec/norme.c\
+			bonus_minishell/exec/redirection_utils.c\
+			bonus_minishell/sec_parsing/functions/utiles_functions.c\
+			bonus_minishell/sec_parsing/functions/ft_error.c\
+			bonus_minishell/sec_parsing/parsing/parser.c\
+			bonus_minishell/sec_parsing/parsing/parser_second.c\
+			bonus_minishell/sec_parsing/ft_free/ft_free_list.c\
+			bonus_minishell/sec_parsing/lexer/mini.c\
+			bonus_minishell/sec_parsing/lexer/lexer_action.c\
+			bonus_minishell/sec_parsing/lexer/lexer.c\
+			bonus_minishell/sec_parsing/lexer/token.c
+
+BNS_OBJ = $(BNS_FILES:.c=.o)
+
+bonus : $(BONUS_NAME)
+
+$(BONUS_NAME) :  $(BNS_OBJ) bonus_minishell/main.c
+			$(CC)  -c $(BNS_FILES)
+			ar -rc $(BONUS_NAME) $(BNS_OBJ)
+			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I /Users/otmallah/.brew/opt/readline/include -lreadline $(BONUS_NAME) bonus_minishell/main.c -o minishell_bonus 

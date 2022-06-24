@@ -6,12 +6,29 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:08:20 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:31:39 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 06:55:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../sec_parsing/header/utiles_functions.h"
+
+int	ft_arg(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] == '-' && str[1] && str[1] == 'n')
+		i++;
+	while (str[i])
+	{
+		if (str[i] == 'n')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
 
 void	ft_echo(t_shell *mini, char **str, int fd)
 {
@@ -20,7 +37,7 @@ void	ft_echo(t_shell *mini, char **str, int fd)
 	i = 1;
 	while (str[i])
 	{
-		if (ft_strcmp(str[1], "-n") == 0 && i == 1)
+		if (ft_arg(str[1]) == 1 && i == 1)
 			i++;
 		if (str[i])
 		{
@@ -32,7 +49,7 @@ void	ft_echo(t_shell *mini, char **str, int fd)
 	}
 	if (str[1])
 	{
-		if (ft_strcmp(str[1], "-n") != 0)
+		if (ft_arg(str[1]) != 1)
 			ft_putstr_fd("\n", fd);
 	}
 	else

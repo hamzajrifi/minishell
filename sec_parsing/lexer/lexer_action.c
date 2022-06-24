@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:41:04 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 06:00:28 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 06:11:25 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*check_var_second(t_lexer *lexer, char *str)
 char	*check_var(t_lexer *lexer)
 {
 	char	*str;
+	char	*temp;
 
 	str = NULL;
 	lexer_advance(lexer);
