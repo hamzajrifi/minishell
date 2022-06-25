@@ -7,7 +7,8 @@ FLAG = -Wall -Wextra -Werror
 HDR = 	sec_parsing/header/minishell.h\
 		sec_parsing/header/utiles_functions.h
 
-C_FILES =	exec/exec_cmd.c\
+C_FILES =	main.c\
+			exec/exec_cmd.c\
 			exec/redirections.c\
 			exec/pipes.c\
 			exec/utils_exec_cmd.c\
@@ -55,7 +56,7 @@ all : $(NAME)
 $(NAME) : $(HDR) $(OBJ) main.c
 			$(CC)  -c $(C_FILES)
 			ar -rc $(NAME) $(OBJ)
-			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I /Users/otmallah/.brew/opt/readline/include -lreadline $(NAME) main.c -o minishell 
+			$(CC) $(NAME) -o minishell -lreadline
 clean :	
 		rm -f *.o sec_parsing/functions/*.o
 		rm -f *.o sec_parsing/ft_free/*.o
