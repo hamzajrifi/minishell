@@ -62,7 +62,7 @@ void	ft_mini(t_shell *mini, char *src)
 		pipes(mini, lst);
 	else
 		ft_mini_second(mini, lst);
-	ft_free_list(head);
+	//ft_free_list(head);
 }
 
 void	initialiation_mini(t_shell *mini, char **env)

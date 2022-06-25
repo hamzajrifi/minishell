@@ -18,6 +18,7 @@ void	ft_and(t_list *list, t_shell *mini)
 
 	while (list && list->v_type[0] != 12)
 	{
+		puts("987");
 		ft_exit_status(mini, list);
 		id = fork();
 		if (id == 0)
@@ -27,7 +28,10 @@ void	ft_and(t_list *list, t_shell *mini)
 		}
 		wait(NULL);
 		if (g_id.failer == 2)
+		{
+			g_id.failer = 0;
 			break ;
+		}
 		if (list->next)
 			list = list->next->next;
 		else
@@ -42,6 +46,7 @@ void	ft_or(t_list *list, t_shell *mini)
 
 	while (list && list->v_type[0] != 13)
 	{
+		puts("321");
 		ft_exit_status(mini, list);
 		id = fork();
 		if (id == 0)
@@ -51,7 +56,10 @@ void	ft_or(t_list *list, t_shell *mini)
 		}
 		wait(NULL);
 		if (g_id.failer != 2)
+		{
+			g_id.failer = 0;
 			break ;
+		}
 		if (list->next)
 			list = list->next->next;
 		else
@@ -83,18 +91,36 @@ void	counter_list(t_list **list)
 
 void	exec_both_and_or(t_list *list, t_shell *mini)
 {
+	int i = 0;
 	while (list)
 	{
 		ft_exit_status(mini, list);
-		exec_bonus(mini, list);
-		if (list->next && list->next->v_type[0] == 12)
+		if (i == 0)
 		{
-			ft_or(list, mini);
+			exec_bonus(mini, list);
+			if (list->next)
+				list = list->next->next;
+			else
+			{
+				list = list->next;
+			}
 		}
+		if (list->next && list->next->v_type[0] == 13 && g_id.failer == 2)
+		{
+			printf("lst2 = %s\n", list->val[0]);
+			exec_bonus(mini, list);
+		}
+		else if (g_id.failer != 2)
+		{
+			printf("lst2 = %s\n", list->val[0]);
+			exec_bonus(mini, list);
+		}
+		if (list->next)
+			list = list->next->next;
 		else
 		{
-			ft_and(list, mini);
+			list = list->next;
 		}
-		
+		i++;
 	}
 }

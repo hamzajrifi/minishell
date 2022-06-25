@@ -147,4 +147,4 @@ bonus : $(BONUS_NAME)
 $(BONUS_NAME) :  $(BNS_OBJ) bonus_minishell/main.c
 			$(CC)  -c $(BNS_FILES)
 			ar -rc $(BONUS_NAME) $(BNS_OBJ)
-			$(CC) $(BONUS_NAME) -lreadline -o minishell_bonus 
+			$(CC) $(BONUS_NAME) -lreadline -o minishell_bonus
