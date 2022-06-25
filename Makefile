@@ -89,7 +89,8 @@ re : fclean all
 ################################ BONUS ###########################################
 BONUS_NAME = bonus_mini.a
 
-BNS_FILES = bonus_minishell/exec/exec_cmd.c\
+BNS_FILES = bonus_minishell/main.c\
+			bonus_minishell/exec/exec_cmd.c\
 			bonus_minishell/exec/redirections.c\
 			bonus_minishell/exec/pipes.c\
 			bonus_minishell/exec/utils_exec_cmd.c\
@@ -146,4 +147,4 @@ bonus : $(BONUS_NAME)
 $(BONUS_NAME) :  $(BNS_OBJ) bonus_minishell/main.c
 			$(CC)  -c $(BNS_FILES)
 			ar -rc $(BONUS_NAME) $(BNS_OBJ)
-			$(CC) $(FLAG) -L /Users/otmallah/.brew/Cellar/readline/8.1.2/lib -I /Users/otmallah/.brew/opt/readline/include -lreadline $(BONUS_NAME) bonus_minishell/main.c -o minishell_bonus 
+			$(CC) $(BONUS_NAME) -lreadline -o minishell_bonus 

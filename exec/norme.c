@@ -66,6 +66,7 @@ void	true_while(t_shell *mini, char **tab, int size)
 	fd = utils_true_while();
 	while (1)
 	{
+		g_id.cheecker = 1;
 		find = readline("> ");
 		if (find == NULL)
 			break ;

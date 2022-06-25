@@ -51,9 +51,12 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 			execve(lst->val[0], &lst->val[0], mini->tab_save_env);
 			exit(0);
 		}
-		write (2, lst->val[0], ft_strlen(lst->val[0]));
-		write (2, " :no such file or directory\n", 29);
-		exit(0);
+		else
+		{
+			write (2, lst->val[0], ft_strlen(lst->val[0]));
+			write (2, " :no such file or directory\n", 29);
+			exit(0);
+		}
 	}
 	else if (lst->val[0][0] == '/')
 	{

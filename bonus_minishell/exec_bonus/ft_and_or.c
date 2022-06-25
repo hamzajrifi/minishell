@@ -89,21 +89,12 @@ void	exec_both_and_or(t_list *list, t_shell *mini)
 		exec_bonus(mini, list);
 		if (list->next && list->next->v_type[0] == 12)
 		{
-			while (list && list->next && list->next->v_type[0] == 12
-				&& g_id.failer != 2)
-				list = list->next->next;
-			if (list->next)
-				list = list->next->next;
-			else
-				list = list->next;
-			printf("lst = %s\n", list->val[0]);
+			ft_or(list, mini);
 		}
 		else
 		{
-			if (list->next)
-				list = list->next->next;
-			else
-				list = list->next;
+			ft_and(list, mini);
 		}
+		
 	}
 }

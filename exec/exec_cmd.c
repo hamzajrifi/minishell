@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
@@ -48,7 +48,7 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 	char	*str;
 
 	str = check_path_if_exi(mini);
-	if (lst->val[0][0] == '.' || lst->val[0][0] == '/')
+	if ((lst->val[0][0] == '.' && lst->val[0][1] != '.' && ft_strlen(lst->val[0]) != 2)|| lst->val[0][0] == '/')
 		ft_check_cmd(mini, lst);
 	else if (str != NULL)
 	{
@@ -58,7 +58,6 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 			if (temp[0])
 				ft_execve(temp, mini, lst);
 			ft_err(lst->val[0]);
-			ft_free(temp);
 		}
 	}
 	else

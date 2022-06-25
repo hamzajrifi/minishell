@@ -26,7 +26,7 @@ char	*check_arg_dollar(t_lexer *lexer, char *str, char c)
 
 	tmp = check_var(lexer);
 	str = ft_h_strjoin(str, tmp);
-	if (tmp[0] == '\0' || tmp)
+	if (tmp[0] == '\0')
 		free(tmp);
 	if (c == '"')
 		return (str);

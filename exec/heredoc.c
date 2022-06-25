@@ -89,11 +89,11 @@ void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 	size = size_tab(tab);
 	g_id.cheecker = 1;
 	true_while(mini, tab, size);
-	g_id.cheecker = 0;
 	out = open_all_files(list, 2);
-	if (list->v_type[0] == 1 && out != -1)
+	printf("id == %d\n", g_id.cheecker);
+	if (list->v_type[0] == 1 && out != -1 && g_id.cheecker == 1)
 		exec_first_cmd_in_her(list, mini, fd_out, num);
-	else if (out != -1)
+	else if (out != -1 && g_id.cheecker == 1)
 		exec_her(list, mini, num, fd_out);
 	if (out == -1)
 		printf("No such file or directory\n");

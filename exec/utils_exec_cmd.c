@@ -23,11 +23,7 @@ void	cmm(t_list *lst, t_shell *mini)
 	{
 		wait(&wstatus);
 		if (WIFEXITED(wstatus))
-		{
 			g_id.g_status_exec = WEXITSTATUS(wstatus);
-			if (g_id.g_status_exec == 1)
-				g_id.g_status_exec = 127;
-		}
 	}
 }
 
