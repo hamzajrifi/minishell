@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:01:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/26 00:21:38 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 03:53:49 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,17 @@ int	loop(t_shell *mini)
 
 void	ft_13(t_shell *index, char *str, char **save, char **temp)
 {
+	static int	n;
+
 	norme4(index, temp, str, save);
 	if (index->tab_save_exp)
 		unset_exp(index, str);
 	g_id.g_status_exec = 0;
-	free(temp);
+	if (n > 0)
+		ft_free(temp);
+	else
+		free(temp);
+	n++;
 }
 
 int	no(t_shell *index, char *add_str, char *string, int i)

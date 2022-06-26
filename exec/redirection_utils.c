@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 10:03:18 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:45:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,4 +140,6 @@ void	utils_red(t_list **lst)
 		}
 		sec_utils_red(lst, tab, ij, k);
 	}
+	else
+		free(tab);
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/26 01:19:47 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 04:31:50 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	handler(int sig)
 {
-	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0 && g_id.cheecker == 0)
+	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0 && g_id.cheecker == 0 && g_id.g_status_exec != 127)
 	{
 		if (sig == SIGQUIT)
 			write (1, "Quit: 3\n", 9);
+		if (sig == SIGINT)
+			write(1, "\n", 1);
 		kill(g_id.id, sig);
 		g_id.g_status_exec = 130;
 	}
@@ -116,7 +118,7 @@ int	main(int ac, char **av, char **env)
 			g_id.g_status_exec = 126;
 		if (src == NULL)
 		{
-			printf(" exit\n");
+			printf("exit\n");
 			exit(0);
 		}
 		ft_mini(&mini, src);

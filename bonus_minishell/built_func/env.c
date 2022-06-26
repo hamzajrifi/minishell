@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 15:13:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 09:22:05 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 04:12:08 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	add_name2(int i, char *str)
 	{
 		g_id.g_status_exec = 127;
 		g_id.failer = 2;
+		g_id.id = 0;
 	}
 }

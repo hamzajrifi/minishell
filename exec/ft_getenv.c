@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:52:40 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/25 20:36:07 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 04:38:18 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 		if ((int)dp != 0)
 		{
 			printf("minishell: ./exec: is a directory\n");
-			//exit(0);
+			exit(0);
 		}
 		else if (access(lst->val[0], F_OK | X_OK) == 0)
 		{
