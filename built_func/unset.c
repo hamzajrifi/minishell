@@ -44,7 +44,10 @@ void	norme3(t_shell *index, char **temp, char *str)
 		if (ft_strcmp(save[0], str) != 0)
 			temp[j++] = index->tab_save_exp[i++];
 		else
+		{
+			free(index->tab_save_exp[i]);
 			i++;
+		}
 		ft_free(save);
 	}
 	printf("ptr = %p\n", index->tab_save_exp[i - 1]);
@@ -90,7 +93,11 @@ void	norme4(t_shell *index, char **temp, char *str, char **save)
 			i++;
 		}
 		else
+		{
+			if (n > 0)
+				free(index->tab_save_env[i]);
 			i++;
+		}
 		ft_free(save);
 	}
 	temp[j] = NULL;

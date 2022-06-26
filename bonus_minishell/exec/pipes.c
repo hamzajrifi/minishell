@@ -73,7 +73,7 @@ int	fin(t_list *list)
 {
 	if (list && list->next && (list->next->v_type[0] == 6
 			|| list->next->v_type[0] == 8 || list->next->v_type[0] == 3
-			|| list->next->v_type[0] == 4
+			|| list->next->v_type[0] == 4 || list->next->v_type[0] == 15
 			|| list->v_type[0] == 3) && list->next->next)
 		return (1);
 	return (0);

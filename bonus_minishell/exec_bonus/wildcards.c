@@ -90,6 +90,7 @@ void	ft_wildcards(t_list **list, t_shell *mini)
 	int		fd;
 	t_wild	wild;
 
+	puts("m hjer");
 	wild.size = 0;
 	wild.size_j = 0;
 	wild.tab_wild = (char **)malloc(sizeof(char *) * 2);

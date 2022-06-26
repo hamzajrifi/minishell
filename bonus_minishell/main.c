@@ -50,7 +50,9 @@ void	ft_mini(t_shell *mini, char *src)
 	head = lst;
 	if (!lst)
 		return ;
-	if (find_both_and_or(lst) == 1)
+	if (finde_her(lst) == 1)
+		pipes(mini, lst);
+	else if (find_both_and_or(lst) == 1)
 		exec_both_and_or(lst, mini);
 	else if (ft_findwild(lst) == 1)
 		ft_wildcards(&lst, mini);
@@ -58,8 +60,6 @@ void	ft_mini(t_shell *mini, char *src)
 		ft_and(lst, mini);
 	else if (ft_findwild(lst) == 3)
 		ft_or(lst, mini);
-	else if (finde_her(lst) == 1)
-		pipes(mini, lst);
 	else
 		ft_mini_second(mini, lst);
 	ft_free_list(head);

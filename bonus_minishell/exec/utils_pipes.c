@@ -84,6 +84,13 @@ void	normm(t_list *list, t_shell *mini, int *fd, int i)
 	{
 		mini->cnt = 2;
 	}
+	else if (ft_findwild(list) == 1)
+	{
+		dup2(fd[1], 1);
+		ft_wildcards(&list, mini);
+		wait(NULL);
+		puts("hana");
+	}
 	else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
 	{
 		mini->counter = i + 1;

@@ -43,7 +43,6 @@ void	home(t_shell *mini)
 
 	i = 0;
 	str = go_home2(mini);
-	system("leaks minishell");
 	if (str[1] != NULL)
 	{
 		chdir(str[1]);
@@ -72,12 +71,17 @@ void	ft_cd(char *path, t_shell *mini)
 {
 	static int			a;
 	char				buff[256];
+	char				*temp;
 
 	a = 0;
 	if (mini->built == 0)
 		mini->save_pwd = ft_strdup(getcwd(buff, sizeof(buff)));
-	else if (ft_strcmp(mini->save_pwd, getcwd(buff, sizeof(buff))) != 0)
-		old(mini, a);
+	if (mini->save_pwd)
+	{
+		temp = getcwd(buff, sizeof(buff));
+		if (temp && ft_strcmp(mini->save_pwd, temp) != 0)
+			old(mini, a);
+	}
 	if (path == NULL)
 		unset_home(mini);
 	else if (strcmp(path, "~") == 0)
