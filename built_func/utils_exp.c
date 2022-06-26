@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:04 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:56:23 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:47:40 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	duplicate_exp(t_shell *index, char *string, char *add_str, int i)
 {
 	int		checker;
 	char	**temp;
-	char	**sec_temp;
 
 	checker = len(add_str);
 	if (len(string) != 0 && checker != 0)

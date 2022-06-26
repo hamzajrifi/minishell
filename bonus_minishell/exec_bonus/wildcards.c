@@ -6,14 +6,14 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 01:09:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 08:26:49 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:32:09 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../sec_parsing/header/utiles_functions.h"
 
-void	one_wild(t_list **list, t_wild *wild, int fd)
+void	one_wild(t_wild *wild, int fd)
 {
 	wild->tab_wild[wild->size_j] = get_next_line(fd);
 	wild->tab_wild[wild->size_j + 1] = NULL;
@@ -25,7 +25,7 @@ void	one_wild(t_list **list, t_wild *wild, int fd)
 	}
 }
 
-void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd)
+void	import_all_arg(t_list **list, t_wild *wild, int fd)
 {
 	char	**tab;
 	int		k;
@@ -38,7 +38,7 @@ void	import_all_arg(t_shell *mini, t_list **list, t_wild *wild, int fd)
 	{
 		tab = ft_split((*list)->val[k], '*');
 		if (!tab[0])
-			one_wild(list, wild, fd);
+			one_wild(wild, fd);
 		else
 			mult_wild(list, wild, tab, fd);
 		close(fd);
@@ -86,7 +86,6 @@ void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list)
 
 void	ft_wildcards(t_list **list, t_shell *mini)
 {
-	char	**tab;
 	char	**exec;
 	int		fd;
 	t_wild	wild;
@@ -108,7 +107,7 @@ void	ft_wildcards(t_list **list, t_shell *mini)
 		exit(EXIT_SUCCESS);
 	}
 	wait(NULL);
-	import_all_arg(mini, list, &wild, fd);
+	import_all_arg(list, &wild, fd);
 	utils_exec_wild(&wild, mini, list);
 	free(exec);
 }

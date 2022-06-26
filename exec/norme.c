@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:08:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:59:39 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:32:34 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	utiiiils(int size, char *find)
 	}
 }
 
-void	true_while(t_shell *mini, char **tab, int size)
+void	true_while(char **tab, int size)
 {
 	char	*find;
 	int		fd;
@@ -64,9 +64,9 @@ void	true_while(t_shell *mini, char **tab, int size)
 
 	i = 0;
 	fd = utils_true_while();
+	g_id.cheecker = 1;
 	while (1)
 	{
-		g_id.cheecker = 1;
 		find = readline("> ");
 		if (find == NULL)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 11:38:30 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:28:13 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:37:43 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void	change_pwd(t_shell *mini)
 {
 	int			i;
 	char		**str;
-	char		buff[256];
-	char		*temp;
 	static int	n;
 
 	i = 0;

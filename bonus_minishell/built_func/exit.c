@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:37:22 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:31:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:48:29 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	err(char *str, int num, int fd)
 void	ft_exit(char **str, int fd, int num)
 {
 	int	i;
-	int	a;
 	int	k;
 
 	i = 0;

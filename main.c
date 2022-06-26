@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:57:56 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 06:02:26 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:19:47 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 void	handler(int sig)
 {
-	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0)
+	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0 && g_id.cheecker == 0)
 	{
 		if (sig == SIGQUIT)
 			write (1, "Quit: 3\n", 9);
 		kill(g_id.id, sig);
 		g_id.g_status_exec = 130;
 	}
-	else if (g_id.cheecker != 0)
+	else if (g_id.cheecker != 0 && sig != SIGQUIT)
+	{
+		write (1, "\n", 1);
 		close(0);
+	}
 	else if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
@@ -31,13 +34,14 @@ void	handler(int sig)
 		rl_redisplay();
 		g_id.g_status_exec = 1;
 	}
-	else if (sig == SIGQUIT)
+	else if (sig == SIGQUIT && g_id.cheecker == 0)
 	{
 		write(1, "\r", 1);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	g_id.cheecker = 0;
+	if (sig != SIGQUIT)
+		g_id.cheecker = 0;
 	g_id.id = 0;
 }
 
@@ -78,7 +82,7 @@ void	ft_mini(t_shell *mini, char *src)
 		ft_exit_status(mini, lst);
 		ft_check_built(mini, lst, 1);
 	}
-	//ft_free_list(head);
+	ft_free_list(head);
 }
 
 void	initialiation_mini(t_shell *mini, char **env)

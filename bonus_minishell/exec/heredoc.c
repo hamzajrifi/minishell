@@ -6,14 +6,14 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:34:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:01:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../sec_parsing/header/utiles_functions.h"
 
-void	true_while(t_shell *mini, char **tab, int size);
+void	true_while(char **tab, int size);
 
 int	fd_i(t_list *list)
 {
@@ -88,7 +88,7 @@ void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 		tab = save_dele(list->next);
 	size = size_tab(tab);
 	g_id.cheecker = 1;
-	true_while(mini, tab, size);
+	true_while(tab, size);
 	g_id.cheecker = 0;
 	out = open_all_files(list, 2);
 	if (list->v_type[0] == 1 && out != -1)

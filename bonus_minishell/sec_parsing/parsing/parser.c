@@ -31,6 +31,7 @@ t_list *lst, t_list *head)
 	int	i;
 
 	i = 1;
+	(void)head;
 	*token = lexer_get_next_token(lexer, *token);
 	while (*token && (*token)->e_type == t_args)
 	{
@@ -103,7 +104,7 @@ t_list	*ft_parser(char *src, t_shell *mini)
 		return (NULL);
 	src = check_parenthesis(src);
 	if (!src)
-		return (print_error(" 0000", lexer, NULL, lst));
+		return (print_error(" 0000", NULL, NULL, lst));
 	lexer = init_lexer(src, mini);
 	token = lexer_get_next_token(lexer, token);
 	if (token)

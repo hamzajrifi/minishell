@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 06:30:19 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 21:45:39 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*check_arg_dollar(t_lexer *lexer, char *str, char c)
 
 	tmp = check_var(lexer);
 	str = ft_h_strjoin(str, tmp);
-	if (tmp[0] == '\0')
+	if (tmp[0] == '\0' || lexer->src[lexer->i - 1] == '?')
 		free(tmp);
 	if (c == '"')
 		return (str);
@@ -97,6 +97,7 @@ t_token	*lexer_collect_string(t_lexer *lexer)
 	char	*str;
 	char	c;
 
+	token = NULL;
 	c = lexer->c;
 	lexer_advance(lexer);
 	str = NULL;

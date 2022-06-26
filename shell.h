@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 09:22:20 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:05:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	change_in(t_list **lst, t_shell *mini);
 int		utils_re(t_list *lst, int fd_in, int k);
 char	**cmd_utils(t_list *list, char **tab);
 char	**cmd(t_list *list);
-void	utils_red(t_list **lst, t_shell *mini);
+void	utils_red(t_list **lst);
 int		utils_files(t_list *list, int a, int fd, int fd_in);
 void	ex(t_shell *mini, t_list *list, int *save, int fs);
 int		size_tab(char **tab);
@@ -143,7 +143,7 @@ int		check_duplicate(t_shell *index, char *str);
 void	exec_cmd(t_shell *mini, t_list *lst);
 void	ft_check_cmd(t_shell *mini, t_list *list);
 char	*check_path_if_exi(t_shell *mini);
-void	ft_echo(t_shell *mini, char **str, int fd);
+void	ft_echo(char **str, int fd);
 void	ft_check_built(t_shell *mini, t_list *lst, int fd);
 void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd);
 int		finder(char *str);

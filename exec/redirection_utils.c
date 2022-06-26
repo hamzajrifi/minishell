@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:33:42 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:03:18 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@ int	utils_files(t_list *list, int a, int fd, int fd_in)
 int	open_all_files(t_list *list, int a)
 {
 	int		fd;
-	int		fd_in;
 	char	*str;
 
 	fd = 1;
 	while (list && list->v_type[0] != 11)
 	{
-		fd = utils_files(list, a, fd, fd_in);
+		fd = utils_files(list, a, fd, 0);
 		if (list->v_type[0] == 3 && a != 2)
 		{
 			while (1337)
@@ -114,7 +113,7 @@ char	**cmd(t_list *list)
 	return ((cmd_utils(list, tab)));
 }
 
-void	utils_red(t_list **lst, t_shell *mini)
+void	utils_red(t_list **lst)
 {
 	char	**tab;
 	int		ij;

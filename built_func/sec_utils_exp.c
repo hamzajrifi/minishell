@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:47:47 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:55:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:42:47 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	check_duplicate(t_shell *index, char *str)
 
 	i = 0;
 	k = 0;
+	temp = NULL;
+	sec_temp = NULL;
 	k = norme2(index, str, temp, sec_temp);
 	if (k == 1 || k == 2)
 		return (k);

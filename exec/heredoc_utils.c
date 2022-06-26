@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:57:49 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 06:27:44 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:55:17 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 char	**save_cmd(t_list *list)
 {
 	int		i;
-	t_list	*head;
 	char	**tab;
 	int		k;
 

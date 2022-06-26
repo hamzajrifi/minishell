@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:39 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 05:47:08 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:18:41 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ t_list	*add_node_in_lst(char *str, int v_type, t_list *lst);
 int		ft_error(t_lexer *lexer);
 t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst);
 int		finde_her(t_list *lis);
+t_token	*ft_free_string(char *str, t_token *token);
 
 #endif

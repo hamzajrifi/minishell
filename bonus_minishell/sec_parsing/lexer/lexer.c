@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:39:13 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/19 19:39:14 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/24 10:38:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	is_allnum(char c)
 	return (0);
 }
 
-char	*lexer_collect_arg_second(t_lexer *lexer, t_token *token, char *str)
+char	*lexer_collect_arg_second(t_lexer *lexer, char *str)
 {
 	char	*tmp;
+	t_token	*token;
 
+	token = NULL;
 	if (lexer->c == '$' && (lexer->src[lexer->i + 1] == '"'
 			|| lexer->src[lexer->i + 1] == '\''))
 		lexer_advance(lexer);
@@ -61,7 +63,6 @@ char	*lexer_collect_arg_second(t_lexer *lexer, t_token *token, char *str)
 t_token	*lexer_collect_arg(t_lexer *lexer)
 {
 	char	*str;
-	t_token	*token;
 
 	str = NULL;
 	while (lexer->src[lexer->i] && lexer->c != ' ' && lexer->c != '|'
@@ -79,7 +80,7 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 			lexer_advance(lexer);
 		else
 		{
-			str = lexer_collect_arg_second(lexer, token, str);
+			str = lexer_collect_arg_second(lexer, str);
 			if (!str)
 				return (init_token(t_error, NULL));
 		}

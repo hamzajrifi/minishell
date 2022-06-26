@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 09:20:09 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:39:19 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,20 @@ void	ft_exit_status(t_shell *mini, t_list *lst)
 		normi(temp, mini, lst);
 	}
 	else
-	{
 		g_id.g_status_exec = 127;
-		g_id.failer = 2;
-	}
 }
 
 void	ft_check_cmd2(t_shell *mini, t_list *lst)
 {
-	DIR	*dp;
+	DIR		*dp;
 
+	(void)mini;
 	dp = opendir(lst->val[0]);
 	if ((int)dp != 0)
+	{
 		g_id.g_status_exec = 126;
+		printf("9879879879879879878");
+	}
 	else if (lst->val[0][0] == '.')
 	{
 		if (access(lst->val[0], F_OK | X_OK) == 0)
@@ -68,6 +69,7 @@ void	normi(char **temp, t_shell *mini, t_list *lst)
 	char	*str;
 
 	i = 0;
+	(void)mini;
 	while (temp[i])
 	{
 		temp[i] = ft_h_strjoin(temp[i], "/");

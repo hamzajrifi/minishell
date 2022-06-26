@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:32:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:31:53 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:27:07 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,13 @@ int	utils_norm(t_shell *index, char **temp, int i, char *str)
 int	norme2(t_shell *index, char *str, char **temp, char **sec_temp)
 {
 	int		i;
-	int		a;
 
 	i = 0;
+	(void)sec_temp;
 	while (index->tab_save_env[i])
 	{
 		temp = ft_split(index->tab_save_env[i], '=');
-		a = len(str);
-		if (a == 0)
+		if (len(str) == 0)
 		{
 			if (ft_strcmp(temp[0], str) == 0)
 			{

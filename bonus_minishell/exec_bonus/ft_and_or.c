@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 00:13:02 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 09:13:53 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:27:22 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_and(t_list *list, t_shell *mini)
 
 	while (list && list->v_type[0] != 12)
 	{
-		puts("987");
 		ft_exit_status(mini, list);
 		id = fork();
 		if (id == 0)
@@ -28,10 +27,7 @@ void	ft_and(t_list *list, t_shell *mini)
 		}
 		wait(NULL);
 		if (g_id.failer == 2)
-		{
-			g_id.failer = 0;
 			break ;
-		}
 		if (list->next)
 			list = list->next->next;
 		else
@@ -46,7 +42,6 @@ void	ft_or(t_list *list, t_shell *mini)
 
 	while (list && list->v_type[0] != 13)
 	{
-		puts("321");
 		ft_exit_status(mini, list);
 		id = fork();
 		if (id == 0)
@@ -56,10 +51,7 @@ void	ft_or(t_list *list, t_shell *mini)
 		}
 		wait(NULL);
 		if (g_id.failer != 2)
-		{
-			g_id.failer = 0;
 			break ;
-		}
 		if (list->next)
 			list = list->next->next;
 		else

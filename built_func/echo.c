@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:08:20 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 06:55:05 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:44:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_arg(char *str)
 	return (1);
 }
 
-void	ft_echo(t_shell *mini, char **str, int fd)
+void	ft_echo(char **str, int fd)
 {
 	int		i;
 

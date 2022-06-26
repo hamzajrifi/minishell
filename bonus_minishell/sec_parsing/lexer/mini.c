@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:17 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/15 22:46:27 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 21:45:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*check_arg_dollar(t_lexer *lexer, char *str, char c)
 
 	tmp = check_var(lexer);
 	str = ft_h_strjoin(str, tmp);
-	if (tmp[0] == '\0')
+	if (tmp[0] == '\0'|| lexer->src[lexer->i - 1] == '?')
 		free(tmp);
 	if (c == '"')
 		return (str);
@@ -48,8 +48,11 @@ char	*check_arg_dollar(t_lexer *lexer, char *str, char c)
 	return (str);
 }
 
-t_token	*ft_collect_string_second_2(t_lexer *lexer, t_token *token, char *str)
+t_token	*ft_collect_string_second_2(t_lexer *lexer, char *str)
 {
+	t_token	*token;
+
+	token = NULL;
 	lexer_advance(lexer);
 	if (lexer->c && check_lexer_c(lexer->c))
 	{
@@ -93,7 +96,6 @@ char	*ft_lexer_collect_string_second_1(t_lexer *lexer, char *str, char c)
 
 t_token	*lexer_collect_string(t_lexer *lexer)
 {
-	t_token	*token;
 	char	*str;
 	char	c;
 
@@ -114,5 +116,5 @@ t_token	*lexer_collect_string(t_lexer *lexer)
 		free(str);
 		return (init_token(t_error, NULL));
 	}
-	return (ft_collect_string_second_2(lexer, token, str));
+	return (ft_collect_string_second_2(lexer, str));
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:25:31 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 08:25:36 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:32:54 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	sec_utils_wild(t_wild *wild, int i, int count, char **tab)
 	return (count);
 }
 
-void	utils_milt_wild(t_list **list, t_wild *wild, char **tab, int fd)
+void	utils_milt_wild(t_wild *wild, char **tab, int fd)
 {
 	int	i;
 	int	count;
@@ -129,7 +129,7 @@ void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd)
 	i = 0;
 	k = size_vl(tab);
 	if (k > 1)
-		utils_milt_wild(list, wild, tab, fd);
+		utils_milt_wild(wild, tab, fd);
 	else
 	{
 		while (tab[i])

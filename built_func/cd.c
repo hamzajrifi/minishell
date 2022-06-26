@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:15:51 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:28:28 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:36:19 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	old(t_shell *mini, int a);
 char	**go_home2(t_shell *mini)
 {
 	int		i;
-	int		k;
 	int		j;
 	char	**temp;
 

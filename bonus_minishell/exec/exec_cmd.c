@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:07:33 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:31:04 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 06:34:33 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 			if (temp[0])
 				ft_execve(temp, mini, lst);
 			ft_err(lst->val[0]);
+			ft_free(temp);
 		}
 	}
 	else

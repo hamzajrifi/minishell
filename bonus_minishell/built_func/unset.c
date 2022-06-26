@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 15:52:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:31:52 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:18:51 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	norme4(t_shell *index, char **temp, char *str, char **save)
 {
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	j = 0;
@@ -95,12 +94,12 @@ void	norme4(t_shell *index, char **temp, char *str, char **save)
 
 void	ft_unset(t_shell *index, char **str, int fd)
 {
-	int		i;
 	int		k;
 	char	**save;
 	char	**temp;
 
 	k = 1;
+	save = NULL;
 	while (str[k])
 	{
 		if (finder(str[k]) == 2)
@@ -115,7 +114,6 @@ void	ft_unset(t_shell *index, char **str, int fd)
 		else
 		{
 			temp = malloc(sizeof(char *) * (tablen(index->tab_save_env) + 1));
-			i = 0;
 			ft_13(index, str[k], save, temp);
 			k++;
 		}

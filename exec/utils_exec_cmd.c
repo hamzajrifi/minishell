@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 17:45:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:54:26 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:29:14 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	built_sec(t_shell *mini, t_list *lst, int fd)
 	else if (ft_strcmp(lst->val[0], "cd") == 0)
 		cmm_cd(lst, mini);
 	else if (ft_strcmp(lst->val[0], "echo") == 0)
-		ft_echo(mini, lst->val, fd);
+		ft_echo(lst->val, fd);
 	else
 		cmm(lst, mini);
 }

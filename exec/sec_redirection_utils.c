@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:37:09 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:59:21 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:05:36 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 	int		fd;
 	int		in;
 
+	(void)a;
 	g_id.cheecker = 1;
 	fd = open_all_files(lst, 0);
 	in = fd_i(lst);
-	utils_red(&lst, mini);
+	utils_red(&lst);
 	ft_exit_status(mini, lst);
 	if (fd != -1)
 	{
@@ -71,7 +72,6 @@ int	utils_redin(t_list *lst)
 void	change_in(t_list **lst, t_shell *mini)
 {
 	int		i;
-	char	*temp;
 
 	i = 0;
 	if (mini->tab_of_norm[i])

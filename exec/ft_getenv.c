@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:52:40 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:32:23 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:36:07 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 	{
 		dp = opendir(lst->val[0]);
 		if ((int)dp != 0)
+		{
 			printf("minishell: ./exec: is a directory\n");
+			//exit(0);
+		}
 		else if (access(lst->val[0], F_OK | X_OK) == 0)
 		{
 			execve(lst->val[0], &lst->val[0], mini->tab_save_env);

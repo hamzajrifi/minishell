@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:34:11 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/24 05:59:58 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:07:59 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_check_error(t_lexer *lexer, int i)
 		if (!lexer->src[i] || (lexer->src[i] == '|'
 				|| ((lexer->src[i] == '>' || lexer->src[i] == '<')
 					&& (lexer->src[i + 1] == '>' || lexer->src[i + 1] == '<'))
-				|| (lexer->i + 1 != i && (lexer->src[i] == '<'
+				|| (lexer->i + 1 != (unsigned int)i && (lexer->src[i] == '<'
 						|| lexer->src[i] == '>'))
 				|| (lexer->src[i] == '>' && lexer->c == '<')
 				|| (lexer->src[i] == '<' && lexer->c == '>')))
@@ -68,10 +68,9 @@ int	ft_error(t_lexer *lexer)
 
 t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst)
 {
-	int		i;
-
 	g_id.g_status_exec = 127;
-	printf("parse error %s\n", str);
+	if (str)
+		printf("parse error %s\n", str);
 	if (lexer)
 		free(lexer);
 	if (token)

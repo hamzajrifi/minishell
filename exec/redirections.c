@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:58:37 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:44:27 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
 	{
 		lst = lst->next;
 		fd_out = open_all_files(lst, 0);
-		fd_in = utils_re(lst, fd_in, k);
+		fd_in = utils_re(lst, 0, k);
 		lst = head;
 		change_in2(&lst);
 		if (fd_in != 0)

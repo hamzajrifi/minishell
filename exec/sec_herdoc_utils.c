@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:58:23 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:56:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	ex(t_shell *mini, t_list *list, int *save, int fs)
 {
 	int	fd;
 
+	(void)fs;
+	(void)save;
 	fd = open("/tmp/test", O_CREAT | O_RDWR);
 	mini->id = fork();
 	g_id.id = mini->id;

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 15:13:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 02:32:17 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:22:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,14 @@ void	ft_env(t_shell *index, int fd)
 				ft_putendl_fd(index->tab_save_exp[i], fd);
 			i++;
 		}
+	}
+}
+
+void	add_name2(int i, char *str)
+{
+	if (i != -1 && ft_strcmp(str, "exit") != 0)
+	{
+		g_id.g_status_exec = 127;
+		g_id.failer = 2;
 	}
 }

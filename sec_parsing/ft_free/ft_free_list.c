@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:39:02 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/20 22:32:07 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:18:25 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ void	ft_free_list(t_list *lst)
 			free(lst);
 			lst = lst->next;
 	}
+}
+
+t_token *ft_free_string(char *str, t_token *token)
+{
+	if (str)
+		free(str);
+	return (token);
 }

@@ -13,7 +13,7 @@
 #include "../header/minishell.h"
 
 t_list	*ft_check_parser(t_token **token, t_lexer *lexer,
-t_list *lst, t_list *head)
+t_list *lst)
 {
 	int	i;
 
@@ -54,7 +54,7 @@ t_list *lst, t_list *head)
 {
 	while (token && token->e_type != t_error)
 	{
-		lst = ft_check_parser(&token, lexer, lst, head);
+		lst = ft_check_parser(&token, lexer, lst);
 		if (!lst)
 			return (print_error(" 003", lexer, token, head));
 		if (token && lst)

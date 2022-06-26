@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:01:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 05:55:50 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:21:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	no1(t_shell *index, char *add_str, char *string, int i)
 	sec_temp = ft_split(add_str, '=');
 	if (ft_strcmp(sec_temp[0], string) == 0)
 	{
+		free(index->tab_save_exp[i]);
 		index->tab_save_exp[i] = ft_strdup(add_str);
 		ft_free(sec_temp);
 		return (5);
