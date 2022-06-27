@@ -66,13 +66,18 @@ void	utils_change_pwd(t_shell *mini, int n, char **str, int i)
 {
 	char	buff[256];
 	char	*temp;
+	char	*sec_temp;
 
-	temp = ft_strjoin("PWD=", getcwd(buff, sizeof(buff)));
-	free(str[0]);
-	str[0] = temp;
-	if (n > 0)
-		free(mini->tab_save_env[i]);
-	mini->tab_save_env[i] = ft_strdup(str[0]);
+	sec_temp = getcwd(buff, sizeof(buff));
+	if (sec_temp)
+	{
+		temp = ft_strjoin("PWD=", sec_temp);
+		free(str[0]);
+		str[0] = temp;
+		if (n > 0)
+			free(mini->tab_save_env[i]);
+		mini->tab_save_env[i] = ft_strdup(str[0]);
+	}
 	ft_free(str);
 }
 

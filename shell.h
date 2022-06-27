@@ -87,7 +87,7 @@ void	utils_red(t_list **lst);
 int		utils_files(t_list *list, int a, int fd, int fd_in);
 void	ex(t_shell *mini, t_list *list, int *save, int fs);
 int		size_tab(char **tab);
-void	ft_nor(t_shell *mini, int fd, int fd_out);
+void	ft_nor(t_shell *mini, int fd, int fd_out, int fd_in);
 int		ft_index(t_list *list);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(char *src);
@@ -153,6 +153,11 @@ int		open_all_files(t_list *list, int a);
 void	red_in(t_shell *mini, char *str);
 int		search_path_in_env(t_shell *mini, int a);
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
+void	ft_copy_tab_save_env(t_shell *index, char **temp, int n, int j);
+void	ft_check_cmd_if_exists(t_shell *mini, t_list *lst, DIR *dp);
+int		ft_free_and_dup_val(t_list **list, char **sec_tab, int io);
+int		ft_free_lst_val(t_list **lst, int ij);
+int		ft_check_cmd_out(t_list *list);
 
 // exit
 

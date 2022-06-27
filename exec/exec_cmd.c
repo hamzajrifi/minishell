@@ -48,7 +48,12 @@ void	exec_cmd(t_shell *mini, t_list *lst)
 	char	*str;
 
 	str = check_path_if_exi(mini);
-	if (lst->val[0][0] == '.' || lst->val[0][0] == '/')
+	if (lst->val[0][0] == '.' && lst->val[0][1] == '.' && lst->val[0][2] != '/')
+	{
+		write(1, " command not found\n", 19);
+		exit(127);
+	}
+	else if (lst->val[0][0] == '.' || lst->val[0][0] == '/')
 		ft_check_cmd(mini, lst);
 	else if (str != NULL)
 	{

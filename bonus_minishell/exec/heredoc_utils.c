@@ -27,7 +27,7 @@ void	exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num)
 	if (g_id.id == 0)
 	{
 		if (out == 1 && num == 1)
-			ft_nor(mini, fd, fd_out);
+			ft_nor(mini, fd, fd_out, fd_in);
 		else
 		{
 			if (fd_in != 0)
@@ -88,7 +88,7 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 		(*list)->v_type[1] = 2;
 	}
 	ft_exit_status(mini, *list);
-	free(sec_tab);
+	ft_free(sec_tab);
 }
 
 char	**save_cmd(t_list *list)
@@ -123,18 +123,18 @@ void	norm_exec_her(t_shell *mini, t_list **list)
 {
 	char	**sec_tab;
 	int		io;
+	int		i;
 
 	io = 0;
 	sec_tab = save_cmd(*list);
 	if (sec_tab[0])
 	{
 		while (sec_tab[io])
-		{
-			free((*list)->val[io]);
-			(*list)->val[io] = ft_strdup(sec_tab[io]);
-			io++;
-		}
-		(*list)->val[io] = NULL;
+			io = ft_free_and_dup_val(list, sec_tab, io);
+		i = io;
+		while ((*list)->val[io])
+			free((*list)->val[io++]);
+		(*list)->val[i] = NULL;
 		(*list)->v_type[0] = 1;
 		(*list)->v_type[1] = 2;
 	}

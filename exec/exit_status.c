@@ -43,7 +43,11 @@ void	ft_check_cmd2(t_shell *mini, t_list *lst)
 	(void)mini;
 	dp = opendir(lst->val[0]);
 	if ((int)dp != 0)
+	{
+		free(dp->__dd_buf);
+		free(dp);
 		g_id.g_status_exec = 126;
+	}
 	else if (lst->val[0][0] == '.')
 	{
 		if (access(lst->val[0], F_OK | X_OK) == 0)

@@ -43,7 +43,6 @@ void	home(t_shell *mini)
 
 	i = 0;
 	str = go_home2(mini);
-	system("leaks minishell");
 	if (str[1] != NULL)
 	{
 		chdir(str[1]);
@@ -55,8 +54,21 @@ void	home(t_shell *mini)
 
 void	sec_home(t_shell *mini, char *path)
 {
-	path = ft_strjoin("/", ft_strchr(path, '/'));
-	chdir(path);
+	char	*temp;
+	char	**sec_temp;
+	char	*tab;
+	int		a;
+
+	sec_temp = go_home2(mini);
+	temp = ft_strchr(path, '/');
+	tab = ft_strjoin("/", temp);
+	path = ft_strjoin(sec_temp[1], tab);
+	a = chdir(path);
+	if (a < 0)
+		perror(NULL);
+	free(tab);
+	free(path);
+	ft_free(sec_temp);
 	change_pwd(mini);
 	mini->built++;
 }
@@ -72,12 +84,16 @@ void	ft_cd(char *path, t_shell *mini)
 {
 	static int			a;
 	char				buff[256];
+	char				*temp;
 
-	a = 0;
 	if (mini->built == 0)
 		mini->save_pwd = ft_strdup(getcwd(buff, sizeof(buff)));
-	else if (ft_strcmp(mini->save_pwd, getcwd(buff, sizeof(buff))) != 0)
-		old(mini, a);
+	if (mini->save_pwd)
+	{
+		temp = getcwd(buff, sizeof(buff));
+		if (temp && ft_strcmp(mini->save_pwd, temp) != 0)
+			old(mini, a);
+	}
 	if (path == NULL)
 		unset_home(mini);
 	else if (strcmp(path, "~") == 0)

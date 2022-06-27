@@ -52,7 +52,11 @@ int	open_all_files(t_list *list, int a)
 				if (str == NULL)
 					break ;
 				if (ft_strcmp(str, list->val[1]) == 0)
+				{
+					free(str);
 					break ;
+				}
+				free(str);
 			}
 		}
 		list = list->next;
@@ -132,9 +136,7 @@ void	utils_red(t_list **lst)
 		}
 		if (k != 1)
 		{
-			while ((*lst)->val[ij])
-				free((*lst)->val[ij++]);
-			free((*lst)->val);
+			ij = ft_free_lst_val(lst, ij);
 			(*lst)->val = malloc(sizeof(char *) * (size_vl(tab) + 1));
 			ij = 0;
 		}

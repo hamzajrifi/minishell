@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 10:01:31 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:31:10 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ int	fd_i(t_list *list)
 	return (fd);
 }
 
-void	ft_norme(t_shell *mini, int fd, int fd_out)
+void	ft_norme(t_shell *mini, int fd, int fd_out, int fd_in)
 {
-	dup2(fd, 0);
+	if (fd_in != 0)
+		dup2(fd_in, 0);
+	else
+		dup2(fd, 0);
 	if (mini->counter == mini->num_ofall_cmd)
 		dup2(1, 1);
 	else
@@ -51,7 +54,7 @@ void	exec_her(t_list *list, t_shell *mini, int num, int fd_out)
 	if (fork() == 0)
 	{
 		if (out == 1 && num == 1)
-			ft_norme(mini, fd, fd_out);
+			ft_norme(mini, fd, fd_out, fd_in);
 		else
 		{
 			if (fd_in != 0)
@@ -87,13 +90,11 @@ void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)
 	else
 		tab = save_dele(list->next);
 	size = size_tab(tab);
-	g_id.cheecker = 1;
 	true_while(tab, size);
-	g_id.cheecker = 0;
 	out = open_all_files(list, 2);
-	if (list->v_type[0] == 1 && out != -1)
+	if (list->v_type[0] == 1 && out != -1 && g_id.cheecker == 1)
 		exec_first_cmd_in_her(list, mini, fd_out, num);
-	else if (out != -1)
+	else if (out != -1 && g_id.cheecker == 1)
 		exec_her(list, mini, num, fd_out);
 	if (out == -1)
 		printf("No such file or directory\n");

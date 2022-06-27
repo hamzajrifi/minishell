@@ -27,7 +27,7 @@ void	handler(int sig)
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		g_id.g_status_exec = 1;
 	}
@@ -52,14 +52,12 @@ void	ft_mini(t_shell *mini, char *src)
 		return ;
 	if (finde_her(lst) == 1)
 		pipes(mini, lst);
-	else if (find_both_and_or(lst) == 1)
-		exec_both_and_or(lst, mini);
 	else if (ft_findwild(lst) == 1)
-		ft_wildcards(&lst, mini);
+		ft_wildcards(&lst, mini, 1);
 	else if (ft_findwild(lst) == 2)
-		ft_and(lst, mini);
+		ft_and(&lst, mini);
 	else if (ft_findwild(lst) == 3)
-		ft_or(lst, mini);
+		ft_or(&lst, mini);
 	else
 		ft_mini_second(mini, lst);
 	ft_free_list(head);

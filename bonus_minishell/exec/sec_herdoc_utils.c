@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 09:56:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:34:16 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ int	ft_index(t_list *list)
 	return (i);
 }
 
-void	ft_nor(t_shell *mini, int fd, int fd_out)
+void	ft_nor(t_shell *mini, int fd, int fd_out, int fd_in)
 {
-	dup2(fd, 0);
+	if (fd_in != 0)
+		dup2(fd_in, 0);
+	else
+		dup2(fd, 0);
 	if (mini->counter == mini->num_ofall_cmd)
 		dup2(1, 1);
 	else

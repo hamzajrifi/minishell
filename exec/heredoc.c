@@ -29,9 +29,12 @@ int	fd_i(t_list *list)
 	return (fd);
 }
 
-void	ft_norme(t_shell *mini, int fd, int fd_out)
+void	ft_norme(t_shell *mini, int fd, int fd_out, int fd_in)
 {
-	dup2(fd, 0);
+	if (fd_in != 0)
+		dup2(fd_in, 0);
+	else
+		dup2(fd, 0);
 	if (mini->counter == mini->num_ofall_cmd)
 		dup2(1, 1);
 	else
@@ -51,7 +54,7 @@ void	exec_her(t_list *list, t_shell *mini, int num, int fd_out)
 	if (fork() == 0)
 	{
 		if (out == 1 && num == 1)
-			ft_norme(mini, fd, fd_out);
+			ft_norme(mini, fd, fd_out, fd_in);
 		else
 		{
 			if (fd_in != 0)

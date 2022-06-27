@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 22:08:50 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 10:01:00 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:38:48 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ int	utiiiils(int size, char *find)
 	}
 }
 
+void	ft_dup_g_fd(int fd, char **tab)
+{
+	dup(fd);
+	ft_free(tab);
+}
+
 void	true_while(char **tab, int size)
 {
 	char	*find;
@@ -64,6 +70,7 @@ void	true_while(char **tab, int size)
 
 	i = 0;
 	fd = utils_true_while();
+	g_id.cheecker = 1;
 	while (1)
 	{
 		find = readline("> ");
@@ -81,6 +88,5 @@ void	true_while(char **tab, int size)
 			ft_putendl_fd(find, fd);
 		free(find);
 	}
-	dup(g_id.g_fd);
-	ft_free(tab);
+	ft_dup_g_fd(g_id.g_fd, tab);
 }

@@ -14,7 +14,8 @@
 
 void	handler(int sig)
 {
-	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0 && g_id.cheecker == 0 && g_id.g_status_exec != 127)
+	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0
+		&& g_id.cheecker == 0 && g_id.g_status_exec != 127)
 	{
 		if (sig == SIGQUIT)
 			write (1, "Quit: 3\n", 9);
@@ -113,7 +114,7 @@ int	main(int ac, char **av, char **env)
 	{
 		mini.counter = 0;
 		g_id.g_fd = dup(0);
-		src = readline("mimishell : ");
+		src = readline("minishell : ");
 		if (errno == 13)
 			g_id.g_status_exec = 126;
 		if (src == NULL)

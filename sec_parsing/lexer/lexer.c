@@ -73,7 +73,7 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 				return (init_token(t_error, NULL));
 		}	
 		else if (lexer->c == '\\' && lexer->src[lexer->i + 1] == '\0')
-			return(ft_free_string(str, init_token(t_error, NULL)));
+			return (ft_free_string(str, init_token(t_error, NULL)));
 		else
 		{
 			if (lexer->c == '\\')

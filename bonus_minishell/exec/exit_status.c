@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/25 20:39:19 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 09:55:00 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ void	ft_check_cmd2(t_shell *mini, t_list *lst)
 	dp = opendir(lst->val[0]);
 	if ((int)dp != 0)
 	{
+		free(dp->__dd_buf);
+		free(dp);
 		g_id.g_status_exec = 126;
-		printf("9879879879879879878");
 	}
 	else if (lst->val[0][0] == '.')
 	{
@@ -88,7 +89,7 @@ void	normi(char **temp, t_shell *mini, t_list *lst)
 		i++;
 	}
 	free(temp);
-	add_name(i, lst->val[0]);
+	add_name2(i, lst->val[0]);
 }
 
 char	*utils_check_path_if_exi2(t_shell *mini)

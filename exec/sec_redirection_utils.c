@@ -32,7 +32,6 @@ void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 	fd = open_all_files(lst, 0);
 	in = fd_i(lst);
 	utils_red(&lst);
-	system("leaks minishell");
 	ft_exit_status(mini, lst);
 	if (fd != -1)
 	{

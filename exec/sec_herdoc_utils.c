@@ -35,9 +35,12 @@ int	ft_index(t_list *list)
 	return (i);
 }
 
-void	ft_nor(t_shell *mini, int fd, int fd_out)
+void	ft_nor(t_shell *mini, int fd, int fd_out, int fd_in)
 {
-	dup2(fd, 0);
+	if (fd_in != 0)
+		dup2(fd_in, 0);
+	else
+		dup2(fd, 0);
 	if (mini->counter == mini->num_ofall_cmd)
 		dup2(1, 1);
 	else

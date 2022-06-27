@@ -44,13 +44,9 @@ void	norme3(t_shell *index, char **temp, char *str)
 		if (ft_strcmp(save[0], str) != 0)
 			temp[j++] = index->tab_save_exp[i++];
 		else
-		{
-			free(index->tab_save_exp[i]);
-			i++;
-		}
+			free(index->tab_save_exp[i++]);
 		ft_free(save);
 	}
-	printf("ptr = %p\n", index->tab_save_exp[i - 1]);
 	free(index->tab_save_exp);
 	temp[j] = NULL;
 }
@@ -63,7 +59,6 @@ void	unset_exp(t_shell *index, char *str)
 	i = 0;
 	temp = (char **)malloc(sizeof(char *) * (tablen(index->tab_save_exp) + 1));
 	norme3(index, temp, str);
-	system("leaks minishell");
 	index->tab_save_exp = (char **)malloc(sizeof(char *) * (tablen(temp) + 1));
 	i = 0;
 	while (temp && temp[i])
@@ -100,17 +95,7 @@ void	norme4(t_shell *index, char **temp, char *str, char **save)
 		}
 		ft_free(save);
 	}
-	temp[j] = NULL;
-	if (n > 0)
-		free(index->tab_save_env);
-	index->tab_save_env = (char **)malloc(sizeof(char *) * (tablen(temp) + 1));
-	i = 0;
-	while (temp[i])
-	{
-		index->tab_save_env[i] = ft_strdup(temp[i]);
-		i++;
-	}
-	index->tab_save_env[i] = NULL;
+	ft_copy_tab_save_env(index, temp, n, j);
 	n++;
 }
 

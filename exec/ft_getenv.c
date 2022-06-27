@@ -39,15 +39,16 @@ char	*ft_getenv(t_shell *m, char *str)
 
 void	ft_check_cmd(t_shell *mini, t_list *lst)
 {
-	DIR		*dp;
+	DIR	*dp;
 
+	dp = NULL;
 	if (lst->val[0][0] == '.')
 	{
 		dp = opendir(lst->val[0]);
 		if ((int)dp != 0)
 		{
 			printf("minishell: ./exec: is a directory\n");
-			exit(0);
+			exit(126);
 		}
 		else if (access(lst->val[0], F_OK | X_OK) == 0)
 		{
@@ -58,18 +59,11 @@ void	ft_check_cmd(t_shell *mini, t_list *lst)
 		{
 			write (2, lst->val[0], ft_strlen(lst->val[0]));
 			write (2, " :no such file or directory\n", 29);
-			exit(0);
+			exit(127);
 		}
 	}
-	else if (lst->val[0][0] == '/')
-	{
-		if (access(lst->val[0], F_OK) == 0)
-		{
-			execve(lst->val[0], &lst->val[0], mini->tab_save_env);
-			exit(0);
-		}
-		ft_err(lst->val[0]);
-	}
+	else
+		ft_check_cmd_if_exists(mini, lst, dp);
 }
 
 char	*utils_path_if_exi(t_shell *mini)

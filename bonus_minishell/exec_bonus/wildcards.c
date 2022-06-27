@@ -70,12 +70,14 @@ void	exec_wild(t_shell *mini, t_list **list)
 	ft_err((*list)->val[0]);
 }
 
-void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list)
+void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list, int fd_out)
 {
 	if (fork() == 0)
 	{
 		if (wild->out_file != 1)
 			dup2(wild->out_file, 1);
+		else if (fd_out != 0)
+			dup2(fd_out, 1);
 		if (wild->in_file != 0)
 			dup2(wild->in_file, 0);
 		exec_wild(mini, list);
@@ -84,13 +86,12 @@ void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list)
 	ft_free(wild->tab_wild);
 }
 
-void	ft_wildcards(t_list **list, t_shell *mini)
+void	ft_wildcards(t_list **list, t_shell *mini, int fd_out)
 {
 	char	**exec;
 	int		fd;
 	t_wild	wild;
 
-	puts("m hjer");
 	wild.size = 0;
 	wild.size_j = 0;
 	wild.tab_wild = (char **)malloc(sizeof(char *) * 2);
@@ -109,6 +110,6 @@ void	ft_wildcards(t_list **list, t_shell *mini)
 	}
 	wait(NULL);
 	import_all_arg(list, &wild, fd);
-	utils_exec_wild(&wild, mini, list);
+	utils_exec_wild(&wild, mini, list, fd_out);
 	free(exec);
 }

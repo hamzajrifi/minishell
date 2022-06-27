@@ -20,6 +20,7 @@ C_FILES =	exec/exec_cmd.c\
 			built_func/export.c\
 			built_func/pwd.c\
 			built_func/unset.c\
+			built_func/unset_second.c\
 			built_func/utils_exp.c\
 			built_func/sec_sec_exp.c\
 			utils/ft_split.c\
@@ -32,6 +33,7 @@ C_FILES =	exec/exec_cmd.c\
 			exec/ft_getenv.c\
 			exec/heredoc.c\
 			exec/utils_pipes.c\
+			exec/utils_check.c\
 			exec/exit_status.c\
 			exec/heredoc_utils.c\
 			exec/sec_herdoc_utils.c\
@@ -81,10 +83,6 @@ fclean : clean
 		rm -f minishell minishell_bonus
 re : fclean all
 
-
-
-
-
 ################################ BONUS ###########################################
 BONUS_NAME = bonus_mini.a
 
@@ -106,10 +104,12 @@ BNS_FILES = bonus_minishell/exec/exec_cmd.c\
 			bonus_minishell/utils/ft_split.c\
 			bonus_minishell/utils/ft_strjoin.c\
 			bonus_minishell/utils/ft_substr.c\
+			bonus_minishell/built_func/unset_second.c\
 			bonus_minishell/utils/all_func.c\
 			bonus_minishell/utils/ft_strcmp.c\
 			bonus_minishell/utils/ft_itoa.c\
 			bonus_minishell/utils/ft_calloc.c\
+			bonus_minishell/exec/utils_check.c\
 			bonus_minishell/exec/ft_getenv.c\
 			bonus_minishell/exec/heredoc.c\
 			bonus_minishell/exec/utils_pipes.c\

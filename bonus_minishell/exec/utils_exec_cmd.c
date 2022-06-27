@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 17:45:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 09:47:33 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 04:22:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ void	cmm(t_list *lst, t_shell *mini)
 	{
 		wait(&wstatus);
 		if (WIFEXITED(wstatus))
-		{
 			g_id.g_status_exec = WEXITSTATUS(wstatus);
-			if (g_id.g_status_exec == 1)
-				g_id.g_status_exec = 127;
-		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 16:52:40 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/24 04:32:23 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 04:38:18 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,31 @@ char	*ft_getenv(t_shell *m, char *str)
 
 void	ft_check_cmd(t_shell *mini, t_list *lst)
 {
-	DIR		*dp;
+	DIR	*dp;
 
+	dp = NULL;
 	if (lst->val[0][0] == '.')
 	{
 		dp = opendir(lst->val[0]);
 		if ((int)dp != 0)
+		{
 			printf("minishell: ./exec: is a directory\n");
+			exit(126);
+		}
 		else if (access(lst->val[0], F_OK | X_OK) == 0)
 		{
 			execve(lst->val[0], &lst->val[0], mini->tab_save_env);
 			exit(0);
 		}
-		write (2, lst->val[0], ft_strlen(lst->val[0]));
-		write (2, " :no such file or directory\n", 29);
-		exit(0);
-	}
-	else if (lst->val[0][0] == '/')
-	{
-		if (access(lst->val[0], F_OK) == 0)
+		else
 		{
-			execve(lst->val[0], &lst->val[0], mini->tab_save_env);
-			exit(0);
+			write (2, lst->val[0], ft_strlen(lst->val[0]));
+			write (2, " :no such file or directory\n", 29);
+			exit(127);
 		}
-		ft_err(lst->val[0]);
 	}
+	else
+		ft_check_cmd_if_exists(mini, lst, dp);
 }
 
 char	*utils_path_if_exi(t_shell *mini)

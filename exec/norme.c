@@ -56,6 +56,12 @@ int	utiiiils(int size, char *find)
 	}
 }
 
+void	ft_dup_g_fd(int fd, char **tab)
+{
+	dup(fd);
+	ft_free(tab);
+}
+
 void	true_while(char **tab, int size)
 {
 	char	*find;
@@ -82,6 +88,5 @@ void	true_while(char **tab, int size)
 			ft_putendl_fd(find, fd);
 		free(find);
 	}
-	dup(g_id.g_fd);
-	ft_free(tab);
+	ft_dup_g_fd(g_id.g_fd, tab);
 }

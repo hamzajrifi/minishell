@@ -77,19 +77,12 @@ void	normm(t_list *list, t_shell *mini, int *fd, int i)
 	if (list && ft_strcmp(list->val[0], "exit") == 0 && list->val[1])
 		ft_exit(list->val, 1, 1);
 	else if (list && list->next && list->next->v_type[0] != 3 && i == 0
-		&& (ft_strcmp(list->val[0], "cat") == 0
-			|| ft_strcmp(list->val[0], "wc") == 0
-			|| ft_strcmp(list->val[0], "grep") == 0
-			|| ft_strcmp(list->val[0], "more") == 0))
-	{
+		&& ft_check_cmd_out(list))
 		mini->cnt = 2;
-	}
 	else if (ft_findwild(list) == 1)
 	{
-		dup2(fd[1], 1);
-		ft_wildcards(&list, mini);
+		ft_wildcards(&list, mini, fd[1]);
 		wait(NULL);
-		puts("hana");
 	}
 	else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
 	{

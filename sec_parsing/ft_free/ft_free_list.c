@@ -48,7 +48,7 @@ void	ft_free_list(t_list *lst)
 	}
 }
 
-t_token *ft_free_string(char *str, t_token *token)
+t_token	*ft_free_string(char *str, t_token *token)
 {
 	if (str)
 		free(str);

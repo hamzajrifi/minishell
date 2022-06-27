@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "utiles_functions.h": "c"
+        "utiles_functions.h": "c",
+        "todo": "cpp"
     }
 }

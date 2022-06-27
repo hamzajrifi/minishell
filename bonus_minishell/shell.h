@@ -80,12 +80,12 @@ typedef struct s_wild
 	int		size_j;
 }	t_wild;
 
-void	add_name(int i, char *str);
+void	add_name2(int i, char *str);
 void	err_wild(char *str);
 void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd);
 void	exec_both_and_or(t_list *list, t_shell *mini);
-void	ft_or(t_list *list, t_shell *mini);
-void	ft_and(t_list *list, t_shell *mini);
+void	ft_or(t_list **list, t_shell *mini);
+void	ft_and(t_list **list, t_shell *mini);
 void	handler(int sig);
 void	ft_free(char **tab);
 char	*utils_path_if_exi(t_shell *mini);
@@ -104,7 +104,7 @@ void	utils_red(t_list **lst);
 int		utils_files(t_list *list, int a, int fd, int fd_in);
 void	ex(t_shell *mini, t_list *list, int *save, int fs);
 int		size_tab(char **tab);
-void	ft_nor(t_shell *mini, int fd, int fd_out);
+void	ft_nor(t_shell *mini, int fd, int fd_out, int fd_in);
 int		ft_index(t_list *list);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(char *src);
@@ -178,8 +178,8 @@ void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd);
 void	one_wild(t_wild *wild, int fd);
 void	import_all_arg(t_list **list, t_wild *wild, int fd);
 void	exec_wild(t_shell *mini, t_list **list);
-void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list);
-void	ft_wildcards(t_list **list, t_shell *mini);
+void	utils_exec_wild(t_wild *wild, t_shell *mini, t_list **list, int fd_out);
+void	ft_wildcards(t_list **list, t_shell *mini, int fd_out);
 char	*get_next_line(int fd);
 char	*ft_strstr(char *str, char *to_find, int size);
 char	*ft_strstr3(char *str, char *to_find, int size);
@@ -198,4 +198,10 @@ int		find_both_and_or(t_list *list);
 int		ft_findwild(t_list *list);
 int		finde_her(t_list *lis);
 void	ft_mini_second(t_shell *mini, t_list *lst);
+void	ft_copy_tab_save_env(t_shell *index, char **temp, int n, int j);
+void	ft_check_cmd_if_exists(t_shell *mini, t_list *lst, DIR *dp);
+int		ft_free_and_dup_val(t_list **list, char **sec_tab, int io);
+int		ft_free_lst_val(t_list **lst, int ij);
+int		ft_check_cmd_out(t_list *list);
+
 #endif

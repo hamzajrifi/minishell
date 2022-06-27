@@ -46,14 +46,17 @@ int	num_of_cmd(t_list *list)
 
 void	pipes(t_shell *mini, t_list *list)
 {
-	int		fd[2];
-	t_list	*head;
-	int		i;
+	int			fd[2];
+	t_list		*head;
+	int			i;
+	static int	n;
 
 	mini->fs = 0;
 	mini->cnt = 0;
 	mini->num_cmd = num_of_cmd(list);
 	mini->num_ofall_cmd = mini->num_cmd;
+	if (n++ > 0)
+		free(mini->save);
 	mini->save = malloc(sizeof(int) * mini->num_cmd);
 	head = list;
 	i = 0;
@@ -73,7 +76,7 @@ int	fin(t_list *list)
 {
 	if (list && list->next && (list->next->v_type[0] == 6
 			|| list->next->v_type[0] == 8 || list->next->v_type[0] == 3
-			|| list->next->v_type[0] == 4 || list->next->v_type[0] == 15
+			|| list->next->v_type[0] == 4
 			|| list->v_type[0] == 3) && list->next->next)
 		return (1);
 	return (0);

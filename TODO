@@ -1,0 +1,7 @@
+ls -la | wc << her < Makefile
+/dev/null
+echo hello | ./minishell
+< not found
+> file
+
+cd ~/Desctop
