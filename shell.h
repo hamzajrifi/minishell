@@ -31,6 +31,7 @@ typedef struct s_ids
 	int				cheecker;
 	int				g_fd;
 	int				failer;
+	int				sig;
 }	t_ids;
 
 t_ids	g_id;
@@ -68,6 +69,7 @@ typedef struct t_list
 	struct t_list	*prev;
 }	t_list;
 
+int		ft_atoi(const char *str);
 void	add_name2(int i, char *str);
 void	handler(int sig);
 void	ft_free(char **tab);
@@ -83,7 +85,7 @@ void	change_in(t_list **lst, t_shell *mini);
 int		utils_re(t_list *lst, int fd_in, int k);
 char	**cmd_utils(t_list *list, char **tab);
 char	**cmd(t_list *list);
-void	utils_red(t_list **lst);
+void	utils_red(t_shell *mini, t_list **lst);
 int		utils_files(t_list *list, int a, int fd, int fd_in);
 void	ex(t_shell *mini, t_list *list, int *save, int fs);
 int		size_tab(char **tab);

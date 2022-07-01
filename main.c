@@ -12,24 +12,9 @@
 
 #include "sec_parsing/header/minishell.h"
 
-void	handler(int sig)
+void	ft_handler_signal_second(int sig)
 {
-	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0
-		&& g_id.cheecker == 0 && g_id.g_status_exec != 127)
-	{
-		if (sig == SIGQUIT)
-			write (1, "Quit: 3\n", 9);
-		if (sig == SIGINT)
-			write(1, "\n", 1);
-		kill(g_id.id, sig);
-		g_id.g_status_exec = 130;
-	}
-	else if (g_id.cheecker != 0 && sig != SIGQUIT)
-	{
-		write (1, "\n", 1);
-		close(0);
-	}
-	else if (sig == SIGINT)
+	if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();
@@ -43,24 +28,31 @@ void	handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+}
+
+void	handler(int sig)
+{
+	if ((sig == SIGINT || sig == SIGQUIT) && g_id.id != 0
+		&& g_id.cheecker == 0 && g_id.g_status_exec != 127)
+	{
+		if (sig == SIGQUIT)
+			write (1, "Quit: 3\n", 9);
+		if (sig == SIGINT)
+			write(1, "\n", 1);
+		kill(g_id.id, 9);
+		g_id.g_status_exec = 130;
+	}
+	else if (g_id.cheecker == 1 && sig != SIGQUIT)
+	{
+		write (1, "\n", 1);
+		close(0);
+		g_id.cheecker = 0;
+	}
+	else
+		ft_handler_signal_second(sig);
 	if (sig != SIGQUIT)
 		g_id.cheecker = 0;
 	g_id.id = 0;
-}
-
-int	finder_red(t_list *list)
-{
-	while (list)
-	{
-		if (list && (list->v_type[0] == 6 || list->v_type[0] == 4))
-			return (2);
-		else if (list && list->v_type[0] == 8)
-			return (3);
-		else if (list && list->v_type[0] == 3)
-			return (4);
-		list = list->next;
-	}
-	return (0);
 }
 
 void	ft_mini(t_shell *mini, char *src)
@@ -113,15 +105,13 @@ int	main(int ac, char **av, char **env)
 	while (1337)
 	{
 		mini.counter = 0;
+		g_id.id = 0;
 		g_id.g_fd = dup(0);
 		src = readline("minishell : ");
 		if (errno == 13)
 			g_id.g_status_exec = 126;
 		if (src == NULL)
-		{
-			printf("exit\n");
-			exit(0);
-		}
+			ft_exit_prg();
 		ft_mini(&mini, src);
 		add_history(src);
 		free(src);

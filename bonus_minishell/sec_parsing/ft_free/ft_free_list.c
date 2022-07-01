@@ -53,3 +53,9 @@ char	*free_string(char *str)
 	free(str);
 	return (NULL);
 }
+
+void	ft_exit_prg(void)
+{
+	printf("exit\n");
+	exit(0);
+}

@@ -26,6 +26,7 @@ C_FILES =	exec/exec_cmd.c\
 			utils/ft_split.c\
 			utils/ft_strjoin.c\
 			utils/ft_substr.c\
+			utils/ft_atoi.c\
 			utils/all_func.c\
 			utils/ft_strcmp.c\
 			utils/ft_itoa.c\
@@ -48,7 +49,8 @@ C_FILES =	exec/exec_cmd.c\
 			sec_parsing/lexer/mini.c\
 			sec_parsing/lexer/lexer_action.c\
 			sec_parsing/lexer/lexer.c\
-			sec_parsing/lexer/token.c
+			sec_parsing/lexer/token.c\
+			check_if_herdoc/check_if_herdoc.c
 
 OBJ = $(C_FILES:.c=.o)
 
@@ -77,6 +79,7 @@ clean :
 		rm -f *.o bonus_minishell/ft_and_or/*.o
 		rm -f *.o bonus_minishell/exec_bonus/*.o
 		rm -f *.o bonus_minishell/*.o
+		rm -f *.o check_if_herdoc/*.o
 		rm -f $(NAME)
 		rm -f $(BONUS_NAME)
 fclean : clean
@@ -108,6 +111,7 @@ BNS_FILES = bonus_minishell/exec/exec_cmd.c\
 			bonus_minishell/utils/all_func.c\
 			bonus_minishell/utils/ft_strcmp.c\
 			bonus_minishell/utils/ft_itoa.c\
+			bonus_minishell/utils/ft_atoi.c\
 			bonus_minishell/utils/ft_calloc.c\
 			bonus_minishell/exec/utils_check.c\
 			bonus_minishell/exec/ft_getenv.c\

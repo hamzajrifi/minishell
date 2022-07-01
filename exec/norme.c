@@ -58,7 +58,8 @@ int	utiiiils(int size, char *find)
 
 void	ft_dup_g_fd(int fd, char **tab)
 {
-	dup(fd);
+	fd = 0;
+	dup(g_id.g_fd);
 	ft_free(tab);
 }
 

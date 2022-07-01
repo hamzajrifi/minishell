@@ -80,6 +80,7 @@ typedef struct s_wild
 	int		size_j;
 }	t_wild;
 
+int		ft_atoi(const char *str);
 void	add_name2(int i, char *str);
 void	err_wild(char *str);
 void	mult_wild(t_list **list, t_wild *wild, char **tab, int fd);

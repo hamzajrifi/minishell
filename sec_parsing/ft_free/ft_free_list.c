@@ -54,3 +54,9 @@ t_token	*ft_free_string(char *str, t_token *token)
 		free(str);
 	return (token);
 }
+
+void	ft_exit_prg(void)
+{
+	printf("exit\n");
+	exit(0);
+}

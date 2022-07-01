@@ -70,5 +70,7 @@ int		ft_error(t_lexer *lexer);
 t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst);
 int		finde_her(t_list *lis);
 t_token	*ft_free_string(char *str, t_token *token);
+int		finder_red(t_list *list);
+void	ft_exit_prg(void);
 
 #endif

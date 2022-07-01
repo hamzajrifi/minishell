@@ -117,7 +117,7 @@ char	**cmd(t_list *list)
 	return ((cmd_utils(list, tab)));
 }
 
-void	utils_red(t_list **lst)
+void	utils_red(t_shell *mini, t_list **lst)
 {
 	char	**tab;
 	int		ij;
@@ -131,8 +131,7 @@ void	utils_red(t_list **lst)
 		if ((*lst)->v_type[0] == 1)
 		{
 			k = 1;
-			while ((*lst)->val[ij])
-				ij++;
+			ij = size_tab((*lst)->val);
 		}
 		if (k != 1)
 		{
@@ -141,6 +140,7 @@ void	utils_red(t_list **lst)
 			ij = 0;
 		}
 		sec_utils_red(lst, tab, ij, k);
+		ft_exit_status(mini, *lst);
 	}
 	else
 		free(tab);

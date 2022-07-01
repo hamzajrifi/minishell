@@ -28,7 +28,6 @@ void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 	int		in;
 
 	(void)a;
-	g_id.cheecker = 1;
 	fd = open_all_files(lst, 0);
 	in = fd_i(lst);
 	utils_red(&lst);

@@ -71,5 +71,6 @@ int		ft_error(t_lexer *lexer);
 t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst);
 char	*free_string(char *str);
 char	*check_parenthesis(char *str);
+void	ft_exit_prg(void);
 
 #endif
